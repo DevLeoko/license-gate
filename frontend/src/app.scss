@@ -1,0 +1,116 @@
+/* Write your global styles here, in SCSS syntax. Variables and mixins from the src/variables.scss file are available here without importing */
+
+@import 'material-icons/iconfont/material-icons.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+	@for $i from 1 through 10 {
+		.grid-table-#{$i} {
+			grid-template-columns: repeat(#{$i}, minmax(0, auto));
+		}
+	}
+}
+
+body {
+	// @apply bg-white;
+	@apply bg-gray-50;
+
+	// TODO: Check accessibility implications of this
+	-webkit-tap-highlight-color: transparent;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='email'],
+input[type='number'],
+input[type='tel'],
+input[type='url'],
+input[type='search'],
+input[type='date'],
+input[type='datetime'],
+input[type='datetime-local'],
+input[type='month'],
+input[type='week'],
+input[type='time'],
+input[type='color'],
+textarea,
+select {
+	@apply outline-none bg-transparent;
+}
+
+input[type='text']:not(.plain),
+input[type='password']:not(.plain),
+input[type='email']:not(.plain),
+input[type='number']:not(.plain),
+input[type='tel']:not(.plain),
+input[type='url']:not(.plain),
+input[type='search']:not(.plain),
+input[type='date']:not(.plain),
+input[type='datetime']:not(.plain),
+input[type='datetime-local']:not(.plain),
+input[type='month']:not(.plain),
+input[type='week']:not(.plain),
+input[type='time']:not(.plain),
+input[type='color']:not(.plain),
+textarea:not(.plain),
+select:not(.plain),
+.input-style {
+	@apply bg-white bg-opacity-70 outline-none relative block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-1 focus:ring-inset focus:ring-blue-400 sm:text-sm sm:leading-6;
+}
+
+.input-style {
+	@apply focus-within:z-10 focus-within:ring-1 focus-within:ring-inset focus-within:ring-blue-400;
+}
+
+input[type='text']:disabled:not(.plain),
+input[type='password']:disabled:not(.plain),
+input[type='email']:disabled:not(.plain),
+input[type='number']:disabled:not(.plain),
+input[type='tel']:disabled:not(.plain),
+input[type='url']:disabled:not(.plain),
+input[type='search']:disabled:not(.plain),
+input[type='date']:disabled:not(.plain),
+input[type='datetime']:disabled:not(.plain),
+input[type='datetime-local']:disabled:not(.plain),
+input[type='month']:disabled:not(.plain),
+input[type='week']:disabled:not(.plain),
+input[type='time']:disabled:not(.plain),
+input[type='color']:disabled:not(.plain),
+textarea:disabled:not(.plain),
+select:disabled:not(.plain) {
+	@apply bg-gray-100 text-gray-500 cursor-pointer;
+}
+
+.input-icon {
+	@apply z-10 w-8 -ml-8 text-base text-center text-gray-600 border-l border-gray-300 hover:text-gray-600;
+}
+
+.input-icon-left {
+	@apply z-10 w-8 -mr-8 text-base text-center text-gray-600 border-r border-gray-300 hover:text-gray-600;
+}
+
+.pageTitle {
+	@apply text-2xl font-semibold mb-4 flex items-center;
+}
+.pageSubTitle {
+	@apply text-lg font-medium;
+}
+
+// Hide number handles
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.floating-action {
+	@apply flex flex-row items-center px-1 hover:bg-gray-100 rounded-sm cursor-pointer -mx-1 transition-all duration-100;
+	width: calc(100% + 8px);
+}
+
+.back-nav {
+	@apply mr-1 -mb-0.5 text-2xl text-gray-400 cursor-pointer;
+}

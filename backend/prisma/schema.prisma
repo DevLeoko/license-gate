@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int      @id @default(autoincrement())
+  email           String   @unique
+  isEmailVerified Boolean
+  passwordHash    String?
+  refreshSession  String?
+  createdAt       DateTime @default(now())
+
+  marketingEmails Boolean @default(false)
+  rsaPublicKey    String
+  rsaPrivateKey   String
+
+  licenses License[]
+  logs     Log[]
+}
+
+enum ReplenishInterval {
+  TEN_SECONDS
+  MINUTE
+  HOUR
+  DAY
+}
+
+model License {
+  id Int @id @default(autoincrement())
+
+  active Boolean @default(true)
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  licenseKey String
+
+  name  String
+  notes String @db.Text
+
+  ipLimit        Int?
+  licenseScope   String?
+  expirationDate DateTime?
+
+  validationPoints  Int?
+  validationLimit   Int?
+  replenishAmount   Int?
+  replenishInterval ReplenishInterval?
+
+  createdAt DateTime @default(now())
+
+  logs Log[]
+
+  @@unique([userId, licenseKey])
+}
+
+enum ValidationResult {
+  VALID
+  NOT_FOUND
+  NOT_ACTIVE
+  EXPIRED
+  LICENSE_SCOPE_FAILED
+  IP_LIMIT_EXCEEDED
+  RATE_LIMIT_EXCEEDED
+}
+
+model Log {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  license   License @relation(fields: [licenseId], references: [id], onDelete: Cascade)
+  licenseId Int
+
+  ip        String
+  result    ValidationResult
+  metadata  String
+  timestamp DateTime         @default(now())
+}

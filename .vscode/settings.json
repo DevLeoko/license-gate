@@ -1,0 +1,39 @@
+{
+  "colorTabs.config": [
+    {
+      "regex": "frontend/.*",
+      "color": "#578a58"
+    },
+    {
+      "regex": "backend/.*",
+      "color": "#475569"
+    },
+  ],
+  "colorTabs.titleBackground": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "svelte.plugin.svelte.compilerWarnings": {
+    "a11y-click-events-have-key-events": "ignore",
+    "css-syntax-error": "ignore",
+  },
+  "svelte.plugin.css.diagnostics.enable": false,
+  "cSpell.words": [
+    "Roboto"
+  ],
+  "macros.list": {
+    "translate": [
+      {
+        "command": "type",
+        "args": {
+          "text": "{$t(\"\")"
+        }
+      },
+      "cursorLeft",
+      "cursorLeft"
+    ]
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
+}
