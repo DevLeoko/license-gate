@@ -1,3 +1,9 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/DevLeoko/license-gate/assets/13747815/65026d9c-86eb-47c8-804a-6b768a5786de">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/DevLeoko/license-gate/assets/13747815/e6425f96-e41b-431c-975c-4699006c6b04">
+  <img src="https://github.com/DevLeoko/license-gate/assets/13747815/35c05ca5-51b7-440f-b589-29da9e27c876">
+</picture>
+
 # !! This project is still in development !!
 
 # LicenseGate
