@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation'
 	import type { ListLicense } from '../../trpcClient'
 	import CardActionButton from '../basics/CardActionButton.svelte'
 
@@ -6,6 +7,8 @@
 </script>
 
 <div class="flex flex-col items-stretch space-y-1 text-sm text-left floating-actions">
-	<CardActionButton icon="edit">Edit</CardActionButton>
+	<CardActionButton icon="edit" on:click={() => goto(`/licenses/${license.id}/edit`)}
+		>Edit</CardActionButton
+	>
 	<CardActionButton icon="delete">Delete</CardActionButton>
 </div>

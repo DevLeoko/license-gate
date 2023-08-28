@@ -34,7 +34,7 @@
 	}
 </script>
 
-<PageTitle title="Create new license">
+<PageTitle title="Create new license" backLink="/licenses">
 	<Button on:click={onSave} loading={$createMutation.isLoading}>
 		<span class="mr-1 material-icons">check</span>
 		Save

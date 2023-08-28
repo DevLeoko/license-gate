@@ -26,6 +26,13 @@ export function createLicenseReadQuery(id: number) {
 	})
 }
 
+export function queryLicenseRead(id: number) {
+	return useQueryClient().fetchQuery({
+		queryKey: LICENSE_KEYS.read(id),
+		queryFn: () => trpc.license.read.query({ id }),
+	})
+}
+
 export function createLicenseListQuery(
 	take: number,
 	skip: number,
