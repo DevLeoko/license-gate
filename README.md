@@ -7,7 +7,7 @@ LicenseGate is an open-source licensing tool for developers. Create and manage l
 ## As easy as a GET request
 
 ```http
-GET /api/v1/license/{user-id}/{license-key}/verify
+GET /license/{user-id}/{license-key}/verify
 ```
 
 ```json

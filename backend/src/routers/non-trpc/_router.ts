@@ -1,4 +1,5 @@
 import { Express, NextFunction, Request, Response } from "express";
+import { handleLicenseKeyVerification } from "./verify";
 
 function asyncHandler(
   fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
@@ -9,5 +10,12 @@ function asyncHandler(
 }
 
 export async function setupNonTrpcRoutes(app: Express) {
-  // TODO
+  app.get(
+    `/license/:userId/:licenseKey/verify`,
+    asyncHandler(handleLicenseKeyVerification)
+  );
+  app.post(
+    `/license/:userId/:licenseKey/verify`,
+    asyncHandler(handleLicenseKeyVerification)
+  );
 }

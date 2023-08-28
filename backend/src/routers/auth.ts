@@ -11,6 +11,7 @@ import { prisma } from "../prisma";
 import { protectedProcedure, publicProcedure, router } from "../trpc";
 import { ShowError } from "../utils/ShowError";
 import { verifyRecaptcha } from "../utils/recaptcha";
+import { userIdToHex } from "../utils/user-id";
 
 export const authRouter = router({
   loginWithPassword: publicProcedure
@@ -168,6 +169,7 @@ export const authRouter = router({
     }
 
     return {
+      userId: userIdToHex(ctx.userId),
       email: user.email,
       isPasswordAccount: !!user.passwordHash,
       marketingEmails: user.marketingEmails,
