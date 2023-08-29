@@ -11,6 +11,8 @@
 		name: '',
 		notes: '',
 
+		active: true,
+
 		ipLimit: null,
 		licenseScope: null,
 		expirationDate: null,
