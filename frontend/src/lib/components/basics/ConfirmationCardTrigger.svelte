@@ -9,7 +9,7 @@
 </script>
 
 <div class="relative">
-	<div on:click={() => (showConfirmationCard = true)}>
+	<div on:click|stopPropagation={() => (showConfirmationCard = true)}>
 		<slot />
 	</div>
 
