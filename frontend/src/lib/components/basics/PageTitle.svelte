@@ -3,12 +3,18 @@
 
 	export let title = ''
 	export let backLink: string | null = null
+	export let backAction: (() => void) | null = null
+	export let closeIcon = false
+
+	$: onBack = backAction || (() => goto(backLink || '/'))
 </script>
 
 <div class="flex items-center justify-between gap-4 mb-4">
 	<h1 class="!mb-0 pageTitle">
-		{#if backLink}
-			<span class="material-icons back-nav" on:click={() => goto(backLink || '/')}>arrow_back</span>
+		{#if backLink || backAction}
+			<span class="material-icons back-nav" on:click={onBack}>
+				{closeIcon ? 'close' : 'arrow_back'}
+			</span>
 		{/if}
 
 		<slot name="title">

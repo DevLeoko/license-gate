@@ -72,6 +72,10 @@
 		<Skeleton class="h-20 max-w-md" />
 	{:else}
 		<div class="px-3 py-2 mt-2 bg-gray-200">
+			<b>User ID</b> <span>{myData.userId}</span> <br />
+		</div>
+
+		<div class="px-3 py-2 mt-2 bg-gray-200">
 			<b>Email</b> <span>{myData.email}</span> <br />
 			<i class="text-sm text-gray-500"
 				>You can not change your email address - please get in touch if you have any issues.</i

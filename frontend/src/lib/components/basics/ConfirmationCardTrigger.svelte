@@ -6,9 +6,13 @@
 	export let loading = false
 
 	export let preferLeft = false
+
+	let className = ''
+
+	export { className as class }
 </script>
 
-<div class="relative">
+<div class="relative {className}">
 	<div on:click|stopPropagation={() => (showConfirmationCard = true)}>
 		<slot />
 	</div>

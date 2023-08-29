@@ -14,6 +14,8 @@ export type LicenseStatusFilter = RouterInput['license']['list']['filterStatus']
 export type CreateLicense = RouterInput['license']['create']
 export type UpdateLicense = RouterInput['license']['update']
 
+export type ReplenishInterval = NonNullable<ReadLicense['replenishInterval']>
+
 export const trpc = createTRPCProxyClient<AppRouter>({
 	transformer: SuperJSON,
 	links: [

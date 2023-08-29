@@ -47,9 +47,9 @@
 {#each LIMITS as limit (limit.name)}
 	<Collapsable class="bg-white border">
 		<svelte:fragment slot="label">
-			<h3 class="font-medium">
+			<h3 class="flex items-center font-medium">
 				{limit.name}
-				<OnOffChip class="ml-2" active={limit.active}>Off</OnOffChip>
+				<OnOffChip class="ml-2" active={limit.active} />
 			</h3>
 
 			<p>{limit.description}</p>

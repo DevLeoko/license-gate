@@ -1,13 +1,27 @@
 <script lang="ts">
+	import { page } from '$app/stores'
 	import Button from '../../../lib/components/basics/Button.svelte'
 	import PageTitle from '../../../lib/components/basics/PageTitle.svelte'
+	import SidePopup from '../../../lib/components/basics/SidePopup.svelte'
 	import Skeleton from '../../../lib/components/basics/Skeleton.svelte'
+	import LicensePreview from '../../../lib/components/license/LicensePreview.svelte'
 	import LicenseRow from '../../../lib/components/license/LicenseRow.svelte'
-	import { createLicenseListQuery } from '../../../lib/controller/query/license'
+	import {
+		createLicenseListQuery,
+		createLicenseReadQuery,
+	} from '../../../lib/controller/query/license'
 
 	const licenses = createLicenseListQuery(10, 0)
 
 	let previewLicenseId: number | null = null
+	$: previewLicense = previewLicenseId != null ? createLicenseReadQuery(previewLicenseId) : null
+	if ($page.url.searchParams.has('preview')) {
+		previewLicenseId = Number.parseInt($page.url.searchParams.get('preview')!)
+	}
+
+	function closePreview() {
+		previewLicenseId = null
+	}
 </script>
 
 <PageTitle title="Licenses">
@@ -56,7 +70,7 @@
 		{/each}
 	</div>
 
-	<!-- {#if previewLicense != null}
+	{#if previewLicense != null}
 		<SidePopup on:exit={closePreview} class="w-[600px]">
 			{#if !$previewLicense?.data}
 				<Skeleton class="w-full h-48" />
@@ -64,5 +78,5 @@
 				<LicensePreview license={$previewLicense.data} on:exit={closePreview} />
 			{/if}
 		</SidePopup>
-	{/if} -->
+	{/if}
 {/if}

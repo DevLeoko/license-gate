@@ -1,12 +1,13 @@
 <script lang="ts">
 	import type { CreateLicense } from '../../../../trpcClient'
+	import DateInput from '../../../basics/DateInput.svelte'
 	import Labeled from '../../../basics/Labeled.svelte'
 
 	export let entity: CreateLicense
 </script>
 
 <Labeled label="Expiration Date" class="w-40">
-	<input type="date" bind:value={entity.expirationDate} />
+	<DateInput bind:date={entity.expirationDate} />
 </Labeled>
 
 {#if entity.expirationDate}

@@ -14,7 +14,7 @@
 	$: {
 		if (!license.active) {
 			statusText = 'Inactive'
-			statusColor = 'gray-500'
+			statusColor = 'gray-700'
 		} else if (license.expirationDate && license.expirationDate < new Date()) {
 			statusText = 'Expired'
 			statusColor = 'red-500'
