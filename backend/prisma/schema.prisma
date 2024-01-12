@@ -19,8 +19,8 @@ model User {
   createdAt       DateTime @default(now())
 
   marketingEmails Boolean @default(false)
-  rsaPublicKey    String
-  rsaPrivateKey   String
+  rsaPublicKey    String  @db.Text
+  rsaPrivateKey   String  @db.Text
 
   licenses License[]
   logs     Log[]

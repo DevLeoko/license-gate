@@ -31,3 +31,15 @@ export function queryAuthData() {
 		queryFn: () => trpc.auth.me.query(),
 	})
 }
+
+export function createRsaKeyUpdateMutation() {
+	const queryClient = useQueryClient()
+	return createMutation({
+		mutationFn: async (rsaKeys: { rsaPublicKey: string; rsaPrivateKey: string }) => {
+			await trpc.auth.updateRsaPublicKey.mutate(rsaKeys)
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries(AUTH_KEYS.all)
+		},
+	})
+}

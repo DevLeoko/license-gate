@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte'
+	import { tick } from 'svelte'
 	import Button from '../../../../lib/components/basics/Button.svelte'
 	import Chip from '../../../../lib/components/basics/Chip.svelte'
 	import PageTitle from '../../../../lib/components/basics/PageTitle.svelte'
@@ -7,19 +7,19 @@
 	import {
 		createAuthDataMutation,
 		createAuthDataQuery,
+		createRsaKeyUpdateMutation,
 	} from '../../../../lib/controller/query/auth'
 	import { logSuccess } from '../../../../lib/stores/alerts'
 	import { setLoggedOut } from '../../../../lib/stores/auth'
-	import { trpc, type ReadMe } from '../../../../lib/trpcClient'
+	import { trpc } from '../../../../lib/trpcClient'
+	import { generateRsaKeyPair } from '../../../../lib/utils/rsaKeys'
+	import { sleep } from '../../../../lib/utils/sleep'
 
-	let myData: ReadMe | null = null
+	const authDataQuery = createAuthDataQuery()
+	$: myData = $authDataQuery.data
+
 	let loadingPasswordReset = false
-
 	let signOutAllDevices = false
-
-	onMount(async () => {
-		myData = await trpc.auth.me.query()
-	})
 
 	function resetPassword() {
 		loadingPasswordReset = true
@@ -33,18 +33,18 @@
 			})
 	}
 
-	const authData = createAuthDataQuery()
 	const updateAuthData = createAuthDataMutation()
+	const updateRsaKeys = createRsaKeyUpdateMutation()
 
 	let loadingConsentUpdate = false
 
 	async function toggleMarketingConsent() {
-		if (!$authData.data) return
+		if (!myData) return
 
 		loadingConsentUpdate = true
 		await $updateAuthData
 			.mutateAsync({
-				marketingEmails: !$authData.data.marketingEmails,
+				marketingEmails: !myData.marketingEmails,
 			})
 			.finally(() => {
 				loadingConsentUpdate = false
@@ -63,12 +63,29 @@
 		setLoggedOut()
 		logSuccess('Deleted account')
 	}
+
+	let loadingRegenerate = false
+
+	async function regenerateKeyPair() {
+		loadingRegenerate = true
+
+		await tick()
+		await sleep(100)
+
+		const keys = generateRsaKeyPair()
+
+		await $updateRsaKeys.mutateAsync(keys).finally(() => {
+			loadingRegenerate = false
+		})
+
+		logSuccess('Generated new key-pair')
+	}
 </script>
 
 <PageTitle title="Account settings" />
 
 <div class="flex flex-col max-w-md">
-	{#if !myData || !$authData.data}
+	{#if !myData}
 		<Skeleton class="h-20 max-w-md" />
 	{:else}
 		<div class="px-3 py-2 mt-2 bg-gray-200">
@@ -113,12 +130,29 @@
 		</div>
 
 		<div class="px-3 py-2 mt-2 bg-gray-200">
+			<b>RSA key pair</b>
+			<p class="text-sm">
+				The RSA keys are used to sign the license server response when you provide a challenge with
+				your verification request.
+			</p>
+
+			<p class="px-2 py-1 my-2 overflow-auto font-mono text-sm text-gray-600 bg-gray-100 max-h-36">
+				{myData.rsaPublicKey || 'None set'}
+			</p>
+
+			<Button on:click={regenerateKeyPair} requiresConfirmation loading={loadingRegenerate} snug
+				>Generate new key-pair</Button
+			>
+			<i class="text-xs">The key-pair is generated on your device and stored on the server.</i>
+		</div>
+
+		<div class="px-3 py-2 mt-2 bg-gray-200">
 			<b>Marketing consent</b>
 			<div class="flex items-center {loadingConsentUpdate ? 'opacity-50' : ''}">
 				<input
 					id="marketingConsent"
 					type="checkbox"
-					checked={$authData.data.marketingEmails}
+					checked={myData.marketingEmails}
 					on:change={toggleMarketingConsent}
 				/>
 				<label for="marketingConsent" class="ml-1 text-sm cursor-pointer"

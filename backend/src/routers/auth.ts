@@ -189,4 +189,16 @@ export const authRouter = router({
   deleteAccount: protectedProcedure.mutation(async ({ ctx }) => {
     await prisma.user.delete({ where: { id: ctx.userId } });
   }),
+
+  updateRsaPublicKey: protectedProcedure
+    .input(z.object({ rsaPublicKey: z.string(), rsaPrivateKey: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await prisma.user.update({
+        where: { id: ctx.userId },
+        data: {
+          rsaPublicKey: input.rsaPublicKey,
+          rsaPrivateKey: input.rsaPrivateKey,
+        },
+      });
+    }),
 });

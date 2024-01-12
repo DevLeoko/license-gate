@@ -1,4 +1,5 @@
 import { License, Prisma } from "@prisma/client";
+import NodeRSA from "node-rsa";
 import { prisma } from "../prisma";
 
 export interface VerificationOptions {
@@ -17,7 +18,21 @@ async function solveChallenge(
   challenge: string,
   userId: number
 ): Promise<string> {
-  return "TODO";
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { rsaPrivateKey: true },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (!user.rsaPrivateKey) {
+    throw new Error("User has no RSA public key");
+  }
+
+  const key = new NodeRSA(user.rsaPrivateKey, "pkcs8-private");
+  return key.sign(challenge, "base64");
 }
 
 async function getIpCount(userId: number, licenseId: number, ip: string) {
