@@ -22,7 +22,8 @@ export async function handleLicenseKeyVerification(
     const userId = hexToUserId(req.params.userId);
     const licenseKey = req.params.licenseKey;
 
-    const options = JSON.parse(req.body || "{}") || {};
+    const options =
+      req.method == "POST" ? JSON.parse(req.body || "{}") : req.query;
 
     // Validate input
     const isValid = verifyLicenseSchema.safeParse({

@@ -35,7 +35,10 @@
 </script>
 
 {#each LIMITS as limit (limit.name)}
-	<div class="flex flex-col px-4 py-2 bg-gray-100 border border-gray-200 rounded-sm">
+	<div
+		class="flex flex-col px-4 py-2 bg-gray-100 border border-gray-200 rounded-sm"
+		class:opacity-40={!limit.active}
+	>
 		<h3 class="flex items-center w-full font-medium">
 			{limit.name}
 			<OnOffChip class="block ml-auto" active={limit.active} />
