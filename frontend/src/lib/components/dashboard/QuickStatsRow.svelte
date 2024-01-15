@@ -14,7 +14,7 @@
 </script>
 
 <div class="flex flex-wrap items-center justify-between gap-4">
-	<QuickStatsBox icon="key" title="Active licenses" value={stats?.successfulChecksLast7Days} />
+	<QuickStatsBox icon="key" title="Active licenses" value={stats?.activeLicenses} />
 
 	<div class="bg-gray-300 w-[1px] self-stretch hidden xl:block">&nbsp;</div>
 
@@ -30,7 +30,7 @@
 	<QuickStatsBox
 		icon="error_outline"
 		title="Failed checks (last 7 days)"
-		value={stats?.successfulChecksLast7Days}
+		value={stats?.failedChecksLast7Days}
 		diffValue={stats?.failedCheckPrevious7Days}
 	/>
 

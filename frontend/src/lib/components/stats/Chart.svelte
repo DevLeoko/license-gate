@@ -1,7 +1,6 @@
 <script lang="ts">
 	import * as d3 from 'd3'
 	import { onMount } from 'svelte'
-	import { formatInt } from '../../stores/settings'
 	import FloatingCard from '../basics/FloatingCard.svelte'
 
 	export let labels: string[]
@@ -53,6 +52,9 @@
 	$: segmentWidth = (width - marginLeft - marginRight) / labels.length
 
 	$: showValues = showIndex == null ? [] : data.map((d) => d.values[showIndex!])
+
+	$: spaceForNLabels = (width - marginLeft - marginRight) / 65
+	$: showEveryNthLabel = Math.ceil(labels.length / spaceForNLabels)
 </script>
 
 <div class="max-w-full" bind:this={container}>
@@ -73,30 +75,32 @@
 			</defs>
 
 			{#each [...data].reverse() as graph, i}
+				<path fill="url(#area-gradient-{i})" stroke="none" d={area(graph.values)} />
+			{/each}
+			{#each [...data].reverse() as graph, i}
 				<path
 					fill="none"
 					stroke={graph.color}
-					stroke-width={i == data.length - 1 ? 2 : 1}
+					stroke-width={1.5}
+					stroke-dasharray={i == 0 ? 'none' : '4 4'}
 					d={line(graph.values)}
 				/>
-				<path fill="url(#area-gradient-{i})" stroke="none" d={area(graph.values)} />
 			{/each}
 
 			<!-- Horizontal lines -->
-			<!-- <g>
-				{#each y.ticks() as tick}
+			<g>
+				{#each y.ticks(5) as tick}
 					<line
 						x1={marginLeft}
 						x2={width - marginRight}
 						y1={y(tick) + 0.25}
 						y2={y(tick) + 0.25}
 						stroke="#8a8c96"
-						stroke-opacity="0.3"
-						stroke-width="1"
-						stroke-dasharray="8 8"
+						stroke-opacity="0.2"
+						stroke-width="0.5"
 					/>
 				{/each}
-			</g> -->
+			</g>
 
 			<g>
 				{#each labels as _, i}
@@ -139,14 +143,16 @@
 		>
 
 		{#each labels as label, i}
-			<div
-				class="text-xs text-gray-500 {showIndex == i
-					? 'bg-gray-100'
-					: ''} px-2 py-1 rounded-md -ml-6 w-12 text-center z-10"
-				style="position: absolute; left: {x(i)}px; bottom: 0px"
-			>
-				{label}
-			</div>
+			{#if i % showEveryNthLabel == 0}
+				<div
+					class="text-xs text-gray-500 {showIndex == i
+						? 'bg-gray-100'
+						: ''} px-2 py-1 rounded-md -ml-7 w-14 text-center z-10"
+					style="position: absolute; left: {x(i)}px; bottom: 0px"
+				>
+					{label}
+				</div>
+			{/if}
 		{/each}
 
 		{#if showIndex != null}
@@ -154,7 +160,7 @@
 			{#key showIndex}
 				<div
 					class="absolute pointer-events-none"
-					style="left: {x(i) + 13}px; top: {y(data[0].values[i]) - 40}px"
+					style="left: {x(i) + 13}px; top: {y(data[data.length - 1].values[i]) - 40}px"
 				>
 					<FloatingCard class="pointer-events-none">
 						<slot name="tooltip" label={labels[i]} index={i} values={showValues} />
@@ -164,12 +170,14 @@
 		{/if}
 
 		{#each y.ticks() as tick}
-			<div
-				class="left-0 w-10 -mt-2 text-xs text-right text-gray-500"
-				style="position: absolute; top: {y(tick)}px"
-			>
-				{$formatInt(tick)}
-			</div>
+			{#if tick % 1 == 0}
+				<div
+					class="left-0 w-10 -mt-2 text-xs text-right text-gray-500"
+					style="position: absolute; top: {y(tick)}px"
+				>
+					{tick.toLocaleString()}
+				</div>
+			{/if}
 		{/each}
 	</div>
 </div>

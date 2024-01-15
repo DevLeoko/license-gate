@@ -17,6 +17,7 @@ export type UpdateLicense = RouterInput['license']['update']
 export type ReplenishInterval = NonNullable<ReadLicense['replenishInterval']>
 
 export type QuickStats = RouterOutput['logs']['quickStats']
+export type HistogramData = RouterOutput['logs']['histogram']['histogram']
 
 export const trpc = createTRPCProxyClient<AppRouter>({
 	transformer: SuperJSON,
