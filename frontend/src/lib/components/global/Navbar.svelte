@@ -19,7 +19,7 @@
 		},
 		{
 			name: 'Manage licenses',
-			icon: 'receipt',
+			icon: 'password',
 			href: '/licenses',
 			primary: true,
 		},
