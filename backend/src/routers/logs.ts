@@ -1,6 +1,17 @@
+import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { prisma } from "../prisma";
 import { protectedProcedure, router } from "../trpc";
+
+const validationResultSchema = z.enum([
+  "VALID",
+  "NOT_FOUND",
+  "NOT_ACTIVE",
+  "EXPIRED",
+  "LICENSE_SCOPE_FAILED",
+  "IP_LIMIT_EXCEEDED",
+  "RATE_LIMIT_EXCEEDED",
+]);
 
 export const logsRouter = router({
   quickStats: protectedProcedure.query(async ({ ctx }) => {
@@ -115,6 +126,60 @@ export const logsRouter = router({
           licenseId,
           userId,
         });
+      }
+    ),
+
+  list: protectedProcedure
+    .input(
+      z.object({
+        filter: z.object({
+          licenseId: z.number().int().optional(),
+          result: z.array(validationResultSchema).optional(),
+        }),
+        size: z.number().int().positive().max(100).default(25),
+        after: z.number().int().optional(),
+        before: z.number().int().optional(),
+      })
+    )
+    .query(
+      async ({ ctx: { userId }, input: { filter, size, after, before } }) => {
+        const where: Prisma.LogWhereInput = {
+          userId,
+        };
+
+        if (filter?.licenseId) {
+          where.licenseId = filter.licenseId;
+        }
+
+        if (filter?.result) {
+          where.result = { in: filter.result };
+        }
+
+        if (after) {
+          where.id = { gt: after };
+        }
+
+        if (before) {
+          where.id = { lt: before };
+        }
+
+        const logs = await prisma.log.findMany({
+          where,
+          orderBy: {
+            id: "desc",
+          },
+          take: size,
+          include: {
+            license: {
+              select: {
+                name: true,
+                licenseKey: true,
+              },
+            },
+          },
+        });
+
+        return logs;
       }
     ),
 });

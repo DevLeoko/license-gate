@@ -24,6 +24,12 @@
 			primary: true,
 		},
 		{
+			name: 'Logs',
+			icon: 'manage_search',
+			href: '/logs',
+			primary: true,
+		},
+		{
 			name: 'Account settings',
 			icon: 'settings',
 			href: '/settings/account',

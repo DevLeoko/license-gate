@@ -16,6 +16,9 @@ export type UpdateLicense = RouterInput['license']['update']
 
 export type ReplenishInterval = NonNullable<ReadLicense['replenishInterval']>
 
+export type ListLog = RouterOutput['logs']['list'][0]
+export type ValidationResult = ListLog['result']
+
 export type QuickStats = RouterOutput['logs']['quickStats']
 export type HistogramData = RouterOutput['logs']['histogram']['histogram']
 
