@@ -10,6 +10,7 @@ export const verifyLicenseSchema = z.object({
   options: z.object({
     scope: z.string().optional(),
     challenge: z.string().optional(),
+    metadata: z.string().optional(),
   }),
 });
 

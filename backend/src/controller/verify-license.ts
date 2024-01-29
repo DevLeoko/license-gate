@@ -5,6 +5,7 @@ import { prisma } from "../prisma";
 export interface VerificationOptions {
   scope?: string;
   challenge?: string;
+  metadata?: string;
 }
 
 type VerificationResultStatus = Prisma.LogCreateInput["result"];
