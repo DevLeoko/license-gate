@@ -8,6 +8,7 @@
 	export let loading = false
 	export let disabled = false
 	export let outlined = false
+	export let text = false
 	export let gray = false
 	export let snug = false
 	export let red = false
@@ -57,6 +58,7 @@
 	class:loading
 	class:disabled
 	class:outlined
+	class:text
 	class:snug
 	class:gray
 	class:red
@@ -77,7 +79,7 @@
 			</div>
 		</div>
 	{/if}
-	<div class:invisible={loading} class="flex items-center justify-center h-full">
+	<div class:invisible={loading} class="flex items-center justify-center gap-1 h-fu1l">
 		<slot />
 	</div>
 </svelte:element>
@@ -140,6 +142,16 @@
 				background-color: rgba(0, 0, 0, 0.02);
 			}
 		}
+
+		&.text {
+			background-color: transparent;
+			color: var(--color);
+
+			&:hover {
+				background-color: transparent;
+				color: var(--hover-color);
+			}
+		}
 	}
 
 	.lds-ellipsis {
@@ -162,7 +174,8 @@
 		opacity: 0.7;
 	}
 
-	.outlined .lds-ellipsis div {
+	.outlined .lds-ellipsis div,
+	.text .lds-ellipsis div {
 		background: var(--color);
 	}
 
