@@ -12,10 +12,10 @@ type VerificationResultStatus = Prisma.LogCreateInput["result"];
 
 export interface VerificationResult {
   result: VerificationResultStatus;
-  challengeResult?: string;
+  signedChallenge?: string;
 }
 
-async function solveChallenge(
+async function signChallenge(
   challenge: string,
   userId: number
 ): Promise<string> {
@@ -140,14 +140,14 @@ export async function verifyLicense(
     await decrementValidationPoints(license.id);
   }
 
-  // Solve challenge
-  let challengeResult: string | undefined = undefined;
+  // Sign challenge
+  let signedChallenge: string | undefined = undefined;
   if (options.challenge) {
-    challengeResult = await solveChallenge(options.challenge, userId);
+    signedChallenge = await signChallenge(options.challenge, userId);
   }
 
   return {
     result: "VALID",
-    challengeResult,
+    signedChallenge,
   };
 }

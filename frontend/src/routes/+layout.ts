@@ -1,7 +1,7 @@
-import type { LayoutLoad } from './$types'
 import { goto } from '$app/navigation'
-import { checkLoginState, loggedIn } from '../lib/stores/auth'
 import { get } from 'svelte/store'
+import { checkLoginState, loggedIn } from '../lib/stores/auth'
+import type { LayoutLoad } from './$types'
 
 export const ssr = false
 

@@ -43,9 +43,11 @@
 		"@tanstack/svelte-query": "^4.27.0",
 		"@trpc/client": "^10.18.0",
 		"d3": "^7.8.5",
+		"highlight.js": "^11.9.0",
 		"lodash": "^4.17.21",
 		"material-icons": "^1.13.4",
 		"node-rsa": "^1.1.1",
-		"superjson": "^1.12.2"
+		"superjson": "^1.12.2",
+		"svelte-persisted-store": "^0.9.1"
 	}
 }

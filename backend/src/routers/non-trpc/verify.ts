@@ -50,7 +50,7 @@ export async function handleLicenseKeyVerification(
     return res.status(200).json({
       valid: verificationResult.result === "VALID",
       result: verificationResult.result,
-      challengeResult: verificationResult.challengeResult,
+      signedChallenge: verificationResult.signedChallenge,
     });
   } catch (e) {
     return res.status(500).json({

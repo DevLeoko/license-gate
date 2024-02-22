@@ -7,15 +7,21 @@
 	<div class="fixed w-screen h-56 bg-red-500 z-90">&nbsp;</div> -->
 
 	<div
-		class="fixed top-0 flex flex-col items-center w-full text-white pointer-events-none"
+		class="fixed top-0 flex flex-col items-center w-full text-black pointer-events-none"
 		style="z-index: 90;"
 	>
 		{#each $alerts as alert, i (alert.startTime)}
 			<div
-				class="flex items-center w-lg max-w-full pt-1 px-3 pb-1.5 mt-2 relative rounded-sm pointer-events-auto"
+				class="flex items-center w-lg max-w-full pt-1 px-3 pb-1.5 mt-2 relative rounded-sm pointer-events-auto bg-opacity-10 border"
 				class:bg-red-600={alert.type == 'error'}
 				class:bg-lime-600={alert.type == 'success'}
 				class:bg-blue-600={alert.type == 'info'}
+				class:border-red-600={alert.type == 'error'}
+				class:border-lime-600={alert.type == 'success'}
+				class:border-blue-600={alert.type == 'info'}
+				class:text-red-700={alert.type == 'error'}
+				class:text-lime-700={alert.type == 'success'}
+				class:text-blue-700={alert.type == 'info'}
 				class:shake-animation={alert.attention}
 			>
 				<p>{alert.message}</p>
@@ -25,7 +31,10 @@
 					on:keydown={() => removeAlert(i)}>close</span
 				>
 				<div
-					class="absolute bottom-0 left-0 w-1/2 h-1 bg-white opacity-50 slider-animation"
+					class="absolute bottom-0 left-0 w-1/2 h-1 opacity-50 slider-animation"
+					class:bg-red-600={alert.type == 'error'}
+					class:bg-lime-600={alert.type == 'success'}
+					class:bg-blue-600={alert.type == 'info'}
 					style="animation-duration: {alert.duration}ms"
 				/>
 			</div>

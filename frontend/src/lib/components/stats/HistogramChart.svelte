@@ -67,7 +67,7 @@
 					{values[1]}
 					valid requests
 				</span>
-				<div class="w-2 h-2 ml-auto rounded-full" style="background-color: #ff0000aa" />
+				<div class="w-2 h-2 ml-auto rounded-full" style="background-color: #16a34a" />
 			</div>
 
 			<div class="flex items-center gap-2 text-sm text-gray-500">
@@ -75,7 +75,7 @@
 					{values[0]}
 					invalid requests
 				</span>
-				<div class="w-2 h-2 ml-auto rounded-full" style="background-color: #16a34a" />
+				<div class="w-2 h-2 ml-auto rounded-full" style="background-color: #ff0000aa" />
 			</div>
 		</div>
 	</svelte:fragment>

@@ -100,7 +100,7 @@ export async function loginWithGoogle(
   createAccountIfNotFound: boolean,
   marketingEmails?: boolean,
   langCode?: string
-): Promise<{ accessToken: string; refreshToken: string }> {
+): Promise<{ accessToken: string; refreshToken: string; userId: number }> {
   const email = await fetchEmailFromGoogleToken(token);
 
   let user = await prisma.user.findUnique({
@@ -128,13 +128,13 @@ export async function loginWithGoogle(
     await updateUserRefreshSession(user.id, refreshSession);
   }
 
-  return { accessToken, refreshToken };
+  return { accessToken, refreshToken, userId: user.id };
 }
 
 export async function loginWithPassword(
   email: string,
   password: string
-): Promise<{ accessToken: string; refreshToken: string }> {
+): Promise<{ accessToken: string; refreshToken: string; userId: number }> {
   email = email.toLowerCase();
 
   const user = await prisma.user.findUnique({
@@ -164,7 +164,11 @@ export async function loginWithPassword(
     await updateUserRefreshSession(user.id, data.refreshSession);
   }
 
-  return { accessToken: data.accessToken, refreshToken: data.refreshToken };
+  return {
+    accessToken: data.accessToken,
+    refreshToken: data.refreshToken,
+    userId: user.id,
+  };
 }
 
 export async function signUpWithPassword(
