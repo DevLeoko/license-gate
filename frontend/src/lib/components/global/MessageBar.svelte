@@ -11,32 +11,34 @@
 		style="z-index: 90;"
 	>
 		{#each $alerts as alert, i (alert.startTime)}
-			<div
-				class="flex items-center w-lg max-w-full pt-1 px-3 pb-1.5 mt-2 relative rounded-sm pointer-events-auto bg-opacity-10 border"
-				class:bg-red-600={alert.type == 'error'}
-				class:bg-lime-600={alert.type == 'success'}
-				class:bg-blue-600={alert.type == 'info'}
-				class:border-red-600={alert.type == 'error'}
-				class:border-lime-600={alert.type == 'success'}
-				class:border-blue-600={alert.type == 'info'}
-				class:text-red-700={alert.type == 'error'}
-				class:text-lime-700={alert.type == 'success'}
-				class:text-blue-700={alert.type == 'info'}
-				class:shake-animation={alert.attention}
-			>
-				<p>{alert.message}</p>
-				<span
-					class="material-icons cursor-pointer !text-base hover:opacity-70 p-2 ml-2 -mr-2"
-					on:click={() => removeAlert(i)}
-					on:keydown={() => removeAlert(i)}>close</span
-				>
+			<div class="mt-2 bg-white rounded-sm">
 				<div
-					class="absolute bottom-0 left-0 w-1/2 h-1 opacity-50 slider-animation"
+					class="flex items-center w-lg max-w-full pt-1 px-3 pb-1.5 relative pointer-events-auto bg-opacity-10 border"
 					class:bg-red-600={alert.type == 'error'}
 					class:bg-lime-600={alert.type == 'success'}
 					class:bg-blue-600={alert.type == 'info'}
-					style="animation-duration: {alert.duration}ms"
-				/>
+					class:border-red-600={alert.type == 'error'}
+					class:border-lime-600={alert.type == 'success'}
+					class:border-blue-600={alert.type == 'info'}
+					class:text-red-700={alert.type == 'error'}
+					class:text-lime-700={alert.type == 'success'}
+					class:text-blue-700={alert.type == 'info'}
+					class:shake-animation={alert.attention}
+				>
+					<p>{alert.message}</p>
+					<span
+						class="material-icons cursor-pointer !text-base hover:opacity-70 p-2 ml-2 -mr-2"
+						on:click={() => removeAlert(i)}
+						on:keydown={() => removeAlert(i)}>close</span
+					>
+					<div
+						class="absolute bottom-0 left-0 w-1/2 h-1 opacity-50 slider-animation"
+						class:bg-red-600={alert.type == 'error'}
+						class:bg-lime-600={alert.type == 'success'}
+						class:bg-blue-600={alert.type == 'info'}
+						style="animation-duration: {alert.duration}ms"
+					/>
+				</div>
 			</div>
 		{/each}
 	</div>

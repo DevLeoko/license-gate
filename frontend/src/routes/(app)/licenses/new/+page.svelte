@@ -32,7 +32,7 @@
 		const licenseRes = await $createMutation.mutateAsync(license)
 
 		logSuccess('License created')
-		goto(`/licenses?preview=${licenseRes.id}`)
+		goto(`/licenses?preview=${licenseRes.id}&instructions=true`)
 	}
 </script>
 

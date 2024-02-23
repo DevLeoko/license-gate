@@ -8,7 +8,7 @@
 	import Skeleton from '../basics/Skeleton.svelte'
 	import LogsTable from './LogsTable.svelte'
 
-	const PAGE_SIZE = 5
+	const PAGE_SIZE = 25
 
 	let logs: ListLog[] = []
 	let loading = false

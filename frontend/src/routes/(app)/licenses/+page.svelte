@@ -1,11 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores'
+	import BasicModal from '../../../lib/components/basics/BasicModal.svelte'
 	import Button from '../../../lib/components/basics/Button.svelte'
 	import PageTitle from '../../../lib/components/basics/PageTitle.svelte'
 	import SidePopup from '../../../lib/components/basics/SidePopup.svelte'
 	import Skeleton from '../../../lib/components/basics/Skeleton.svelte'
 	import LicensePreview from '../../../lib/components/license/LicensePreview.svelte'
 	import LicenseRow from '../../../lib/components/license/LicenseRow.svelte'
+	import LicenseInstructions from '../../../lib/components/license/instructions/LicenseInstructions.svelte'
 	import {
 		createLicenseListQuery,
 		createLicenseReadQuery,
@@ -13,10 +15,13 @@
 
 	const licenses = createLicenseListQuery(10, 0)
 
+	let licenseInstructions = false
+
 	let previewLicenseId: number | null = null
 	$: previewLicense = previewLicenseId != null ? createLicenseReadQuery(previewLicenseId) : null
 	if ($page.url.searchParams.has('preview')) {
 		previewLicenseId = Number.parseInt($page.url.searchParams.get('preview')!)
+		licenseInstructions = $page.url.searchParams.has('instructions')
 	}
 
 	function closePreview() {
@@ -76,6 +81,26 @@
 				<Skeleton class="w-full h-48" />
 			{:else}
 				<LicensePreview license={$previewLicense.data} on:exit={closePreview} />
+
+				<div class="flex justify-center mt-8">
+					<Button text on:click={() => (licenseInstructions = true)} class="">
+						<span class="mr-1 text-xl material-icons-outlined">integration_instructions</span>
+						See how to integrate
+					</Button>
+				</div>
+
+				{#if licenseInstructions}
+					<BasicModal class="!bg-gray-50" on:exit={() => (licenseInstructions = false)}>
+						<LicenseInstructions
+							license={$previewLicense.data.licenseKey}
+							scope={$previewLicense.data.licenseScope ?? undefined}
+						/>
+
+						<svelte:fragment slot="action">
+							<Button gray text on:click={() => (licenseInstructions = false)}>Close</Button>
+						</svelte:fragment>
+					</BasicModal>
+				{/if}
 			{/if}
 		</SidePopup>
 	{/if}
