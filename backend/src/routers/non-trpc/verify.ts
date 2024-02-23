@@ -4,15 +4,20 @@ import { hexToUserId } from "../../utils/user-id";
 import { z } from "zod";
 import { verifyLicense } from "../../controller/verify-license";
 
-export const verifyLicenseSchema = z.object({
-  licenseKey: z.string(),
-  userId: z.number().int(),
-  options: z.object({
-    scope: z.string().optional(),
-    challenge: z.string().optional(),
-    metadata: z.string().optional(),
-  }),
-});
+export const verifyLicenseSchema = z
+  .object({
+    licenseKey: z.string(),
+    userId: z.number().int(),
+    options: z
+      .object({
+        scope: z.string().optional(),
+        challenge: z.string().optional(),
+        metadata: z.string().optional(),
+      })
+      .strict()
+      .optional(),
+  })
+  .strict();
 
 export async function handleLicenseKeyVerification(
   req: Request,
@@ -53,6 +58,8 @@ export async function handleLicenseKeyVerification(
       signedChallenge: verificationResult.signedChallenge,
     });
   } catch (e) {
+    console.error(e);
+
     return res.status(500).json({
       valid: false,
       error: "INTERNAL_SERVER_ERROR",

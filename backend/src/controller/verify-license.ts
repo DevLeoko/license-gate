@@ -22,6 +22,7 @@ async function signChallenge(
   rsaPrivateKey: string
 ): Promise<string> {
   if (!rsaPrivateKey) {
+    // TODO: Properly propagate this error to the user
     throw new Error("User has no RSA public key");
   }
 
@@ -71,7 +72,7 @@ async function fetchLicense(
     where: { userId_licenseKey: { licenseKey, userId } },
     include: includePrivateKey
       ? { user: { select: { rsaPrivateKey: true } } }
-      : {},
+      : undefined,
   });
 }
 
@@ -107,8 +108,7 @@ export async function verifyLicense(
   licenseKey: string,
   userId: number,
   ip: string,
-  options: VerificationOptions,
-  metadata: string = ""
+  options: VerificationOptions
 ): Promise<VerificationResult> {
   let time = Date.now();
 
@@ -146,7 +146,7 @@ export async function verifyLicense(
         licenseId: license.id,
         ip,
         result: status,
-        metadata,
+        metadata: options.metadata || "",
       },
     })
   );
