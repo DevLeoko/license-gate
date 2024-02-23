@@ -2,6 +2,8 @@ import { License, Prisma } from "@prisma/client";
 import NodeRSA from "node-rsa";
 import { prisma } from "../prisma";
 
+const DEBUG_TIME = false;
+
 export interface VerificationOptions {
   scope?: string;
   challenge?: string;
@@ -17,22 +19,13 @@ export interface VerificationResult {
 
 async function signChallenge(
   challenge: string,
-  userId: number
+  rsaPrivateKey: string
 ): Promise<string> {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { rsaPrivateKey: true },
-  });
-
-  if (!user) {
-    throw new Error("User not found");
-  }
-
-  if (!user.rsaPrivateKey) {
+  if (!rsaPrivateKey) {
     throw new Error("User has no RSA public key");
   }
 
-  const key = new NodeRSA(user.rsaPrivateKey, "pkcs8-private");
+  const key = new NodeRSA(rsaPrivateKey, "pkcs8-private");
   return key.sign(challenge, "base64");
 }
 
@@ -65,9 +58,20 @@ async function decrementValidationPoints(licenseId: number, amount = 1) {
   });
 }
 
-async function fetchLicense(licenseKey: string, userId: number) {
+type LicenseWithRsaKey = Prisma.LicenseGetPayload<{
+  include: { user: { select: { rsaPrivateKey: true } } };
+}>;
+
+async function fetchLicense(
+  licenseKey: string,
+  userId: number,
+  includePrivateKey: boolean
+) {
   return prisma.license.findUnique({
     where: { userId_licenseKey: { licenseKey, userId } },
+    include: includePrivateKey
+      ? { user: { select: { rsaPrivateKey: true } } }
+      : {},
   });
 }
 
@@ -106,9 +110,18 @@ export async function verifyLicense(
   options: VerificationOptions,
   metadata: string = ""
 ): Promise<VerificationResult> {
-  // TODO: By writing raw SQL or batching them we could reduce the number of queries/requests
-  // TODO: This is not save against timing attacks / could use a mutex in future
-  const license = await fetchLicense(licenseKey, userId);
+  let time = Date.now();
+
+  const license = await fetchLicense(
+    licenseKey,
+    userId,
+    options.challenge !== undefined
+  );
+
+  if (DEBUG_TIME) {
+    console.log("Time to fetch license: ", Date.now() - time);
+    time = Date.now();
+  }
 
   if (!license) {
     return {
@@ -118,16 +131,25 @@ export async function verifyLicense(
 
   const status = await checkLicense(license, userId, ip, options.scope);
 
+  if (DEBUG_TIME) {
+    console.log("Time to check license: ", Date.now() - time);
+    time = Date.now();
+  }
+
+  const backgroundPromises: Promise<unknown>[] = [];
+
   // Create log entry
-  await prisma.log.create({
-    data: {
-      userId,
-      licenseId: license.id,
-      ip,
-      result: status,
-      metadata,
-    },
-  });
+  backgroundPromises.push(
+    prisma.log.create({
+      data: {
+        userId,
+        licenseId: license.id,
+        ip,
+        result: status,
+        metadata,
+      },
+    })
+  );
 
   if (status != "VALID") {
     return {
@@ -137,13 +159,22 @@ export async function verifyLicense(
 
   // Reduce validation points
   if (license.validationPoints !== null) {
-    await decrementValidationPoints(license.id);
+    backgroundPromises.push(decrementValidationPoints(license.id));
   }
 
   // Sign challenge
   let signedChallenge: string | undefined = undefined;
   if (options.challenge) {
-    signedChallenge = await signChallenge(options.challenge, userId);
+    signedChallenge = await signChallenge(
+      options.challenge,
+      (license as LicenseWithRsaKey).user.rsaPrivateKey
+    );
+  }
+
+  await Promise.all(backgroundPromises);
+
+  if (DEBUG_TIME) {
+    console.log("Time to log, sign and decrement: ", Date.now() - time);
   }
 
   return {
