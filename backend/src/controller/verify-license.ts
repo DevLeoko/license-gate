@@ -38,20 +38,25 @@ async function getIpCount(
   const last12Hours = new Date(Date.now() - 1000 * 60 * 60 * 12);
 
   // TODO: We might want to add indexes to the database to speed up this query (and some other queries)
-  return prisma.log.count({
-    distinct: ["ip"],
-    where: {
-      userId,
-      licenseId: licenseId,
-      result: "VALID",
-      ip: {
-        not: excludeIp,
-      },
-      timestamp: {
-        gte: last12Hours,
-      },
-    },
-  });
+  const result = await prisma.$queryRaw<
+    [{ count: number }]
+  >`SELECT COUNT(DISTINCT \`ip\`) AS \`count\` FROM \`Log\` WHERE \`userId\` = ${userId} AND \`licenseId\` = ${licenseId} AND \`result\` = 'VALID' AND \`ip\` != ${excludeIp} AND \`timestamp\` >= ${last12Hours}`;
+  return result[0].count;
+
+  // return prisma.log.count({
+  //   distinct: ["ip"],
+  //   where: {
+  //     userId,
+  //     licenseId: licenseId,
+  //     result: "VALID",
+  //     ip: {
+  //       not: excludeIp,
+  //     },
+  //     timestamp: {
+  //       gte: last12Hours,
+  //     },
+  //   },
+  // });
 }
 
 async function decrementValidationPoints(licenseId: number, amount = 1) {
