@@ -3,6 +3,7 @@
 	import { page } from '$app/stores'
 	import { setLoggedOut } from '../../stores/auth'
 	import Button from '../basics/Button.svelte'
+	import Chip from '../basics/Chip.svelte'
 	import MobileNavbar from './MobileNavbar.svelte'
 
 	function logout() {
@@ -50,6 +51,9 @@
 	<a class="flex items-center justify-center md:justify-start" href="/">
 		<img class="h-8" src="/logo.svg" alt="logo" />
 	</a>
+	<div class="flex justify-center mt-2">
+		<Chip>Early access</Chip>
+	</div>
 
 	<nav class="flex flex-col mt-6">
 		{#each PAGES as link (link.href)}
