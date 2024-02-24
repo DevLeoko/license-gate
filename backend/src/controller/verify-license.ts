@@ -95,6 +95,10 @@ async function checkLicense(
   ip: string,
   scope: string | undefined
 ): Promise<VerificationResultStatus> {
+  if (!license.active) {
+    return "NOT_ACTIVE";
+  }
+
   if (scope && license.licenseScope !== scope) {
     return "LICENSE_SCOPE_FAILED";
   }
