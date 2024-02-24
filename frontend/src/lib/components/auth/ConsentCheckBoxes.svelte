@@ -16,9 +16,11 @@
 			<div>&nbsp;</div>
 			<span class="text-sm text-gray-500">
 				By signing up, you agree to the
-				<a class="text-blue-500" href="https://TODO/legal/tos" target="_blank">Terms Of Service</a>
+				<a class="text-blue-500" href="https://licensegate.io/legal/tos" target="_blank"
+					>Terms Of Service</a
+				>
 				and
-				<a class="text-blue-500" href="https://TODO/legal/privacy-policy" target="_blank"
+				<a class="text-blue-500" href="https://licensegate.io/legal/privacy-policy" target="_blank"
 					>Privacy Policy</a
 				>
 			</span>

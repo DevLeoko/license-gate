@@ -25,12 +25,6 @@ type AuthResponse<T, E extends string> =
 // 5. Set refresh session in DB
 // User is now logged in
 
-// Sign up (google):
-// TODO
-
-// Login (google):
-// TODO
-
 // Change/reset password:
 // 1. User enters email
 // 2. Get verified user with email and send mail with #generateMailToken(email)

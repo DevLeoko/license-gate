@@ -1,6 +1,6 @@
 {
-	"short_name": "License Gate",
-	"name": "License Gate - Free Invoicing Tool",
+	"short_name": "LicenseGate",
+	"name": "LicenseGate - License Management",
 	"icons": [
 		{
 			"src": "/manifest-images/icon-512.svg",
@@ -25,5 +25,5 @@
 	"scope": "/",
 	"theme_color": "#3b82f6",
 	"shortcuts": [],
-	"description": "TODO"
+	"description": "LicenseGate is a license management platform for developers"
 }

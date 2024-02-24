@@ -185,7 +185,6 @@ export async function signUpWithPassword(
     mailToken
   )}&email=${encodeURIComponent(email)}`;
 
-  // TODO: localize subject and body
   await sendMail(email, "Verify your email", "verify-email", {
     url: verifyUrl,
   });
@@ -221,8 +220,8 @@ async function createUser(
           password != null ? await authenticator.hashPassword(password) : null,
         isEmailVerified,
         marketingEmails,
-        rsaPrivateKey: "TODO",
-        rsaPublicKey: "TODO",
+        rsaPrivateKey: "",
+        rsaPublicKey: "",
       },
     });
 

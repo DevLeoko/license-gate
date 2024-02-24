@@ -17,7 +17,6 @@
 	let resultFilter: ValidationResult[] = []
 
 	// TODO: It would be cool to have auto fetching in the background for newer logs (using after cursor in query)
-
 	onMount(() => {
 		fetchLogs(true)
 	})
