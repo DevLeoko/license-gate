@@ -48,7 +48,7 @@ export async function handleLicenseKeyVerification(
     const verificationResult = await verifyLicense(
       licenseKey,
       userId,
-      req.ip,
+      getIpFromRequest(req),
       options
     );
 
@@ -65,4 +65,8 @@ export async function handleLicenseKeyVerification(
       error: "INTERNAL_SERVER_ERROR",
     });
   }
+}
+
+function getIpFromRequest(req: Request): string {
+  return (req.headers["cf-connecting-ip"] as string | undefined) || req.ip;
 }
