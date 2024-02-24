@@ -160,12 +160,15 @@ export async function verifyLicense(
   );
 
   if (status != "VALID") {
+    await Promise.all(backgroundPromises);
+
     return {
       result: status,
     };
   }
 
   // Reduce validation points
+  // TODO: This is not save against timing attacks / could use a mutex in future (also IP limit)
   if (license.validationPoints !== null) {
     backgroundPromises.push(decrementValidationPoints(license.id));
   }
