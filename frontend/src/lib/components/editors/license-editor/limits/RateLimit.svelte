@@ -7,11 +7,13 @@
 	function onReplenishAmountChange(amount: number | null) {
 		if (amount != null) {
 			entity.validationLimit = amount * 3
+			entity.validationPoints = entity.validationLimit
 
 			if (entity.replenishInterval == null) entity.replenishInterval = 'TEN_SECONDS'
 		} else {
 			entity.validationLimit = null
 			entity.replenishInterval = null
+			entity.validationPoints = null
 		}
 	}
 

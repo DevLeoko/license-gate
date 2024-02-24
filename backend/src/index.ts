@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import { authExpressMiddleware } from "./controller/auth-flows";
+import { setupRateLimitReplenishCron } from "./controller/license-rate-limit";
 import { appRouter } from "./routers/_app";
 import { setupNonTrpcRoutes } from "./routers/non-trpc/_router";
 import { ShowError } from "./utils/ShowError";
@@ -40,6 +41,8 @@ app.use(
     },
   })
 );
+
+setupRateLimitReplenishCron();
 
 app.listen(process.env.PORT, () => {
   console.log(`\n📄 Server ready on port ${process.env.PORT}\n`);
