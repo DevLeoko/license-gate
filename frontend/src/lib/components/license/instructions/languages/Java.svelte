@@ -22,20 +22,20 @@
 <dependency>
   <groupId>dev.respark.licensegate</groupId>
   <artifactId>license-gate</artifactId>
-  <version>1.0.1</version>
+  <version>1.X.X</version>
 </dependency>`,
 		['Gradle (Kotlin)']: `maven {
     name = "resparkReleases"
     url = uri("https://maven.respark.dev/releases")
 }
 
-implementation("dev.respark.licensegate:license-gate:1.0.1")`,
+implementation("dev.respark.licensegate:license-gate:1.X.X")`,
 		['Gradle (Groovy)']: `maven {
     name "resparkReleases"
     url "https://maven.respark.dev/releases"
 }
 
-implementation "dev.respark.licensegate:license-gate:1.0.1"`,
+implementation "dev.respark.licensegate:license-gate:1.X.X"`,
 	}
 </script>
 

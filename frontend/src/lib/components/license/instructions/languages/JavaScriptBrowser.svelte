@@ -11,7 +11,7 @@
 </script>
 
 <Code language="javascript">
-	{`const { valid } = await fetch("${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}${scopeArg}")
+	{`const { valid } = await fetch("${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}/verify${scopeArg}")
 	.then((res) => res.json())
 
 if (valid) {

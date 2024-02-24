@@ -16,7 +16,7 @@
 		{#if selected === 'requests'}
 			{`import requests
 
-url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}${scopeArg}"
+url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}/verify${scopeArg}"
 response = requests.get(url)
 data = response.json()
 
@@ -29,7 +29,7 @@ else:
 			{`import urllib.request
 import json
 
-url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}${scopeArg}"
+url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}/verify${scopeArg}"
 response = urllib.request.urlopen(url)
 data = json.loads(response.read())
 

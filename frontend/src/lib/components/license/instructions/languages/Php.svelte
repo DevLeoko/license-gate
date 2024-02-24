@@ -11,7 +11,7 @@
 </script>
 
 <Code language="php">
-	{`$url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}${scopeArg}";
+	{`$url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}/verify${scopeArg}";
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);

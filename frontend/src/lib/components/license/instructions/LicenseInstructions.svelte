@@ -118,7 +118,7 @@
 					</p>
 
 					<Code language="http" class="bg-gray-200">
-						GET {`${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}${scopeArg}`}
+						GET {`${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}/verify${scopeArg}`}
 					</Code>
 				</Card>
 			{/if}

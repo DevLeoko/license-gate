@@ -9,7 +9,7 @@
 		</div>
 
 		<div class="z-20 flex flex-wrap gap-4 mt-auto mb-4 text-xs text-gray-700">
-			<span>&copy; LicenseGate 2023</span>
+			<span>&copy; LicenseGate {new Date().getFullYear()}</span>
 
 			<a
 				href="https://TODO/legal/tos"

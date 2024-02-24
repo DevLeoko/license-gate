@@ -16,7 +16,7 @@
 		{#if selected === 'axios'}
 			{`const axios = require('axios');
 
-const url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}${scopeArg}";
+const url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}/verify${scopeArg}";
 axios.get(url)
   .then(response => {
       const data = response.data;
@@ -33,7 +33,7 @@ axios.get(url)
 		{:else}
 			{`const fetch = require('node-fetch');
 
-const url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}${scopeArg}";
+const url = "${PUBLIC_BACKEND_URL}/license/${$userId}/${exampleLicense}/verify${scopeArg}";
 fetch(url)
   .then(response => response.json())
   .then(data => {

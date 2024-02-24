@@ -75,7 +75,10 @@
 		class="flex justify-between mt-1 mb-8 text-xs text-gray-700 md:mb-4"
 		on:click|stopPropagation
 	>
-		<span>&copy; LicenseGate 2023</span>
+		<span
+			>&copy; LicenseGate
+			{new Date().getFullYear()}
+		</span>
 	</div>
 </div>
 
