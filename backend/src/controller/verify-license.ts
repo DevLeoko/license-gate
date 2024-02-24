@@ -30,15 +30,23 @@ async function signChallenge(
   return key.sign(challenge, "base64");
 }
 
-async function getIpCount(userId: number, licenseId: number, ip: string) {
+async function getIpCount(
+  userId: number,
+  licenseId: number,
+  excludeIp: string
+) {
   const last12Hours = new Date(Date.now() - 1000 * 60 * 60 * 12);
 
+  // TODO: We might want to add indexes to the database to speed up this query (and some other queries)
   return prisma.log.count({
+    distinct: ["ip"],
     where: {
       userId,
       licenseId: licenseId,
-      ip,
       result: "VALID",
+      ip: {
+        not: excludeIp,
+      },
       timestamp: {
         gte: last12Hours,
       },
