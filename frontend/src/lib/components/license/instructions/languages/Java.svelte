@@ -80,9 +80,9 @@ LicenseGate licenseGate = new LicenseGate("${$userId}"${useRsaKey ? `, PUBLIC_KE
 LicenseGate.ValidationType result = licenseGate.verify("${exampleLicense}"${scopeArg});
 
 // Handle the result
-if (result == LicenseGate.ValidationType.VALID) \{
+if (result == LicenseGate.ValidationType.VALID) {
     // License is valid
-} else if (result == LicenseGate.ValidationType.EXPIRED) \{
+} else if (result == LicenseGate.ValidationType.EXPIRED) {
     // License is expired (e.g. prompt user to renew)
 } else {
     // License is invalid (check documentation for all possible types)

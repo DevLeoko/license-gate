@@ -25,8 +25,8 @@ function replenishRateLimitLoop(interval: ReplenishInterval) {
   const seconds = getReplenishIntervalSeconds(interval);
   setInterval(() => {
     prisma.$transaction([
-      prisma.$queryRaw`UPDATE \`License\` SET \`validationPoints\` = \`validationPoints\` + \`replenishAmount\` WHERE \`replenishInterval\` = ${interval} AND \`validationPoints\` < \`validationLimit\` - \`replenishAmount\``,
       prisma.$queryRaw`UPDATE \`License\` SET \`validationPoints\` = \`validationLimit\` WHERE \`replenishInterval\` = ${interval} AND \`validationPoints\` >= \`validationLimit\` - \`replenishAmount\` AND \`validationPoints\` < \`validationLimit\``,
+      prisma.$queryRaw`UPDATE \`License\` SET \`validationPoints\` = \`validationPoints\` + \`replenishAmount\` WHERE \`replenishInterval\` = ${interval} AND \`validationPoints\` < \`validationLimit\` - \`replenishAmount\``,
     ]);
   }, seconds * 1000);
 }
