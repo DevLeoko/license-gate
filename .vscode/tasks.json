@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "runDevelopment",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "frontend",
+        "backend",
+      ]
+    },
+    {
+      "label": "frontend",
+      "type": "shell",
+      "command": "cd frontend ; npm run dev",
+      "presentation": {
+        "panel": "dedicated",
+      }
+    },
+    {
+      "label": "backend",
+      "type": "shell",
+      "command": "cd backend ; npm run dev",
+      "presentation": {
+        "panel": "dedicated",
+      }
+    },
+  ]
+}
