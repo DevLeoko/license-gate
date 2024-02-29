@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation'
 import { persisted } from 'svelte-persisted-store'
 import { derived, get } from 'svelte/store'
 
@@ -29,6 +30,8 @@ export function setLoggedIn(userId: string, email: string) {
 	loggedInState.set({ userId, email, loggedInUntil })
 }
 
-export function setLoggedOut() {
-	loggedInState.set(null)
+export function logout() {
+	goto('/auth/login?logout=true').then(() => {
+		loggedInState.set(null)
+	})
 }

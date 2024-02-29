@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
 	import { onMount } from 'svelte'
-	import { setLoggedOut, userEmail, userId } from '../../stores/auth'
+	import { logout, userEmail, userId } from '../../stores/auth'
 	import { trpc } from '../../trpcClient'
 	import Button from '../basics/Button.svelte'
 	import Chip from '../basics/Chip.svelte'
@@ -13,11 +12,6 @@
 	onMount(async () => {
 		licenseCount = await trpc.license.countActive.query()
 	})
-
-	function logout() {
-		setLoggedOut()
-		goto('/')
-	}
 
 	const PAGES = [
 		{

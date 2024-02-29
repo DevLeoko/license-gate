@@ -1,10 +1,9 @@
-import { goto } from '$app/navigation'
 import { PUBLIC_BACKEND_URL } from '$env/static/public'
 import { createTRPCProxyClient, httpBatchLink, loggerLink } from '@trpc/client'
 import SuperJSON from 'superjson'
 import type { AppRouter, RouterInput, RouterOutput } from '../../../backend/src/routers/_app'
 import { logError } from './stores/alerts'
-import { setLoggedOut } from './stores/auth'
+import { logout } from './stores/auth'
 
 export type ReadMe = RouterOutput['auth']['me']
 
@@ -31,8 +30,7 @@ export const trpc = createTRPCProxyClient<AppRouter>({
 					if (data.result instanceof Error) {
 						if (data.result.message == 'error.notAuthenticated') {
 							logError('Your session expired')
-							setLoggedOut()
-							goto('/')
+							logout()
 						} else if (data.result.message.startsWith('+ ')) {
 							logError(data.result.message.slice(2))
 						} else {

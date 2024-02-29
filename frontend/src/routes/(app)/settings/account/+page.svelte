@@ -10,7 +10,7 @@
 		createRsaKeyUpdateMutation,
 	} from '../../../../lib/controller/query/auth'
 	import { logSuccess } from '../../../../lib/stores/alerts'
-	import { setLoggedOut } from '../../../../lib/stores/auth'
+	import { logout } from '../../../../lib/stores/auth'
 	import { trpc } from '../../../../lib/trpcClient'
 	import { generateRsaKeyPair } from '../../../../lib/utils/rsaKeys'
 	import { sleep } from '../../../../lib/utils/sleep'
@@ -60,7 +60,7 @@
 		await trpc.auth.deleteAccount.mutate().finally(() => {
 			loadingDelete = false
 		})
-		setLoggedOut()
+		logout()
 		logSuccess('Deleted account')
 	}
 
