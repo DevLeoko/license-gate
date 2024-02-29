@@ -55,7 +55,10 @@
 	let loading = false
 
 	async function login() {
-		if (inputIssue) return
+		if (inputIssue) {
+			showIssue = true
+			return
+		}
 
 		loading = true
 		const { userId } = await trpc.auth.loginWithPassword.mutate({ email, password }).finally(() => {
@@ -94,11 +97,10 @@
 		placeholder="Password"
 		class="mt-2"
 		bind:value={password}
-		on:focus={() => (showIssue = true)}
 		on:keypress={(e) => e.key === 'Enter' && login()}
 	/>
 
-	<Button {loading} disabled={!!inputIssue} on:click={login} class="mt-4">Login</Button>
+	<Button {loading} on:click={login} class="mt-4">Login</Button>
 
 	<div class="my-2 text-sm text-center text-gray-500">or</div>
 
