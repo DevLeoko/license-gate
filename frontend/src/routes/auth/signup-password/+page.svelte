@@ -95,15 +95,23 @@
 	</BasicModal>
 {/if}
 
-<div class="flex flex-col w-[350px] max-w-full">
+<form class="flex flex-col w-[350px] max-w-full" on:submit|preventDefault={registerClick}>
 	<h1 class="text-3xl font-semibold text-slate-700">Sign up</h1>
 	<span class="text-orange-400">
 		{inputIssue && showIssue ? inputIssue : ''}&nbsp;
 	</span>
-	<input type="text" placeholder="Email" class="mt-2" bind:value={email} />
+	<input
+		type="email"
+		name="email"
+		autocomplete="username"
+		placeholder="Email"
+		class="mt-2"
+		bind:value={email}
+	/>
 	<!-- Chrome should suggest password -->
 	<input
 		type="password"
+		name="password"
 		autocomplete="new-password"
 		placeholder="Password"
 		class="mt-2"
@@ -111,6 +119,7 @@
 	/>
 	<input
 		type="password"
+		name="confirmPassword"
 		autocomplete="new-password"
 		placeholder="Confirm password"
 		class="mt-2"
@@ -144,4 +153,4 @@
 		<span>Already have an account?</span>
 		<a href="/auth/login" class="text-blue-500">Login</a>
 	</div>
-</div>
+</form>

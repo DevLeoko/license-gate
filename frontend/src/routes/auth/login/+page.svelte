@@ -86,15 +86,23 @@
 	<script src="https://accounts.google.com/gsi/client" async defer></script>
 </svelte:head>
 
-<div class="flex flex-col w-[350px] max-w-full">
+<form class="flex flex-col w-[350px] max-w-full" on:submit|preventDefault={login}>
 	<h1 class="text-3xl font-semibold text-slate-700">Sign in</h1>
 	<span class="text-orange-400">
 		{inputIssue && showIssue ? inputIssue : ''}&nbsp;
 	</span>
-	<input type="text" placeholder="Email" class="mt-2" bind:value={email} />
+	<input
+		type="email"
+		placeholder="Email"
+		name="email"
+		autocomplete="username"
+		class="mt-2"
+		bind:value={email}
+	/>
 	<input
 		type="password"
 		placeholder="Password"
+		name="password"
 		class="mt-2"
 		bind:value={password}
 		on:keypress={(e) => e.key === 'Enter' && login()}
@@ -132,4 +140,4 @@
 		<span>Don't have an account?</span>
 		<a href="/auth/signup" class="text-blue-500">Sign up</a>
 	</div>
-</div>
+</form>
