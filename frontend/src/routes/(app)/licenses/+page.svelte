@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores'
+	import { persisted } from 'svelte-persisted-store'
 	import BasicModal from '../../../lib/components/basics/BasicModal.svelte'
 	import Button from '../../../lib/components/basics/Button.svelte'
 	import PageTitle from '../../../lib/components/basics/PageTitle.svelte'
@@ -15,13 +16,14 @@
 
 	const licenses = createLicenseListQuery(10, 0)
 
+	let showInstructionsOnCreate = persisted('showInstructionsOnCreate', true)
 	let licenseInstructions = false
 
 	let previewLicenseId: number | null = null
 	$: previewLicense = previewLicenseId != null ? createLicenseReadQuery(previewLicenseId) : null
 	if ($page.url.searchParams.has('preview')) {
 		previewLicenseId = Number.parseInt($page.url.searchParams.get('preview')!)
-		licenseInstructions = $page.url.searchParams.has('instructions')
+		licenseInstructions = $page.url.searchParams.has('instructions') && $showInstructionsOnCreate
 	}
 
 	function closePreview() {
@@ -97,6 +99,17 @@
 						/>
 
 						<svelte:fragment slot="action">
+							<div class="flex items-center gap-2 mr-auto text-gray-500">
+								<input
+									id="showInstructionsOnCreate"
+									class="opacity-70"
+									type="checkbox"
+									bind:checked={$showInstructionsOnCreate}
+								/>
+								<label for="showInstructionsOnCreate" class="text-sm">
+									Show these instructions when creating a new license
+								</label>
+							</div>
 							<Button gray text on:click={() => (licenseInstructions = false)}>Close</Button>
 						</svelte:fragment>
 					</BasicModal>
