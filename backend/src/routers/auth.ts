@@ -70,11 +70,12 @@ export const authRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const { accessToken, refreshToken, userId } = await loginWithGoogle(
-        input.token,
-        input.createAccountIfNotFound,
-        input.marketingEmails
-      );
+      const { accessToken, refreshToken, userId, email } =
+        await loginWithGoogle(
+          input.token,
+          input.createAccountIfNotFound,
+          input.marketingEmails
+        );
 
       ctx.res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
@@ -88,7 +89,7 @@ export const authRouter = router({
         secure: process.env.NODE_ENV === "production",
       });
 
-      return { userId: userIdToHex(userId) };
+      return { userId: userIdToHex(userId), email };
     }),
 
   verifyEmail: publicProcedure

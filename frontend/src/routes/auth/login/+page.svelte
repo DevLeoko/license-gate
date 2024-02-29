@@ -64,19 +64,19 @@
 		const { userId } = await trpc.auth.loginWithPassword.mutate({ email, password }).finally(() => {
 			loading = false
 		})
-		setLoggedIn(userId)
+		setLoggedIn(userId, email.toLowerCase())
 
 		goto('/dashboard')
 	}
 
 	async function signInWithGoogle(response: any) {
 		loading = true
-		const { userId } = await trpc.auth.loginWithGoogle
+		const { userId, email } = await trpc.auth.loginWithGoogle
 			.mutate({ token: response.credential, createAccountIfNotFound: false })
 			.finally(() => {
 				loading = false
 			})
-		setLoggedIn(userId)
+		setLoggedIn(userId, email)
 
 		goto('/dashboard')
 	}

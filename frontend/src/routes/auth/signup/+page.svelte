@@ -20,7 +20,7 @@
 
 	async function completeSignup() {
 		loading = true
-		const { userId } = await trpc.auth.loginWithGoogle
+		const { userId, email } = await trpc.auth.loginWithGoogle
 			.mutate({
 				token: googleToken!,
 				createAccountIfNotFound: true,
@@ -29,7 +29,7 @@
 			.finally(() => {
 				loading = false
 			})
-		setLoggedIn(userId)
+		setLoggedIn(userId, email)
 
 		goto('/dashboard')
 	}

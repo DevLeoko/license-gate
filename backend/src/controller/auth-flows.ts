@@ -100,7 +100,12 @@ export async function loginWithGoogle(
   createAccountIfNotFound: boolean,
   marketingEmails?: boolean,
   langCode?: string
-): Promise<{ accessToken: string; refreshToken: string; userId: number }> {
+): Promise<{
+  accessToken: string;
+  refreshToken: string;
+  userId: number;
+  email: string;
+}> {
   const email = await fetchEmailFromGoogleToken(token);
 
   let user = await prisma.user.findUnique({
@@ -128,7 +133,7 @@ export async function loginWithGoogle(
     await updateUserRefreshSession(user.id, refreshSession);
   }
 
-  return { accessToken, refreshToken, userId: user.id };
+  return { accessToken, refreshToken, userId: user.id, email };
 }
 
 export async function loginWithPassword(

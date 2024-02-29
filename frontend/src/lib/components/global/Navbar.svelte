@@ -1,10 +1,18 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
 	import { page } from '$app/stores'
-	import { setLoggedOut } from '../../stores/auth'
+	import { onMount } from 'svelte'
+	import { setLoggedOut, userEmail, userId } from '../../stores/auth'
+	import { trpc } from '../../trpcClient'
 	import Button from '../basics/Button.svelte'
 	import Chip from '../basics/Chip.svelte'
 	import MobileNavbar from './MobileNavbar.svelte'
+
+	let licenseCount: null | number = null
+
+	onMount(async () => {
+		licenseCount = await trpc.license.countActive.query()
+	})
 
 	function logout() {
 		setLoggedOut()
@@ -73,7 +81,20 @@
 			</a>
 		{/each}
 	</nav>
-	<Button on:click={logout} outlined class="mt-auto">Logout</Button>
+
+	<div class="flex flex-col gap-2 mt-auto mb-4 text-sm text-center text-gray-600">
+		<div>
+			Logged in as <br />
+			<b class="font-medium text-black">{$userEmail}</b> <br />
+			<span class="font-mono">User ID: {$userId}</span>
+		</div>
+
+		<div>
+			Serving <b class="font-medium text-blue-500">{licenseCount ?? '-'}</b> active licenses
+		</div>
+	</div>
+
+	<Button on:click={logout} outlined class="">Logout</Button>
 	<Button class="mt-4 mb-4 md:hidden" outlined gray>Close</Button>
 	<div
 		class="flex justify-between mt-1 mb-8 text-xs text-gray-700 md:mb-4"

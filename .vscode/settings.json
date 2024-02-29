@@ -37,10 +37,10 @@
     "source.organizeImports": "explicit"
   },
   "workbench.colorCustomizations": {
-    "tab.activeBorder": "#578a58",
-    "titleBar.activeBackground": "#578a58",
+    "tab.activeBorder": "#475569",
+    "titleBar.activeBackground": "#475569",
     "titleBar.activeForeground": "#ffffff",
-    "statusBar.background": "#578a58",
+    "statusBar.background": "#475569",
     "statusBar.foreground": "#ffffff"
   }
 }

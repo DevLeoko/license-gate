@@ -100,6 +100,25 @@ export const licenseRouter = router({
       });
     }),
 
+  countActive: protectedProcedure.query(async ({ ctx }) => {
+    return await prisma.license.count({
+      where: {
+        userId: ctx.userId,
+        OR: [
+          {
+            expirationDate: {
+              gt: new Date(),
+            },
+          },
+          {
+            expirationDate: null,
+          },
+        ],
+        active: true,
+      },
+    });
+  }),
+
   list: protectedProcedure
     .input(
       z.object({
@@ -114,9 +133,16 @@ export const licenseRouter = router({
       };
 
       if (input.filterStatus == "active") {
-        where.expirationDate = {
-          gt: new Date(),
-        };
+        where.OR = [
+          {
+            expirationDate: {
+              gt: new Date(),
+            },
+          },
+          {
+            expirationDate: null,
+          },
+        ];
         where.active = true;
       } else if (input.filterStatus == "disabled/expired") {
         where.OR = [
