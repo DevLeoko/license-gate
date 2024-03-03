@@ -110,28 +110,30 @@
 
 	<Button {loading} on:click={login} class="mt-4">Login</Button>
 
-	<div class="my-2 text-sm text-center text-gray-500">or</div>
+	{#if PUBLIC_GOOGLE_AUTH_CLIENT_ID != 'none'}
+		<div class="my-2 text-sm text-center text-gray-500">or</div>
 
-	<div
-		id="g_id_onload"
-		data-client_id={PUBLIC_GOOGLE_AUTH_CLIENT_ID}
-		data-context="signin"
-		data-ux_mode="popup"
-		data-callback="signInWithGoogleCallback"
-		data-itp_support="true"
-	/>
-
-	<div class="flex justify-center">
 		<div
-			class="g_id_signin"
-			data-type="standard"
-			data-shape="rectangular"
-			data-theme="outline"
-			data-text="signin_with"
-			data-size="large"
-			data-logo_alignment="center"
+			id="g_id_onload"
+			data-client_id={PUBLIC_GOOGLE_AUTH_CLIENT_ID}
+			data-context="signin"
+			data-ux_mode="popup"
+			data-callback="signInWithGoogleCallback"
+			data-itp_support="true"
 		/>
-	</div>
+
+		<div class="flex justify-center">
+			<div
+				class="g_id_signin"
+				data-type="standard"
+				data-shape="rectangular"
+				data-theme="outline"
+				data-text="signin_with"
+				data-size="large"
+				data-logo_alignment="center"
+			/>
+		</div>
+	{/if}
 
 	<div class="mt-4">
 		<a href="/auth/reset-password" class="text-blue-500">Forgot your password?</a>
