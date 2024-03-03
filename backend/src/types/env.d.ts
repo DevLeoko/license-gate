@@ -15,7 +15,6 @@ declare global {
       SIGN_IN_URL: string;
       RESET_PASSWORD_URL: string;
       CORS_ORIGIN: string;
-      FILE_STORAGE_PATH: string;
       GOOGLE_AUTH_CLIENT_ID: string;
     }
   }
