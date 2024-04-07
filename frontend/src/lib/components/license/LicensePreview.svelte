@@ -1,12 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
 	import { createEventDispatcher } from 'svelte'
-	import {
-		createLicenseDeleteMutation,
-		createLicenseUpdateMutation,
-	} from '../../controller/query/license'
 	import { logSuccess } from '../../stores/alerts'
-	import type { ReadLicense } from '../../trpcClient'
+	import { trpc, type ReadLicense } from '../../trpcClient'
 	import Button from '../basics/Button.svelte'
 	import ConfirmationCardTrigger from '../basics/ConfirmationCardTrigger.svelte'
 	import CopyText from '../basics/CopyText.svelte'
@@ -17,26 +13,30 @@
 
 	export let license: ReadLicense
 
-	const dispatchEvent = createEventDispatcher()
+	const dispatchEvent = createEventDispatcher<{ exit: void; deleted: void }>()
 
-	const deleteMutation = createLicenseDeleteMutation()
-	const updateMutation = createLicenseUpdateMutation()
+	let loadingDelete = false
 
 	function onEdit() {
 		goto(`/licenses/${license.id}/edit`)
 	}
 
 	async function onDelete() {
-		await $deleteMutation.mutateAsync(license.id)
+		loadingDelete = true
+		await trpc.license.delete.mutate({ id: license.id }).finally(() => {
+			loadingDelete = false
+		})
+		dispatchEvent('deleted')
 		logSuccess('License deleted')
 	}
 
 	async function onToggleActive() {
-		await $updateMutation.mutateAsync({
+		await trpc.license.update.mutate({
 			id: license.id,
 			active: !license.active,
 		})
-		logSuccess(`License ${license.active ? 'deactivated' : 'activated'}`)
+		license.active = !license.active
+		logSuccess(`License ${!license.active ? 'deactivated' : 'activated'}`)
 	}
 </script>
 
@@ -64,7 +64,7 @@
 		</span>
 	</Button>
 
-	<ConfirmationCardTrigger loading={$deleteMutation.isLoading} on:confirm={onDelete}>
+	<ConfirmationCardTrigger loading={loadingDelete} on:confirm={onDelete}>
 		<Button class="w-full" red outlined>
 			Delete
 			<span class="absolute text-base material-icons right-2">delete</span>

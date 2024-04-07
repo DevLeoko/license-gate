@@ -32,7 +32,7 @@
 					<svelte:fragment slot="trigger">
 						<span class="p-2 -m-2 text-base material-icons hover:text-blue-500">more_vert</span>
 					</svelte:fragment>
-					<LicenseActionCard {license} />
+					<LicenseActionCard bind:license on:deleted />
 				</FloatingCardTrigger>
 			</div>
 		</td>

@@ -1,22 +1,20 @@
 <script lang="ts">
-	import { tick } from 'svelte'
+	import { onMount, tick } from 'svelte'
 	import Button from '../../../../lib/components/basics/Button.svelte'
 	import Chip from '../../../../lib/components/basics/Chip.svelte'
 	import PageTitle from '../../../../lib/components/basics/PageTitle.svelte'
 	import Skeleton from '../../../../lib/components/basics/Skeleton.svelte'
-	import {
-		createAuthDataMutation,
-		createAuthDataQuery,
-		createRsaKeyUpdateMutation,
-	} from '../../../../lib/controller/query/auth'
 	import { logSuccess } from '../../../../lib/stores/alerts'
 	import { logout } from '../../../../lib/stores/auth'
-	import { trpc } from '../../../../lib/trpcClient'
+	import { trpc, type ReadMe } from '../../../../lib/trpcClient'
 	import { generateRsaKeyPair } from '../../../../lib/utils/rsaKeys'
 	import { sleep } from '../../../../lib/utils/sleep'
 
-	const authDataQuery = createAuthDataQuery()
-	$: myData = $authDataQuery.data
+	let myData: ReadMe | null = null
+
+	onMount(async () => {
+		myData = await trpc.auth.me.query()
+	})
 
 	let loadingPasswordReset = false
 	let signOutAllDevices = false
@@ -33,18 +31,18 @@
 			})
 	}
 
-	const updateAuthData = createAuthDataMutation()
-	const updateRsaKeys = createRsaKeyUpdateMutation()
-
 	let loadingConsentUpdate = false
 
 	async function toggleMarketingConsent() {
 		if (!myData) return
 
 		loadingConsentUpdate = true
-		await $updateAuthData
-			.mutateAsync({
+		await trpc.auth.update
+			.mutate({
 				marketingEmails: !myData.marketingEmails,
+			})
+			.then(() => {
+				myData!.marketingEmails = !myData!.marketingEmails
 			})
 			.finally(() => {
 				loadingConsentUpdate = false
@@ -74,9 +72,14 @@
 
 		const keys = generateRsaKeyPair()
 
-		await $updateRsaKeys.mutateAsync(keys).finally(() => {
-			loadingRegenerate = false
-		})
+		await trpc.auth.updateRsaPublicKey
+			.mutate(keys)
+			.then(() => {
+				myData!.rsaPublicKey = keys.rsaPublicKey
+			})
+			.finally(() => {
+				loadingRegenerate = false
+			})
 
 		logSuccess('Generated new key-pair')
 	}

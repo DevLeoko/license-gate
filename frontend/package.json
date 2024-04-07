@@ -40,7 +40,6 @@
 	"type": "module",
 	"dependencies": {
 		"@sveltejs/adapter-static": "^2.0.2",
-		"@tanstack/svelte-query": "^4.27.0",
 		"@trpc/client": "^10.18.0",
 		"d3": "^7.8.5",
 		"highlight.js": "^11.9.0",

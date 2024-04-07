@@ -3,9 +3,8 @@
 	import Button from '../../../../lib/components/basics/Button.svelte'
 	import PageTitle from '../../../../lib/components/basics/PageTitle.svelte'
 	import LicenseEditor from '../../../../lib/components/editors/license-editor/LicenseEditor.svelte'
-	import { createLicenseCreateMutation } from '../../../../lib/controller/query/license'
 	import { logSuccess } from '../../../../lib/stores/alerts'
-	import type { CreateLicense } from '../../../../lib/trpcClient'
+	import { trpc, type CreateLicense } from '../../../../lib/trpcClient'
 
 	let license: CreateLicense = {
 		name: '',
@@ -26,10 +25,11 @@
 		licenseKey: self.crypto.randomUUID(),
 	}
 
-	const createMutation = createLicenseCreateMutation()
-
+	let loadingCreate = false
 	async function onSave() {
-		const licenseRes = await $createMutation.mutateAsync(license)
+		const licenseRes = await trpc.license.create.mutate(license).finally(() => {
+			loadingCreate = false
+		})
 
 		logSuccess('License created')
 		goto(`/licenses?preview=${licenseRes.id}&instructions=true`)
@@ -37,7 +37,7 @@
 </script>
 
 <PageTitle title="Create new license" backLink="/licenses">
-	<Button on:click={onSave} loading={$createMutation.isLoading}>
+	<Button on:click={onSave} loading={loadingCreate}>
 		<span class="mr-1 material-icons">check</span>
 		Save
 	</Button>
