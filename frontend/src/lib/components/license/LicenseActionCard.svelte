@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
 	import { createEventDispatcher } from 'svelte'
+	import { notifyLicenseRemoved } from '../../controller/license'
 	import { logSuccess } from '../../stores/alerts'
 	import { trpc, type ListLicense } from '../../trpcClient'
 	import CardActionButton from '../basics/CardActionButton.svelte'
@@ -23,6 +24,7 @@
 			loadingDelete = false
 		})
 		dispatchEvent('deleted')
+		notifyLicenseRemoved(license.id)
 		logSuccess('License deleted')
 	}
 

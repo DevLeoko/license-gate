@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte'
+	import { writable } from 'svelte/store'
 	import { trpc, type ListLicense } from '../../../lib/trpcClient'
+	import { syncLicenses } from '../../controller/license'
 	import Button from '../basics/Button.svelte'
 	import Skeleton from '../basics/Skeleton.svelte'
 	import LicenseTable from './LicenseTable.svelte'
@@ -13,9 +15,21 @@
 	let loading = false
 	let hasMoreToLoad = true
 
+	const licensesStore = writable(licenses)
+
 	onMount(() => {
 		fetchLogs(true)
+
+		return syncLicenses(licensesStore, ['active'])
 	})
+
+	$: {
+		licensesStore.set(licenses)
+	}
+
+	$: {
+		licenses = $licensesStore
+	}
 
 	function fetchLogs(reset: boolean = false) {
 		loading = true

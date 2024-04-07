@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
-	import { createEventDispatcher } from 'svelte'
+	import { createEventDispatcher, onMount } from 'svelte'
+	import { writable } from 'svelte/store'
+	import { notifyLicenseRemoved, syncLicense } from '../../controller/license'
 	import { logSuccess } from '../../stores/alerts'
 	import { trpc, type ReadLicense } from '../../trpcClient'
 	import Button from '../basics/Button.svelte'
@@ -12,6 +14,20 @@
 	import LicenseStatusChip from './LicenseStatusChip.svelte'
 
 	export let license: ReadLicense
+
+	const licenseStore = writable(license)
+
+	onMount(() => {
+		return syncLicense(licenseStore, ['active'], () => dispatchEvent('exit'))
+	})
+
+	$: {
+		licenseStore.set(license)
+	}
+
+	$: {
+		license = $licenseStore
+	}
 
 	const dispatchEvent = createEventDispatcher<{ exit: void; deleted: void }>()
 
@@ -27,6 +43,7 @@
 			loadingDelete = false
 		})
 		dispatchEvent('deleted')
+		notifyLicenseRemoved(license.id)
 		logSuccess('License deleted')
 	}
 
