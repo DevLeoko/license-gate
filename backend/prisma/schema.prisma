@@ -24,6 +24,8 @@ model User {
 
   licenses License[]
   logs     Log[]
+
+  apiKeys ApiKey[]
 }
 
 enum ReplenishInterval {
@@ -85,4 +87,16 @@ model Log {
   result    ValidationResult
   metadata  String
   timestamp DateTime         @default(now())
+}
+
+model ApiKey {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  key  String @unique
+  name String
+
+  createdAt DateTime @default(now())
 }

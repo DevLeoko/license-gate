@@ -19,3 +19,13 @@ export const licenseCreateSchema = z.object({
 
   licenseKey: z.string().min(1).max(100).optional(),
 });
+
+export type LicenseCreateInput = z.infer<typeof licenseCreateSchema>;
+
+export const licenseListSchema = z.object({
+  take: z.number().int().nonnegative().max(100),
+  skip: z.number().int().nonnegative(),
+  filterStatus: z.enum(["active", "disabled/expired"]).optional(),
+});
+
+export type LicenseListInput = z.infer<typeof licenseListSchema>;

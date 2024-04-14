@@ -1,0 +1,509 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ReplenishInterval": {
+				"type": "string",
+				"enum": [
+					"TEN_SECONDS",
+					"MINUTE",
+					"HOUR",
+					"DAY"
+				]
+			},
+			"License": {
+				"description": "A license with all its properties and restrictions.",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "int32",
+						"description": "License ID."
+					},
+					"active": {
+						"type": "boolean",
+						"description": "Whether the license is active.\nWhen a license is disabled, it will not validate."
+					},
+					"userId": {
+						"type": "integer",
+						"format": "int32",
+						"description": "User ID that owns this license (you)."
+					},
+					"licenseKey": {
+						"type": "string",
+						"description": "License key."
+					},
+					"name": {
+						"type": "string",
+						"description": "Name to identify the license."
+					},
+					"notes": {
+						"type": "string",
+						"description": "Notes for the license."
+					},
+					"ipLimit": {
+						"type": "integer",
+						"format": "int32",
+						"nullable": true,
+						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit"
+					},
+					"licenseScope": {
+						"type": "string",
+						"nullable": true,
+						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope"
+					},
+					"expirationDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true,
+						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration"
+					},
+					"validationPoints": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"validationLimit": {
+						"type": "integer",
+						"format": "int32",
+						"nullable": true,
+						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"replenishAmount": {
+						"type": "integer",
+						"format": "int32",
+						"nullable": true,
+						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"replenishInterval": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ReplenishInterval"
+							}
+						],
+						"nullable": true,
+						"description": "Interval to replenish validation points.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time",
+						"description": "Date the license was created."
+					}
+				},
+				"required": [
+					"id",
+					"active",
+					"userId",
+					"licenseKey",
+					"name",
+					"notes",
+					"ipLimit",
+					"licenseScope",
+					"expirationDate",
+					"validationPoints",
+					"validationLimit",
+					"replenishAmount",
+					"replenishInterval",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LicenseCreateInput": {
+				"description": "Data required to create a license.",
+				"properties": {
+					"active": {
+						"type": "boolean",
+						"description": "Whether the license is active.\nWhen a license is disabled, it will not validate."
+					},
+					"name": {
+						"type": "string",
+						"description": "Name to identify the license."
+					},
+					"notes": {
+						"type": "string",
+						"description": "Notes for the license."
+					},
+					"ipLimit": {
+						"type": "integer",
+						"format": "int32",
+						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit"
+					},
+					"licenseScope": {
+						"type": "string",
+						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope"
+					},
+					"expirationDate": {
+						"type": "string",
+						"format": "date-time",
+						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration"
+					},
+					"validationPoints": {
+						"type": "number",
+						"format": "double",
+						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"validationLimit": {
+						"type": "integer",
+						"format": "int32",
+						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"replenishAmount": {
+						"type": "integer",
+						"format": "int32",
+						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"replenishInterval": {
+						"$ref": "#/components/schemas/ReplenishInterval",
+						"description": "Interval to replenish validation points.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"licenseKey": {
+						"type": "string",
+						"description": "You can specify a custom license key, or one will be generated (UUIDv4).\nIf you specify a custom key, it must be unique."
+					}
+				},
+				"required": [
+					"active",
+					"name",
+					"notes",
+					"ipLimit",
+					"licenseScope",
+					"expirationDate",
+					"validationPoints",
+					"validationLimit",
+					"replenishAmount",
+					"replenishInterval"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LicenseUpdateInput": {
+				"description": "Data required to update a license.\nUpdates are partial, so all fields are optional.",
+				"properties": {
+					"licenseKey": {
+						"type": "string",
+						"description": "License key."
+					},
+					"active": {
+						"type": "boolean",
+						"description": "Whether the license is active.\nWhen a license is disabled, it will not validate."
+					},
+					"name": {
+						"type": "string",
+						"description": "Name to identify the license."
+					},
+					"notes": {
+						"type": "string",
+						"description": "Notes for the license."
+					},
+					"ipLimit": {
+						"type": "integer",
+						"format": "int32",
+						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit"
+					},
+					"licenseScope": {
+						"type": "string",
+						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope"
+					},
+					"expirationDate": {
+						"type": "string",
+						"format": "date-time",
+						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration"
+					},
+					"validationPoints": {
+						"type": "number",
+						"format": "double",
+						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"validationLimit": {
+						"type": "integer",
+						"format": "int32",
+						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"replenishAmount": {
+						"type": "integer",
+						"format": "int32",
+						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					},
+					"replenishInterval": {
+						"$ref": "#/components/schemas/ReplenishInterval",
+						"description": "Interval to replenish validation points.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"api_key": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			}
+		}
+	},
+	"info": {
+		"title": "license-gate-backend",
+		"version": "1.0.1",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/licenses": {
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/License"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new license.",
+				"summary": "Create license",
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LicenseCreateInput"
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"operationId": "List",
+				"responses": {
+					"200": {
+						"description": "List of licenses and total count.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"count": {
+											"type": "number",
+											"format": "double"
+										},
+										"licenses": {
+											"items": {
+												"$ref": "#/components/schemas/License"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"count",
+										"licenses"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"description": "List licenses for the authenticated account.",
+				"summary": "List licenses",
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "Number of licenses to take.",
+						"in": "query",
+						"name": "take",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "int32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Number of licenses to skip.",
+						"in": "query",
+						"name": "skip",
+						"required": false,
+						"schema": {
+							"default": 0,
+							"format": "int32",
+							"type": "integer"
+						}
+					},
+					{
+						"description": "Filter licenses by status.",
+						"in": "query",
+						"name": "filterStatus",
+						"required": false,
+						"schema": {
+							"type": "string",
+							"enum": [
+								"active",
+								"disabled/expired"
+							]
+						}
+					},
+					{
+						"description": "Include logs for each license.",
+						"in": "query",
+						"name": "includeLogs",
+						"required": false,
+						"schema": {
+							"default": false,
+							"type": "boolean"
+						}
+					}
+				]
+			}
+		},
+		"/licenses/{licenseId}": {
+			"get": {
+				"operationId": "Read",
+				"responses": {
+					"200": {
+						"description": "The license.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/License"
+								}
+							}
+						}
+					}
+				},
+				"description": "Read a license by ID.",
+				"summary": "Read license",
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "License ID.",
+						"in": "path",
+						"name": "licenseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"description": "Include logs for this license.",
+						"in": "query",
+						"name": "includeLogs",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
+			},
+			"patch": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "The updated license.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/License"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a license by ID.",
+				"summary": "Update license",
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "License ID.",
+						"in": "path",
+						"name": "licenseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LicenseUpdateInput"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "The deleted license.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/License"
+								}
+							}
+						}
+					}
+				},
+				"description": "Delete a license by ID.",
+				"summary": "Delete license",
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "License ID.",
+						"in": "path",
+						"name": "licenseId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "http://localhost:8080",
+			"description": "Local server"
+		}
+	]
+}

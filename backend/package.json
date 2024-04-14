@@ -12,6 +12,8 @@
     "prisma-up": "prisma db push",
     "prisma-migrate": "prisma migrate deploy",
     "prisma-gen": "prisma generate",
+    "tsoa-gen": "tsoa spec-and-routes",
+    "tsoa-watch": "nodemon --exec \"npm run tsoa-gen\" --watch tsoa.json",
     "gen-env": "gen-env-types .env -o src/types/env.d.ts -e ."
   },
   "keywords": [],
@@ -35,6 +37,7 @@
     "@prisma/client": "^5.10.2",
     "@trpc/server": "^10.18.0",
     "argon2": "^0.30.3",
+    "axios": "^1.6.8",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv-safe": "^8.2.0",
@@ -48,7 +51,10 @@
     "nodemailer": "^6.9.1",
     "painless-pdf": "^1.2.2",
     "prisma": "^5.10.2",
+    "reflect-metadata": "^0.2.2",
     "superjson": "^1.12.2",
+    "tsoa": "^6.2.0",
+    "typedi": "^0.10.0",
     "zod": "^3.20.6"
   }
 }

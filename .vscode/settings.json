@@ -7,7 +7,7 @@
     {
       "regex": "backend/.*",
       "color": "#475569"
-    },
+    }
   ],
   "colorTabs.titleBackground": true,
   "[typescript]": {
@@ -15,12 +15,10 @@
   },
   "svelte.plugin.svelte.compilerWarnings": {
     "a11y-click-events-have-key-events": "ignore",
-    "css-syntax-error": "ignore",
+    "css-syntax-error": "ignore"
   },
   "svelte.plugin.css.diagnostics.enable": false,
-  "cSpell.words": [
-    "Roboto"
-  ],
+  "cSpell.words": ["Roboto"],
   "macros.list": {
     "translate": [
       {
@@ -37,10 +35,10 @@
     "source.organizeImports": "explicit"
   },
   "workbench.colorCustomizations": {
-    "tab.activeBorder": "#578a58",
-    "titleBar.activeBackground": "#578a58",
+    "tab.activeBorder": "#475569",
+    "titleBar.activeBackground": "#475569",
     "titleBar.activeForeground": "#ffffff",
-    "statusBar.background": "#578a58",
+    "statusBar.background": "#475569",
     "statusBar.foreground": "#ffffff"
   }
 }

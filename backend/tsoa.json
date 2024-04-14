@@ -1,0 +1,28 @@
+{
+  "entryFile": "src/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/routers/public/**/*.controller.ts"],
+  "spec": {
+    "outputDirectory": "./",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "spec": {
+      "servers": [
+        {
+          "url": "http://localhost:8080",
+          "description": "Local server"
+        }
+      ]
+    }
+  },
+  "routes": {
+    "routesDir": "src/tsoa-generated",
+    "authenticationModule": "src/routers/public/authentication.ts"
+  }
+}

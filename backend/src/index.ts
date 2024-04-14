@@ -1,6 +1,6 @@
 /// <reference path="./types/env.d.ts" />
-
 import "dotenv-safe/config";
+import "reflect-metadata";
 
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cookieParser from "cookie-parser";
@@ -10,6 +10,7 @@ import { authExpressMiddleware } from "./controller/auth-flows";
 import { setupRateLimitReplenishCron } from "./controller/license-rate-limit";
 import { appRouter } from "./routers/_app";
 import { setupNonTrpcRoutes } from "./routers/non-trpc/_router";
+import { RegisterRoutes } from "./tsoa-generated/routes";
 import { ShowError } from "./utils/ShowError";
 
 const app = express();
@@ -43,6 +44,8 @@ app.use(
 );
 
 setupRateLimitReplenishCron();
+
+RegisterRoutes(app);
 
 app.listen(process.env.PORT, () => {
   console.log(`\n📄 Server ready on port ${process.env.PORT}\n`);
