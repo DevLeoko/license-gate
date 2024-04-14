@@ -99,7 +99,7 @@ async function checkLicense(
     return "NOT_ACTIVE";
   }
 
-  if (scope && license.licenseScope !== scope) {
+  if (license.licenseScope && license.licenseScope !== scope) {
     return "LICENSE_SCOPE_FAILED";
   }
 
