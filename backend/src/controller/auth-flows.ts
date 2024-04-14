@@ -69,14 +69,16 @@ async function fetchEmailFromGoogleToken(token: string) {
       audience: process.env.GOOGLE_AUTH_CLIENT_ID,
     })
     .catch(() => {
-      throw new ShowError("Google authentication failed.");
+      throw new ShowError("Google authentication failed.", "google-auth-error");
     });
 
   const payload = res.getPayload();
-  if (!payload) throw new ShowError("Google authentication failed.");
+  if (!payload)
+    throw new ShowError("Google authentication failed.", "google-auth-error");
 
   const email = payload.email?.toLowerCase();
-  if (!email) throw new ShowError("Google authentication failed.");
+  if (!email)
+    throw new ShowError("Google authentication failed.", "google-auth-error");
 
   return email;
 }
@@ -117,7 +119,8 @@ export async function loginWithGoogle(
   if (!user) {
     if (!createAccountIfNotFound)
       throw new ShowError(
-        "There is no account linked to this email address. Please sign up."
+        "There is no account linked to this email address. Please sign up.",
+        "no-account-for-google-email"
       );
 
     user = await createUser(email, null, true, marketingEmails ?? false);
@@ -148,13 +151,19 @@ export async function loginWithPassword(
     },
   });
 
-  if (!user) throw new ShowError("Invalid email or password.");
+  if (!user) throw new ShowError("Invalid email or password.", "unauthorized");
 
   if (!user.isEmailVerified)
-    throw new ShowError("Your email address has not been verified.");
+    throw new ShowError(
+      "Your email address has not been verified.",
+      "unauthorized"
+    );
 
   if (!user.passwordHash)
-    throw new ShowError("Please use the Google login for this account.");
+    throw new ShowError(
+      "Please use the Google login for this account.",
+      "unauthorized"
+    );
 
   const { success, data } = await authenticator.loginWithPassword(
     user.passwordHash,
@@ -163,7 +172,8 @@ export async function loginWithPassword(
     user.refreshSession ?? undefined
   );
 
-  if (!success) throw new ShowError("Invalid email or password.");
+  if (!success)
+    throw new ShowError("Invalid email or password.", "unauthorized");
 
   if (!user.refreshSession) {
     await updateUserRefreshSession(user.id, data.refreshSession);
@@ -199,7 +209,8 @@ export async function verifyMailToken(token: string, email: string) {
   email = email.toLowerCase();
 
   const isValid = authenticator.verifyMailToken(token, email);
-  if (!isValid) throw new ShowError("This link is expired or invalid.");
+  if (!isValid)
+    throw new ShowError("This link is expired or invalid.", "invalid-token");
 
   await prisma.user.update({
     where: {
@@ -233,7 +244,10 @@ async function createUser(
     return user;
   } catch (e: any) {
     if (e.code === "P2002") {
-      throw new ShowError("This email address is already in use.");
+      throw new ShowError(
+        "This email address is already in use.",
+        "email-already-in-use"
+      );
     }
 
     throw e;
@@ -265,7 +279,8 @@ export async function resetPassword({
   email = email.toLowerCase();
 
   const isValid = authenticator.verifyMailToken(token, email);
-  if (!isValid) throw new ShowError("This link is expired or invalid.");
+  if (!isValid)
+    throw new ShowError("This link is expired or invalid.", "invalid-token");
 
   const user = await prisma.user.findUnique({
     where: {
@@ -273,7 +288,8 @@ export async function resetPassword({
     },
   });
 
-  if (!user) throw new ShowError("This link is expired or invalid.");
+  if (!user)
+    throw new ShowError("This link is expired or invalid.", "invalid-token");
 
   await prisma.user.update({
     where: {

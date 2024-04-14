@@ -12,6 +12,7 @@ import { appRouter } from "./routers/_app";
 import { setupNonTrpcRoutes } from "./routers/non-trpc/_router";
 import { RegisterRoutes } from "./tsoa-generated/routes";
 import { ShowError } from "./utils/ShowError";
+import { tsoaErrorHandler } from "./utils/tsoa-response-error";
 
 const app = express();
 
@@ -46,6 +47,8 @@ app.use(
 setupRateLimitReplenishCron();
 
 RegisterRoutes(app);
+
+app.use(tsoaErrorHandler);
 
 app.listen(process.env.PORT, () => {
   console.log(`\n📄 Server ready on port ${process.env.PORT}\n`);

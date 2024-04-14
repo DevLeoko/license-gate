@@ -52,7 +52,8 @@ export const authRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (!verifyRecaptcha(input.token)) throw new ShowError("Failed captcha");
+      if (!verifyRecaptcha(input.token))
+        throw new ShowError("Failed captcha", "failed-captcha");
 
       await signUpWithPassword(
         input.email,
@@ -112,7 +113,8 @@ export const authRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      if (!verifyRecaptcha(input.token)) throw new ShowError("Failed captcha");
+      if (!verifyRecaptcha(input.token))
+        throw new ShowError("Failed captcha", "failed-captcha");
 
       const user = await prisma.user.findUnique({
         where: { email: input.email },

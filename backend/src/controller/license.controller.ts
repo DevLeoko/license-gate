@@ -44,7 +44,10 @@ export class LicenseService {
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === "P2002") {
-          throw new ShowError("License with same key already exists");
+          throw new ShowError(
+            "License with same key already exists",
+            "license-with-same-key-already-exists"
+          );
         }
       }
 
@@ -70,7 +73,7 @@ export class LicenseService {
     });
 
     if (!license) {
-      throw new ShowError("License not found");
+      throw new ShowError("License not found", "not-found");
     }
 
     return license;
@@ -94,7 +97,7 @@ export class LicenseService {
     });
 
     if (!existingLicense) {
-      throw new ShowError("License not found");
+      throw new ShowError("License not found", "not-found");
     }
 
     return await prisma.license.update({
@@ -123,7 +126,7 @@ export class LicenseService {
     });
 
     if (!license) {
-      throw new ShowError("License not found");
+      throw new ShowError("License not found", "not-found");
     }
 
     return await prisma.license.delete({

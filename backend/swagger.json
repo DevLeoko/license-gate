@@ -49,36 +49,42 @@
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit"
+						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit",
+						"default": null
 					},
 					"licenseScope": {
 						"type": "string",
 						"nullable": true,
-						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope"
+						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope",
+						"default": null
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
 						"nullable": true,
-						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration"
+						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration",
+						"default": null
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
 						"nullable": true,
-						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"replenishInterval": {
 						"allOf": [
@@ -87,7 +93,8 @@
 							}
 						],
 						"nullable": true,
-						"description": "Interval to replenish validation points.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Interval to replenish validation points.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"createdAt": {
 						"type": "string",
@@ -114,6 +121,66 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"TsoaResponseError_license-with-same-key-already-exists_": {
+				"properties": {
+					"error": {
+						"type": "string",
+						"enum": [
+							"license-with-same-key-already-exists"
+						],
+						"nullable": false
+					},
+					"details": {
+						"description": "Additional details about the error.",
+						"default": {}
+					}
+				},
+				"required": [
+					"error"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TsoaResponseError_unauthorized_": {
+				"properties": {
+					"error": {
+						"type": "string",
+						"enum": [
+							"unauthorized"
+						],
+						"nullable": false
+					},
+					"details": {
+						"description": "Additional details about the error.",
+						"default": {}
+					}
+				},
+				"required": [
+					"error"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TsoaResponseError_invalid-schema_": {
+				"properties": {
+					"error": {
+						"type": "string",
+						"enum": [
+							"invalid-schema"
+						],
+						"nullable": false
+					},
+					"details": {
+						"description": "Additional details about the error.",
+						"default": {}
+					}
+				},
+				"required": [
+					"error"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"LicenseCreateInput": {
 				"description": "Data required to create a license.",
 				"properties": {
@@ -132,31 +199,37 @@
 					"ipLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit"
+						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit",
+						"default": null
 					},
 					"licenseScope": {
 						"type": "string",
-						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope"
+						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope",
+						"default": null
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
-						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration"
+						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration",
+						"default": null
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
-						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"replenishInterval": {
 						"$ref": "#/components/schemas/ReplenishInterval",
@@ -178,6 +251,26 @@
 					"validationLimit",
 					"replenishAmount",
 					"replenishInterval"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TsoaResponseError_not-found_": {
+				"properties": {
+					"error": {
+						"type": "string",
+						"enum": [
+							"not-found"
+						],
+						"nullable": false
+					},
+					"details": {
+						"description": "Additional details about the error.",
+						"default": {}
+					}
+				},
+				"required": [
+					"error"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -204,31 +297,37 @@
 					"ipLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit"
+						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit",
+						"default": null
 					},
 					"licenseScope": {
 						"type": "string",
-						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope"
+						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope",
+						"default": null
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
-						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration"
+						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration",
+						"default": null
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
-						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					},
 					"replenishInterval": {
 						"$ref": "#/components/schemas/ReplenishInterval",
@@ -256,7 +355,7 @@
 		"contact": {}
 	},
 	"paths": {
-		"/licenses": {
+		"/admin/licenses": {
 			"post": {
 				"operationId": "Create",
 				"responses": {
@@ -266,6 +365,45 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/License"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "License with same key already exists",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_license-with-same-key-already-exists_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Invalid schema",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+								},
+								"examples": {
+									"Example 1": {}
 								}
 							}
 						}
@@ -315,6 +453,32 @@
 										"licenses"
 									],
 									"type": "object"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Invalid schema",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+								},
+								"examples": {
+									"Example 1": {}
 								}
 							}
 						}
@@ -376,7 +540,7 @@
 				]
 			}
 		},
-		"/licenses/{licenseId}": {
+		"/admin/licenses/{licenseId}": {
 			"get": {
 				"operationId": "Read",
 				"responses": {
@@ -386,6 +550,45 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/License"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "License not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_not-found_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Invalid schema",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+								},
+								"examples": {
+									"Example 1": {}
 								}
 							}
 						}
@@ -432,6 +635,45 @@
 								}
 							}
 						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "License not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_not-found_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Invalid schema",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
 					}
 				},
 				"description": "Update a license by ID.",
@@ -473,6 +715,45 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/License"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "License not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_not-found_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Invalid schema",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+								},
+								"examples": {
+									"Example 1": {}
 								}
 							}
 						}

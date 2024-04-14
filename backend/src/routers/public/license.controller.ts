@@ -8,6 +8,7 @@ import {
   Post,
   Query,
   Request,
+  Response,
   Route,
   Security,
   SuccessResponse,
@@ -15,6 +16,7 @@ import {
 import Container from "typedi";
 import { LicenseService } from "../../controller/license.controller";
 import { Expand } from "../../utils/Expand";
+import { TsoaResponseError } from "../../utils/tsoa-response-error";
 import { licenseCreateSchema } from "../license-schema";
 
 type ReplenishInterval = "TEN_SECONDS" | "MINUTE" | "HOUR" | "DAY";
@@ -60,24 +62,28 @@ interface License {
    * Limit of IPs that can validate this license.
    * See https://docs.licensegate.io/restriction-options/ip-limit
    * @isInt
+   * @default null
    */
   ipLimit: number | null;
 
   /**
    * Scope of the license.
    * See https://docs.licensegate.io/restriction-options/scope
+   * @default null
    */
   licenseScope: string | null;
 
   /**
    * Expiration date of the license.
    * See https://docs.licensegate.io/restriction-options/expiration
+   * @default null
    */
   expirationDate: Date | null;
 
   /**
    * Current amount of validation points. This is used for rate limiting.
    * See https://docs.licensegate.io/restriction-options/rate-limit
+   * @default null
    */
   validationPoints: number | null;
 
@@ -86,6 +92,7 @@ interface License {
    * Set to null for no rate limiting.
    * See https://docs.licensegate.io/restriction-options/rate-limit
    * @isInt
+   * @default null
    */
   validationLimit: number | null;
 
@@ -94,6 +101,7 @@ interface License {
    * Set to null for no rate limiting.
    * See https://docs.licensegate.io/restriction-options/rate-limit
    * @isInt
+   * @default null
    */
   replenishAmount: number | null;
 
@@ -101,6 +109,7 @@ interface License {
    * Interval to replenish validation points.
    * Set to null for no rate limiting.
    * See https://docs.licensegate.io/restriction-options/rate-limit
+   * @default null
    */
   replenishInterval: ReplenishInterval | null;
 
@@ -131,7 +140,7 @@ interface LicenseCreateInput
 interface LicenseUpdateInput
   extends Expand<Partial<Omit<License, "id" | "createdAt" | "userId">>> {}
 
-@Route("licenses")
+@Route("admin/licenses")
 export class LicenseController extends Controller {
   licenseService!: LicenseService;
 
@@ -149,6 +158,12 @@ export class LicenseController extends Controller {
   @Security("api_key")
   @Post()
   @SuccessResponse(201, "Created")
+  @Response<TsoaResponseError<"license-with-same-key-already-exists">>(
+    "400",
+    "License with same key already exists"
+  )
+  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
   public async create(
     @Request() request: Express.Request,
     @Body() license: LicenseCreateInput
@@ -171,6 +186,9 @@ export class LicenseController extends Controller {
    */
   @Security("api_key")
   @Get("{licenseId}")
+  @Response<TsoaResponseError<"not-found">>(404, "License not found")
+  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
   public async read(
     @Request() request: Express.Request,
     @Path() licenseId: number,
@@ -192,6 +210,9 @@ export class LicenseController extends Controller {
    */
   @Security("api_key")
   @Patch("{licenseId}")
+  @Response<TsoaResponseError<"not-found">>(404, "License not found")
+  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
   public async update(
     @Request() request: Express.Request,
     @Path() licenseId: number,
@@ -217,6 +238,9 @@ export class LicenseController extends Controller {
    */
   @Security("api_key")
   @Delete("{licenseId}")
+  @Response<TsoaResponseError<"not-found">>(404, "License not found")
+  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
   public async delete(
     @Request() request: Express.Request,
     @Path() licenseId: number
@@ -242,6 +266,8 @@ export class LicenseController extends Controller {
    */
   @Security("api_key")
   @Get()
+  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
   public async list(
     @Request() request: Express.Request,
     @Query() take: number = 10,
