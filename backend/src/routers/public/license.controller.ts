@@ -167,12 +167,12 @@ export class LicenseController extends Controller {
   @Response<ResponseError<"invalid-schema">>(422, "Invalid schema")
   public async create(
     @Request() request: Express.Request,
-    @Body() license: LicenseCreateInput
+    @Body() requestBody: LicenseCreateInput
   ): Promise<License> {
-    license = licenseCreateSchema.parse(license);
+    requestBody = licenseCreateSchema.parse(requestBody);
 
     return this.licenseService.create({
-      license: license,
+      license: requestBody,
       userId: request.user!.id,
     });
   }
@@ -239,15 +239,15 @@ export class LicenseController extends Controller {
   public async update(
     @Request() request: Express.Request,
     @Path() licenseId: number,
-    @Body() license: LicenseUpdateInput
+    @Body() requestBody: LicenseUpdateInput
   ): Promise<License> {
-    license = licenseCreateSchema.partial().parse(license);
+    requestBody = licenseCreateSchema.partial().parse(requestBody);
 
     return this.licenseService.update({
       checkUserId: request.user!.id,
       license: {
         id: licenseId,
-        ...license,
+        ...requestBody,
       },
     });
   }

@@ -157,7 +157,7 @@ export function RegisterRoutes(app: Router) {
             function LicenseController_create(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
-                    license: {"in":"body","name":"license","required":true,"ref":"LicenseCreateInput"},
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"LicenseCreateInput"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -256,7 +256,7 @@ export function RegisterRoutes(app: Router) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
                     request: {"in":"request","name":"request","required":true,"dataType":"object"},
                     licenseId: {"in":"path","name":"licenseId","required":true,"dataType":"double"},
-                    license: {"in":"body","name":"license","required":true,"ref":"LicenseUpdateInput"},
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"LicenseUpdateInput"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -391,7 +391,7 @@ export function RegisterRoutes(app: Router) {
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
                     userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
                     licenseKey: {"in":"path","name":"licenseKey","required":true,"dataType":"string"},
-                    body: {"in":"body","name":"body","required":true,"ref":"VerificationOptions"},
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"VerificationOptions"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

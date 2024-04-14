@@ -1,11 +1,13 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../../prisma";
+import { ResponseError } from "../../utils/tsoa-response-error";
 
 export async function expressAuthentication(
   request: Request,
   securityName: string,
-  scopes?: string[]
+  scopes: string[] | undefined,
+  response: Response
 ) {
   if (securityName === "api_key") {
     // Get API key from request
@@ -23,6 +25,12 @@ export async function expressAuthentication(
         id: apiKey.userId,
       });
     } else {
+      response
+        .status(401)
+        .send({
+          error: "unauthorized",
+          details: "Invalid API key",
+        } satisfies ResponseError<"unauthorized">);
       return Promise.reject({});
     }
   }

@@ -16,8 +16,24 @@ import { tsoaErrorHandler } from "./utils/tsoa-response-error";
 const app = express();
 
 app.use(
+  "/trpc",
   cors({ origin: process.env.CORS_ORIGIN.split(","), credentials: true })
 );
+
+const allCors = cors({ origin: "*" });
+const urlencoded = express.urlencoded({
+  extended: true,
+});
+const json = express.json();
+
+app.use((req, res, next) => {
+  if (req.url.startsWith("/trpc")) return next();
+  allCors(req, res, () => {
+    urlencoded(req, res, () => {
+      json(req, res, next);
+    });
+  });
+});
 
 app.use(cookieParser());
 

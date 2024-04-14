@@ -206,9 +206,9 @@ export class LicenseVerifyController extends Controller {
     @Request() req: express.Request,
     @Path() userId: string,
     @Path() licenseKey: string,
-    @Body() body: VerificationOptions
+    @Body() requestBody: VerificationOptions
   ): Promise<ValidationResponse> {
-    return processLicenseVerification(req, licenseKey, userId, body);
+    return processLicenseVerification(req, licenseKey, userId, requestBody);
   }
 }
 
