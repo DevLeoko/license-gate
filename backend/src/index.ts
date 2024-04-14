@@ -9,20 +9,19 @@ import express from "express";
 import { authExpressMiddleware } from "./controller/auth-flows";
 import { setupRateLimitReplenishCron } from "./controller/license-rate-limit";
 import { appRouter } from "./routers/_app";
-import { setupNonTrpcRoutes } from "./routers/non-trpc/_router";
 import { RegisterRoutes } from "./tsoa-generated/routes";
 import { ShowError } from "./utils/ShowError";
 import { tsoaErrorHandler } from "./utils/tsoa-response-error";
 
 const app = express();
 
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
+app.use(
+  cors({ origin: process.env.CORS_ORIGIN.split(","), credentials: true })
+);
 
 app.use(cookieParser());
 
 app.use(authExpressMiddleware);
-
-setupNonTrpcRoutes(app);
 
 app.use(
   "/trpc",

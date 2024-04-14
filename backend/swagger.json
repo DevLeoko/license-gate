@@ -121,7 +121,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"TsoaResponseError_license-with-same-key-already-exists_": {
+			"ResponseError_license-with-same-key-already-exists_": {
 				"properties": {
 					"error": {
 						"type": "string",
@@ -141,7 +141,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"TsoaResponseError_unauthorized_": {
+			"ResponseError_unauthorized_": {
 				"properties": {
 					"error": {
 						"type": "string",
@@ -161,7 +161,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"TsoaResponseError_invalid-schema_": {
+			"ResponseError_invalid-schema_": {
 				"properties": {
 					"error": {
 						"type": "string",
@@ -255,7 +255,7 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"TsoaResponseError_not-found_": {
+			"ResponseError_not-found_": {
 				"properties": {
 					"error": {
 						"type": "string",
@@ -336,6 +336,64 @@
 				},
 				"type": "object",
 				"additionalProperties": false
+			},
+			"ValidationResult": {
+				"type": "string",
+				"enum": [
+					"VALID",
+					"NOT_FOUND",
+					"NOT_ACTIVE",
+					"EXPIRED",
+					"LICENSE_SCOPE_FAILED",
+					"IP_LIMIT_EXCEEDED",
+					"RATE_LIMIT_EXCEEDED"
+				],
+				"example": "VALID",
+				"description": "The result of the license verification.\n- `VALID`: The license is valid\n- `NOT_FOUND`: The license was not found\n- `NOT_ACTIVE`: The license is not active\n- `EXPIRED`: The license has expired\n- `LICENSE_SCOPE_FAILED`: The scope of the license does not match the scope in the request\n- `IP_LIMIT_EXCEEDED`: The IP limit has been exceeded\n- `RATE_LIMIT_EXCEEDED`: The rate limit has been exceeded"
+			},
+			"ValidationResponse": {
+				"properties": {
+					"valid": {
+						"type": "boolean",
+						"description": "Whether the license is valid. (Short for `result == \"VALID\"`)",
+						"example": true
+					},
+					"result": {
+						"$ref": "#/components/schemas/ValidationResult"
+					},
+					"signedChallenge": {
+						"type": "string",
+						"description": "The challenge signed by the server. Only present if a challenge was provided in the request.",
+						"example": "23fa25/7dd..."
+					}
+				},
+				"required": [
+					"valid",
+					"result"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"VerificationOptions": {
+				"description": "Options for the license verification.",
+				"properties": {
+					"scope": {
+						"type": "string",
+						"description": "The scope of the license. Required if the license has a <a href=\"restriction-options/scope\">scope restriction</a>",
+						"example": "premium"
+					},
+					"challenge": {
+						"type": "string",
+						"description": "A challenge that will be signed by the server. We recommend to use the current time in milliseconds as the challenge. See <a href=\"security-considerations\">Security considerations</a> for more information.",
+						"example": "1634567890123"
+					},
+					"metadata": {
+						"type": "string",
+						"description": "A string that will be logged with the license verification. This can be used to log additional information about the verification request."
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -374,7 +432,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_license-with-same-key-already-exists_"
+									"$ref": "#/components/schemas/ResponseError_license-with-same-key-already-exists_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -387,7 +445,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+									"$ref": "#/components/schemas/ResponseError_unauthorized_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -400,7 +458,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -462,7 +520,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+									"$ref": "#/components/schemas/ResponseError_unauthorized_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -475,7 +533,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -559,7 +617,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+									"$ref": "#/components/schemas/ResponseError_unauthorized_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -572,7 +630,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_not-found_"
+									"$ref": "#/components/schemas/ResponseError_not-found_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -585,7 +643,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -641,7 +699,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+									"$ref": "#/components/schemas/ResponseError_unauthorized_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -654,7 +712,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_not-found_"
+									"$ref": "#/components/schemas/ResponseError_not-found_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -667,7 +725,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -724,7 +782,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_unauthorized_"
+									"$ref": "#/components/schemas/ResponseError_unauthorized_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -737,7 +795,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_not-found_"
+									"$ref": "#/components/schemas/ResponseError_not-found_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -750,7 +808,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/TsoaResponseError_invalid-schema_"
+									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
 								},
 								"examples": {
 									"Example 1": {}
@@ -779,12 +837,223 @@
 					}
 				]
 			}
+		},
+		"/license/{userId}/{licenseKey}/verify": {
+			"get": {
+				"operationId": "VerifyLicenseGet",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationResponse"
+								},
+								"examples": {
+									"License is valid": {
+										"value": {
+											"valid": true,
+											"result": "VALID"
+										}
+									},
+									"License is valid (signed challenge)": {
+										"value": {
+											"valid": true,
+											"result": "VALID",
+											"signedChallenge": "23fa25/7dd..."
+										}
+									},
+									"License has expired": {
+										"value": {
+											"valid": false,
+											"result": "EXPIRED"
+										}
+									},
+									"License not found": {
+										"value": {
+											"valid": false,
+											"result": "NOT_FOUND"
+										}
+									},
+									"License scope does not match": {
+										"value": {
+											"valid": false,
+											"result": "LICENSE_SCOPE_FAILED"
+										}
+									}
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Invalid request schema",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"description": "Verify a license",
+				"summary": "Verify license",
+				"security": [],
+				"parameters": [
+					{
+						"description": "The user ID (from web panel) that owns the license",
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The license key",
+						"in": "path",
+						"name": "licenseKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The scope of the license. Required if the license has a <a href=\"restriction-options/scope\">scope restriction</a>",
+						"in": "query",
+						"name": "scope",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "A challenge that will be signed by the server. We recommend to use the current time in milliseconds as the challenge. See <a href=\"security-considerations\">Security considerations</a> for more information.",
+						"in": "query",
+						"name": "challenge",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "A string that will be logged with the license verification. This can be used to log additional information about the verification request.",
+						"in": "query",
+						"name": "metadata",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "VerifyLicensePost",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidationResponse"
+								},
+								"examples": {
+									"License is valid": {
+										"value": {
+											"valid": true,
+											"result": "VALID"
+										}
+									},
+									"License is valid (signed challenge)": {
+										"value": {
+											"valid": true,
+											"result": "VALID",
+											"signedChallenge": "23fa25/7dd..."
+										}
+									},
+									"License has expired": {
+										"value": {
+											"valid": false,
+											"result": "EXPIRED"
+										}
+									},
+									"License not found": {
+										"value": {
+											"valid": false,
+											"result": "NOT_FOUND"
+										}
+									},
+									"License scope does not match": {
+										"value": {
+											"valid": false,
+											"result": "LICENSE_SCOPE_FAILED"
+										}
+									}
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Invalid request schema",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"description": "Verify a license",
+				"summary": "Verify license",
+				"security": [],
+				"parameters": [
+					{
+						"description": "The user ID (from web panel) that owns the license",
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "The license key",
+						"in": "path",
+						"name": "licenseKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/VerificationOptions"
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"servers": [
 		{
 			"url": "http://localhost:8080",
 			"description": "Local server"
+		},
+		{
+			"url": "https://api.licensegate.io",
+			"description": "Production server"
 		}
 	]
 }

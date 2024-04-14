@@ -16,7 +16,7 @@ import {
 import Container from "typedi";
 import { LicenseService } from "../../controller/license.controller";
 import { Expand } from "../../utils/Expand";
-import { TsoaResponseError } from "../../utils/tsoa-response-error";
+import { ResponseError } from "../../utils/tsoa-response-error";
 import { licenseCreateSchema } from "../license-schema";
 
 type ReplenishInterval = "TEN_SECONDS" | "MINUTE" | "HOUR" | "DAY";
@@ -158,12 +158,12 @@ export class LicenseController extends Controller {
   @Security("api_key")
   @Post()
   @SuccessResponse(201, "Created")
-  @Response<TsoaResponseError<"license-with-same-key-already-exists">>(
+  @Response<ResponseError<"license-with-same-key-already-exists">>(
     "400",
     "License with same key already exists"
   )
-  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
-  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
+  @Response<ResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<ResponseError<"invalid-schema">>(422, "Invalid schema")
   public async create(
     @Request() request: Express.Request,
     @Body() license: LicenseCreateInput
@@ -186,9 +186,9 @@ export class LicenseController extends Controller {
    */
   @Security("api_key")
   @Get("{licenseId}")
-  @Response<TsoaResponseError<"not-found">>(404, "License not found")
-  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
-  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
+  @Response<ResponseError<"not-found">>(404, "License not found")
+  @Response<ResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<ResponseError<"invalid-schema">>(422, "Invalid schema")
   public async read(
     @Request() request: Express.Request,
     @Path() licenseId: number,
@@ -210,9 +210,9 @@ export class LicenseController extends Controller {
    */
   @Security("api_key")
   @Patch("{licenseId}")
-  @Response<TsoaResponseError<"not-found">>(404, "License not found")
-  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
-  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
+  @Response<ResponseError<"not-found">>(404, "License not found")
+  @Response<ResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<ResponseError<"invalid-schema">>(422, "Invalid schema")
   public async update(
     @Request() request: Express.Request,
     @Path() licenseId: number,
@@ -238,9 +238,9 @@ export class LicenseController extends Controller {
    */
   @Security("api_key")
   @Delete("{licenseId}")
-  @Response<TsoaResponseError<"not-found">>(404, "License not found")
-  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
-  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
+  @Response<ResponseError<"not-found">>(404, "License not found")
+  @Response<ResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<ResponseError<"invalid-schema">>(422, "Invalid schema")
   public async delete(
     @Request() request: Express.Request,
     @Path() licenseId: number
@@ -266,8 +266,8 @@ export class LicenseController extends Controller {
    */
   @Security("api_key")
   @Get()
-  @Response<TsoaResponseError<"unauthorized">>(401, "Unauthorized")
-  @Response<TsoaResponseError<"invalid-schema">>(422, "Invalid schema")
+  @Response<ResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<ResponseError<"invalid-schema">>(422, "Invalid schema")
   public async list(
     @Request() request: Express.Request,
     @Query() take: number = 10,

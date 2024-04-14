@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { ValidateError } from "tsoa";
 import { ShowError, ShowErrorType } from "./ShowError";
 
-export interface TsoaResponseError<T extends ShowErrorType> {
+export interface ResponseError<T extends ShowErrorType> {
   error: T;
   /**
    * Additional details about the error.

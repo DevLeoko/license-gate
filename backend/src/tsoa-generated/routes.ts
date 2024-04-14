@@ -4,6 +4,8 @@
 import { TsoaRoute, fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { LicenseController } from './../routers/public/license.controller';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { LicenseVerifyController } from './../routers/public/license-verify.controller';
 import { expressAuthentication } from './../routers/public/authentication';
 // @ts-ignore - no great way to install types from subpackage
 import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
@@ -40,7 +42,7 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "TsoaResponseError_license-with-same-key-already-exists_": {
+    "ResponseError_license-with-same-key-already-exists_": {
         "dataType": "refObject",
         "properties": {
             "error": {"dataType":"enum","enums":["license-with-same-key-already-exists"],"required":true},
@@ -49,7 +51,7 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "TsoaResponseError_unauthorized_": {
+    "ResponseError_unauthorized_": {
         "dataType": "refObject",
         "properties": {
             "error": {"dataType":"enum","enums":["unauthorized"],"required":true},
@@ -58,7 +60,7 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "TsoaResponseError_invalid-schema_": {
+    "ResponseError_invalid-schema_": {
         "dataType": "refObject",
         "properties": {
             "error": {"dataType":"enum","enums":["invalid-schema"],"required":true},
@@ -85,7 +87,7 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "TsoaResponseError_not-found_": {
+    "ResponseError_not-found_": {
         "dataType": "refObject",
         "properties": {
             "error": {"dataType":"enum","enums":["not-found"],"required":true},
@@ -108,6 +110,31 @@ const models: TsoaRoute.Models = {
             "validationLimit": {"dataType":"integer","default":null},
             "replenishAmount": {"dataType":"integer","default":null},
             "replenishInterval": {"ref":"ReplenishInterval","default":null},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ValidationResult": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["VALID"]},{"dataType":"enum","enums":["NOT_FOUND"]},{"dataType":"enum","enums":["NOT_ACTIVE"]},{"dataType":"enum","enums":["EXPIRED"]},{"dataType":"enum","enums":["LICENSE_SCOPE_FAILED"]},{"dataType":"enum","enums":["IP_LIMIT_EXCEEDED"]},{"dataType":"enum","enums":["RATE_LIMIT_EXCEEDED"]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "ValidationResponse": {
+        "dataType": "refObject",
+        "properties": {
+            "valid": {"dataType":"boolean","required":true},
+            "result": {"ref":"ValidationResult","required":true},
+            "signedChallenge": {"dataType":"string"},
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "VerificationOptions": {
+        "dataType": "refObject",
+        "properties": {
+            "scope": {"dataType":"string"},
+            "challenge": {"dataType":"string"},
+            "metadata": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -276,6 +303,74 @@ export function RegisterRoutes(app: Router) {
 
               templateService.apiHandler({
                 methodName: 'list',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/license/:userId/:licenseKey/verify',
+            ...(fetchMiddlewares<RequestHandler>(LicenseVerifyController)),
+            ...(fetchMiddlewares<RequestHandler>(LicenseVerifyController.prototype.verifyLicenseGet)),
+
+            function LicenseVerifyController_verifyLicenseGet(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+                    userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
+                    licenseKey: {"in":"path","name":"licenseKey","required":true,"dataType":"string"},
+                    scope: {"in":"query","name":"scope","dataType":"string"},
+                    challenge: {"in":"query","name":"challenge","dataType":"string"},
+                    metadata: {"in":"query","name":"metadata","dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LicenseVerifyController();
+
+              templateService.apiHandler({
+                methodName: 'verifyLicenseGet',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/license/:userId/:licenseKey/verify',
+            ...(fetchMiddlewares<RequestHandler>(LicenseVerifyController)),
+            ...(fetchMiddlewares<RequestHandler>(LicenseVerifyController.prototype.verifyLicensePost)),
+
+            function LicenseVerifyController_verifyLicensePost(request: ExRequest, response: ExResponse, next: any) {
+            const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    req: {"in":"request","name":"req","required":true,"dataType":"object"},
+                    userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
+                    licenseKey: {"in":"path","name":"licenseKey","required":true,"dataType":"string"},
+                    body: {"in":"body","name":"body","required":true,"ref":"VerificationOptions"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args, request, response });
+
+                const controller = new LicenseVerifyController();
+
+              templateService.apiHandler({
+                methodName: 'verifyLicensePost',
                 controller,
                 response,
                 next,
