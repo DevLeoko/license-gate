@@ -79,6 +79,30 @@ export class LicenseService {
     return license;
   }
 
+  async readByLicenseKey({
+    licenseKey,
+    checkUserId,
+    includeLogs,
+  }: {
+    licenseKey: string;
+    checkUserId?: number;
+    includeLogs?: boolean;
+  }) {
+    const license = await prisma.license.findFirst({
+      where: {
+        licenseKey,
+        ...(checkUserId !== undefined && { userId: checkUserId }),
+      },
+      include: includeLogs ? INCLUDE_LAST_7_DAYS_LOGS : undefined,
+    });
+
+    if (!license) {
+      throw new ShowError("License not found", "not-found");
+    }
+
+    return license;
+  }
+
   async update({
     license,
     checkUserId,

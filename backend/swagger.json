@@ -854,6 +854,92 @@
 				]
 			}
 		},
+		"/admin/licenses/key/{licenseKey}": {
+			"get": {
+				"operationId": "ReadByLicenseKey",
+				"responses": {
+					"200": {
+						"description": "The license.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/License"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseError_unauthorized_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "License not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseError_not-found_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Invalid schema",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
+								},
+								"examples": {
+									"Example 1": {}
+								}
+							}
+						}
+					}
+				},
+				"description": "Read a license by its license key.",
+				"summary": "Read license by license key",
+				"tags": [
+					"Admin"
+				],
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [
+					{
+						"description": "License key.",
+						"in": "path",
+						"name": "licenseKey",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"description": "Include logs for this license.",
+						"in": "query",
+						"name": "includeLogs",
+						"required": false,
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				]
+			}
+		},
 		"/license/{userId}/{licenseKey}/verify": {
 			"get": {
 				"operationId": "VerifyLicenseGet",

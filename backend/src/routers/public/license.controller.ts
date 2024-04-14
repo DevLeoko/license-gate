@@ -202,6 +202,30 @@ export class LicenseController extends Controller {
   }
 
   /**
+   * Read a license by its license key.
+   * @param licenseKey License key.
+   * @param includeLogs Include logs for this license.
+   * @returns The license.
+   * @summary Read license by license key
+   */
+  @Security("api_key")
+  @Get("key/{licenseKey}")
+  @Response<ResponseError<"not-found">>(404, "License not found")
+  @Response<ResponseError<"unauthorized">>(401, "Unauthorized")
+  @Response<ResponseError<"invalid-schema">>(422, "Invalid schema")
+  public async readByLicenseKey(
+    @Request() request: Express.Request,
+    @Path() licenseKey: string,
+    @Query() includeLogs?: boolean
+  ): Promise<License> {
+    return this.licenseService.readByLicenseKey({
+      licenseKey,
+      checkUserId: request.user!.id,
+      includeLogs: includeLogs,
+    });
+  }
+
+  /**
    * Update a license by ID.
    * @param licenseId License ID.
    * @returns The updated license.
