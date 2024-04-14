@@ -3,6 +3,8 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["src/routers/public/**/*.controller.ts"],
   "spec": {
+    "name": "LicenseGate API",
+    "description": "REST API for verifying and managing licenses",
     "outputDirectory": "./",
     "specVersion": 3,
     "securityDefinitions": {

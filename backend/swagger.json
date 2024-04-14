@@ -405,8 +405,9 @@
 		}
 	},
 	"info": {
-		"title": "license-gate-backend",
+		"title": "LicenseGate API",
 		"version": "1.0.1",
+		"description": "REST API for verifying and managing licenses",
 		"license": {
 			"name": "ISC"
 		},
@@ -469,6 +470,9 @@
 				},
 				"description": "Create a new license.",
 				"summary": "Create license",
+				"tags": [
+					"Admin"
+				],
 				"security": [
 					{
 						"api_key": []
@@ -544,6 +548,9 @@
 				},
 				"description": "List licenses for the authenticated account.",
 				"summary": "List licenses",
+				"tags": [
+					"Admin"
+				],
 				"security": [
 					{
 						"api_key": []
@@ -654,6 +661,9 @@
 				},
 				"description": "Read a license by ID.",
 				"summary": "Read license",
+				"tags": [
+					"Admin"
+				],
 				"security": [
 					{
 						"api_key": []
@@ -736,6 +746,9 @@
 				},
 				"description": "Update a license by ID.",
 				"summary": "Update license",
+				"tags": [
+					"Admin"
+				],
 				"security": [
 					{
 						"api_key": []
@@ -819,6 +832,9 @@
 				},
 				"description": "Delete a license by ID.",
 				"summary": "Delete license",
+				"tags": [
+					"Admin"
+				],
 				"security": [
 					{
 						"api_key": []
@@ -901,6 +917,9 @@
 				},
 				"description": "Verify a license",
 				"summary": "Verify license",
+				"tags": [
+					"Public"
+				],
 				"security": [],
 				"parameters": [
 					{
@@ -1012,6 +1031,9 @@
 				},
 				"description": "Verify a license",
 				"summary": "Verify license",
+				"tags": [
+					"Public"
+				],
 				"security": [],
 				"parameters": [
 					{

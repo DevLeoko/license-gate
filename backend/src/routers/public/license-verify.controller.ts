@@ -10,6 +10,7 @@ import {
   Request,
   Response,
   Route,
+  Tags,
 } from "tsoa";
 import { z } from "zod";
 import { verifyLicense } from "../../controller/verify-license";
@@ -91,6 +92,7 @@ interface VerificationOptions {
 }
 
 @Route("/license")
+@Tags("Public")
 export class LicenseVerifyController extends Controller {
   /**
    * Verify a license

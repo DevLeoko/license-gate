@@ -12,6 +12,7 @@ import {
   Route,
   Security,
   SuccessResponse,
+  Tags,
 } from "tsoa";
 import Container from "typedi";
 import { LicenseService } from "../../controller/license.controller";
@@ -141,6 +142,7 @@ interface LicenseUpdateInput
   extends Expand<Partial<Omit<License, "id" | "createdAt" | "userId">>> {}
 
 @Route("admin/licenses")
+@Tags("Admin")
 export class LicenseController extends Controller {
   licenseService!: LicenseService;
 
@@ -153,7 +155,6 @@ export class LicenseController extends Controller {
    * Create a new license.
    * @returns The newly created license.
    * @summary Create license
-   * @tags licenses
    */
   @Security("api_key")
   @Post()
@@ -182,7 +183,6 @@ export class LicenseController extends Controller {
    * @param includeLogs Include logs for this license.
    * @returns The license.
    * @summary Read license
-   * @tags licenses
    */
   @Security("api_key")
   @Get("{licenseId}")
@@ -206,7 +206,6 @@ export class LicenseController extends Controller {
    * @param licenseId License ID.
    * @returns The updated license.
    * @summary Update license
-   * @tags licenses
    */
   @Security("api_key")
   @Patch("{licenseId}")
@@ -234,7 +233,6 @@ export class LicenseController extends Controller {
    * @param licenseId License ID.
    * @returns The deleted license.
    * @summary Delete license
-   * @tags licenses
    */
   @Security("api_key")
   @Delete("{licenseId}")
@@ -262,7 +260,6 @@ export class LicenseController extends Controller {
    * @returns List of licenses and total count.
    * @security api_key
    * @summary List licenses
-   * @tags licenses
    */
   @Security("api_key")
   @Get()
