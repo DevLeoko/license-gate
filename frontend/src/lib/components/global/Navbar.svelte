@@ -33,6 +33,12 @@
 			primary: true,
 		},
 		{
+			name: 'API keys',
+			icon: 'lock_open',
+			href: '/api-keys',
+			primary: false,
+		},
+		{
 			name: 'Account settings',
 			icon: 'settings',
 			href: '/settings/account',

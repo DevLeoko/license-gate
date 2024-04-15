@@ -21,6 +21,8 @@ export type ValidationResult = ListLog['result']
 export type QuickStats = RouterOutput['logs']['quickStats']
 export type HistogramData = RouterOutput['logs']['histogram']['histogram']
 
+export type ListApiKey = RouterOutput['apiKey']['list'][0]
+
 export const trpc = createTRPCProxyClient<AppRouter>({
 	transformer: SuperJSON,
 	links: [
