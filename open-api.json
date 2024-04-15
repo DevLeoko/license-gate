@@ -26,7 +26,7 @@
 					},
 					"active": {
 						"type": "boolean",
-						"description": "Whether the license is active.\nWhen a license is disabled, it will not validate."
+						"description": "Whether the license is active.\r\nWhen a license is disabled, it will not validate."
 					},
 					"userId": {
 						"type": "integer",
@@ -49,41 +49,41 @@
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit",
+						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
 						"default": null
 					},
 					"licenseScope": {
 						"type": "string",
 						"nullable": true,
-						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope",
+						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope",
 						"default": null
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
 						"nullable": true,
-						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration",
+						"description": "Expiration date of the license.\r\nSee https://docs.licensegate.io/restriction-options/expiration",
 						"default": null
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
 						"nullable": true,
-						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Current amount of validation points. This is used for rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Maximum amount of validation points. This is used for rate limiting.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Amount of validation points to replenish every interval.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"replenishInterval": {
@@ -93,7 +93,7 @@
 							}
 						],
 						"nullable": true,
-						"description": "Interval to replenish validation points.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Interval to replenish validation points.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"createdAt": {
@@ -186,7 +186,7 @@
 				"properties": {
 					"active": {
 						"type": "boolean",
-						"description": "Whether the license is active.\nWhen a license is disabled, it will not validate."
+						"description": "Whether the license is active.\r\nWhen a license is disabled, it will not validate."
 					},
 					"name": {
 						"type": "string",
@@ -199,45 +199,45 @@
 					"ipLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit",
+						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
 						"default": null
 					},
 					"licenseScope": {
 						"type": "string",
-						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope",
+						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope",
 						"default": null
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
-						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration",
+						"description": "Expiration date of the license.\r\nSee https://docs.licensegate.io/restriction-options/expiration",
 						"default": null
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
-						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Current amount of validation points. This is used for rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Maximum amount of validation points. This is used for rate limiting.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Amount of validation points to replenish every interval.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"replenishInterval": {
 						"$ref": "#/components/schemas/ReplenishInterval",
-						"description": "Interval to replenish validation points.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Interval to replenish validation points.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					},
 					"licenseKey": {
 						"type": "string",
-						"description": "You can specify a custom license key, or one will be generated (UUIDv4).\nIf you specify a custom key, it must be unique."
+						"description": "You can specify a custom license key, or one will be generated (UUIDv4).\r\nIf you specify a custom key, it must be unique."
 					}
 				},
 				"required": [
@@ -276,7 +276,7 @@
 				"additionalProperties": false
 			},
 			"LicenseUpdateInput": {
-				"description": "Data required to update a license.\nUpdates are partial, so all fields are optional.",
+				"description": "Data required to update a license.\r\nUpdates are partial, so all fields are optional.",
 				"properties": {
 					"licenseKey": {
 						"type": "string",
@@ -284,7 +284,7 @@
 					},
 					"active": {
 						"type": "boolean",
-						"description": "Whether the license is active.\nWhen a license is disabled, it will not validate."
+						"description": "Whether the license is active.\r\nWhen a license is disabled, it will not validate."
 					},
 					"name": {
 						"type": "string",
@@ -297,41 +297,41 @@
 					"ipLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Limit of IPs that can validate this license.\nSee https://docs.licensegate.io/restriction-options/ip-limit",
+						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
 						"default": null
 					},
 					"licenseScope": {
 						"type": "string",
-						"description": "Scope of the license.\nSee https://docs.licensegate.io/restriction-options/scope",
+						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope",
 						"default": null
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
-						"description": "Expiration date of the license.\nSee https://docs.licensegate.io/restriction-options/expiration",
+						"description": "Expiration date of the license.\r\nSee https://docs.licensegate.io/restriction-options/expiration",
 						"default": null
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
-						"description": "Current amount of validation points. This is used for rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Current amount of validation points. This is used for rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Maximum amount of validation points. This is used for rate limiting.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Maximum amount of validation points. This is used for rate limiting.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Amount of validation points to replenish every interval.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"description": "Amount of validation points to replenish every interval.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"replenishInterval": {
 						"$ref": "#/components/schemas/ReplenishInterval",
-						"description": "Interval to replenish validation points.\nSet to null for no rate limiting.\nSee https://docs.licensegate.io/restriction-options/rate-limit"
+						"description": "Interval to replenish validation points.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					}
 				},
 				"type": "object",
@@ -349,7 +349,7 @@
 					"RATE_LIMIT_EXCEEDED"
 				],
 				"example": "VALID",
-				"description": "The result of the license verification.\n- `VALID`: The license is valid\n- `NOT_FOUND`: The license was not found\n- `NOT_ACTIVE`: The license is not active\n- `EXPIRED`: The license has expired\n- `LICENSE_SCOPE_FAILED`: The scope of the license does not match the scope in the request\n- `IP_LIMIT_EXCEEDED`: The IP limit has been exceeded\n- `RATE_LIMIT_EXCEEDED`: The rate limit has been exceeded"
+				"description": "The result of the license verification.\r\n- `VALID`: The license is valid\r\n- `NOT_FOUND`: The license was not found\r\n- `NOT_ACTIVE`: The license is not active\r\n- `EXPIRED`: The license has expired\r\n- `LICENSE_SCOPE_FAILED`: The scope of the license does not match the scope in the request\r\n- `IP_LIMIT_EXCEEDED`: The IP limit has been exceeded\r\n- `RATE_LIMIT_EXCEEDED`: The rate limit has been exceeded"
 			},
 			"ValidationResponse": {
 				"properties": {

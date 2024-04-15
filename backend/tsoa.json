@@ -5,7 +5,8 @@
   "spec": {
     "name": "LicenseGate API",
     "description": "REST API for verifying and managing licenses",
-    "outputDirectory": "./",
+    "outputDirectory": "../",
+    "specFileBaseName": "open-api",
     "specVersion": 3,
     "securityDefinitions": {
       "api_key": {
