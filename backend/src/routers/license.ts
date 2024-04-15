@@ -10,7 +10,7 @@ export const licenseRouter = router({
   create: protectedProcedure
     .input(licenseCreateSchema)
     .mutation(async ({ ctx, input }) => {
-      licenseService.create({
+      return licenseService.create({
         license: input,
         userId: ctx.userId,
       });
