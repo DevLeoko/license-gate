@@ -21,7 +21,7 @@ FROM nginx:1.19-alpine
 #Copy the Build folder only https://docs.licensegate.io/self-hosting/#frontend
 COPY --from=dockerbuild /app/build /usr/share/nginx/html
 
-# Expose port 5000
+# Expose port 80 since this is now from nginx(80 or 443)
 EXPOSE 80
 
 # Default command to run Nginx

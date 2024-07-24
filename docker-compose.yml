@@ -6,33 +6,31 @@ services:
     restart: always
     working_dir: /app
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - caddy
-
+      - internal
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:5.0.1
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
       PMA_USER: root
-      PMA_PASSWORD: rootpassword
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_PASSWORD: password
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "8080:80"
     depends_on:
       - db
     networks:
-      - caddy
-
+      - internal
   api:
     build:
       context: ./backend
@@ -44,7 +42,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: "mysql://root:rootpassword@db:3306/mydb"
+      DATABASE_URL: "mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}"
       NODE_ENV: production
       HEX_USER_ID_OFFSET: 0
       PORT: 3000
@@ -55,12 +53,13 @@ services:
       SMTP_SENDER: ${SMTP_SENDER}
       JWT_SECRET: ${JWT_SECRET}
       RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
-      SIGN_IN_URL: http://localhost:5000/auth/login
-      RESET_PASSWORD_URL: http://localhost:5000/auth/password
-      CORS_ORIGIN: http://localhost:5000
+      SIGN_IN_URL: ${PUBLIC_FRONTEND_URL}/auth/login
+      RESET_PASSWORD_URL: ${PUBLIC_FRONTEND_URL}/auth/password
+      CORS_ORIGIN: ${PUBLIC_FRONTEND_URL}
       GOOGLE_AUTH_CLIENT_ID: none
     networks:
       - caddy
+      - internal
     labels:
       caddy: ${PUBLIC_BACKEND_URL}
       caddy.reverse_proxy: "{{upstreams http 3000}}"
@@ -72,7 +71,7 @@ services:
     env_file:
       - frontend/.env
     ports:
-      - 5000:3000
+      - 5000:80
     depends_on:
       - api
     networks:
@@ -102,3 +101,4 @@ volumes:
 networks:
   caddy:
     external: true
+  internal:
