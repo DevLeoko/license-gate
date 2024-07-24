@@ -2,7 +2,7 @@
 FROM node:20-alpine AS dockerbuild
 
 # A small line inside the image to show who made it
-LABEL Developers="Curlybytes"
+LABEL Developers="Curlybytes,DevLeoko"
 
 # https://docs.licensegate.io/self-hosting/#frontend
 # The WORKDIR instruction sets the working directory for everything that will happen next
