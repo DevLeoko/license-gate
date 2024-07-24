@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    image: 'mysql:8.0.19'
+    image: 'mysql:9.0.1'
     restart: always
     working_dir: /app
     environment:
@@ -17,7 +17,7 @@ services:
     networks:
       - internal
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.0.1
+    image: phpmyadmin/phpmyadmin:5.2.1
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
@@ -61,7 +61,7 @@ services:
       - caddy
       - internal
     labels:
-      caddy: ${PUBLIC_BACKEND_URL}
+      caddy: ${BACKEND_FQDN}
       caddy.reverse_proxy: "{{upstreams http 3000}}"
 
   web:
@@ -77,8 +77,8 @@ services:
     networks:
       - caddy
     labels:
-      caddy: ${PUBLIC_FRONTEND_URL}
-      caddy.reverse_proxy: "{{upstreams http 5000}}"
+      caddy: ${FROTNEND_FQDN}
+      caddy.reverse_proxy: "{{upstreams http 80}}"
 
   caddy:
     image: lucaslorentz/caddy-docker-proxy:ci-alpine
