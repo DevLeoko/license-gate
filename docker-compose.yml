@@ -19,7 +19,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     command: >
-      sh -c "npm run prisma-up && npm run prisma-gen && npm run start"
+      sh -c "sleep 30 && npm run prisma-up && npm run prisma-gen && npm run start"
     depends_on:
       - db
     environment:
