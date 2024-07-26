@@ -4,11 +4,6 @@ FROM node:20-alpine AS dockerbuild
 # A small line inside the image to show who made it
 LABEL Developers="Curlybytes,DevLeoko"
 
-# Set Environment values to use during build
-ENV PUBLIC_BACKEND_URL=${PUBLIC_BACKEND_URL}
-ENV PUBLIC_RECAPTCHA_SITE_KEY=${PUBLIC_RECAPTCHA_SITE_KEY}
-ENV PUBLIC_GOOGLE_AUTH_CLIENT_ID=${PUBLIC_GOOGLE_AUTH_CLIENT_ID}
-
 # https://docs.licensegate.io/self-hosting/#frontend
 # The WORKDIR instruction sets the working directory for everything that will happen next
 WORKDIR /app
@@ -18,10 +13,6 @@ RUN npm install
 
 # Copy all local files into the image
 COPY . .
-
-# Generate .env file to be used during build
-RUN sh -c 'printenv | grep "^PUBLIC_" > .env'
-
 RUN npm run build
 
 # Add nginx for static frontend https://docs.licensegate.io/self-hosting/#serving-the-files-with-nginx
