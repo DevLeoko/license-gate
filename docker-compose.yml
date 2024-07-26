@@ -71,14 +71,14 @@ services:
     env_file:
       - frontend/.env
     ports:
-      - 5000:80
+      - 5000:5000
     depends_on:
       - api
     networks:
       - caddy
     labels:
       caddy: ${FROTNEND_FQDN}
-      caddy.reverse_proxy: "{{upstreams http 80}}"
+      caddy.reverse_proxy: "{{upstreams http 5000}}"
 
   caddy:
     image: lucaslorentz/caddy-docker-proxy:ci-alpine
