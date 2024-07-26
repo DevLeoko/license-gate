@@ -14,21 +14,6 @@ services:
       - db_data:/var/lib/mysql
     networks:
       - internal
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.2.1
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_USER: root
-      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
-    networks:
-      - internal
   api:
     build:
       context: ./backend
