@@ -35,8 +35,6 @@ services:
       dockerfile: Dockerfile
     command: >
       sh -c "npm run prisma-up && npm run prisma-gen && npm run start"
-    ports:
-      - "3000:3000"
     depends_on:
       - db
     environment:
