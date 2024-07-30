@@ -12,7 +12,11 @@ COPY ./frontend/package-lock.json ./
 RUN npm install
 
 # Copy all local files into the image
-COPY . .
+COPY ./frontend ./
+
+# Copy the .env file to the image
+COPY .env ./.env
+
 RUN npm run build
 
 # Add nginx for static frontend https://docs.licensegate.io/self-hosting/#serving-the-files-with-nginx
