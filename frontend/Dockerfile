@@ -7,8 +7,8 @@ LABEL Developers="Curlybytes,DevLeoko"
 # https://docs.licensegate.io/self-hosting/#frontend
 # The WORKDIR instruction sets the working directory for everything that will happen next
 WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
+COPY ./frontend/package.json ./
+COPY ./frontend/package-lock.json ./
 RUN npm install
 
 # Copy all local files into the image
