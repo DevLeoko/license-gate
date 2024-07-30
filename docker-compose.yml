@@ -23,12 +23,12 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: "mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/${MYSQL_DATABASE}"
+      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOSTNAME}:${MYSQL_PORT}/${MYSQL_DATABASE}"
       NODE_ENV: production
       HEX_USER_ID_OFFSET: 0
       PORT: 3000
-      SMTP_PORT: 465
       SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
       SMTP_USERNAME: ${SMTP_USERNAME}
       SMTP_PASSWORD: ${SMTP_PASSWORD}
       SMTP_SENDER: ${SMTP_SENDER}
@@ -37,7 +37,7 @@ services:
       SIGN_IN_URL: ${PUBLIC_FRONTEND_URL}/auth/login
       RESET_PASSWORD_URL: ${PUBLIC_FRONTEND_URL}/auth/password
       CORS_ORIGIN: ${PUBLIC_FRONTEND_URL}
-      GOOGLE_AUTH_CLIENT_ID: none
+      GOOGLE_AUTH_CLIENT_ID: ${PUBLIC_GOOGLE_AUTH_CLIENT_ID}
     networks:
       - caddy
       - internal
@@ -56,7 +56,7 @@ services:
     networks:
       - caddy
     labels:
-      caddy: ${FROTNEND_FQDN}
+      caddy: ${FRONTEND_FQDN}
       caddy.reverse_proxy: "{{upstreams http 5000}}"
 
   caddy:
