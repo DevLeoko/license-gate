@@ -47,10 +47,10 @@ services:
 
   web:
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./frontend/Dockerfile
     env_file:
-      - frontend/.env
+      - .env
     depends_on:
       - api
     networks:
