@@ -22,7 +22,7 @@ FROM nginx:1.19-alpine
 COPY --from=dockerbuild /app/build /usr/share/nginx/html
 
 # move the nginx.conf file to the configurations of nginx to load them correctly.
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 5000 since this is now from nginx(80 or 443)
 EXPOSE 5000
