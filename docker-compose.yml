@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  db:
+    image: 'mysql:9.0.1'
+    restart: always
+    working_dir: /app
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - internal
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: >
+      sh -c "sleep 30 && npm run prisma-up && npm run prisma-gen && npm run start"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOSTNAME}:${MYSQL_PORT}/${MYSQL_DATABASE}"
+      NODE_ENV: production
+      HEX_USER_ID_OFFSET: 0
+      PORT: 3000
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USERNAME: ${SMTP_USERNAME}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_SENDER: ${SMTP_SENDER}
+      JWT_SECRET: ${JWT_SECRET}
+      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
+      SIGN_IN_URL: ${PUBLIC_FRONTEND_URL}/auth/login
+      RESET_PASSWORD_URL: ${PUBLIC_FRONTEND_URL}/auth/password
+      CORS_ORIGIN: ${PUBLIC_FRONTEND_URL}
+      GOOGLE_AUTH_CLIENT_ID: ${PUBLIC_GOOGLE_AUTH_CLIENT_ID}
+    networks:
+      - caddy
+      - internal
+    labels:
+      caddy: ${BACKEND_FQDN}
+      caddy.reverse_proxy: "{{upstreams http 3000}}"
+
+  web:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - api
+    networks:
+      - caddy
+    labels:
+      caddy: ${FRONTEND_FQDN}
+      caddy.reverse_proxy: "{{upstreams http 5000}}"
+
+  caddy:
+    image: lucaslorentz/caddy-docker-proxy:ci-alpine
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      - CADDY_INGRESS_NETWORKS=caddy
+    networks:
+      - caddy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - caddy_data:/data
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  caddy_data: {}
+
+networks:
+  caddy:
+    external: true
+  internal:
