@@ -16,13 +16,13 @@
 
 	export let license: ReadLicense
 
-	let qrCodeDataUrl = "";
-
 	const licenseStore = writable(license)
 
+	const licenseKeyWithUserId = license.licenseKey + '#' + license.userId
+	let qrCodeDataUrl = "";
 	const generateQRCode = () => {
 		QRCode
-			.toDataURL(license.licenseKey, {
+			.toDataURL(licenseKeyWithUserId, {
 				scale: 8,
 				errorCorrectionLevel: 'H'
 			})
@@ -82,7 +82,7 @@
 <h2
 	class="flex items-center justify-between w-full px-4 py-2 text-xl tracking-widest bg-gray-100 rounded-md"
 >
-	{license.licenseKey}
+	{licenseKeyWithUserId}
 	<CopyText class="text-xl" text={license.licenseKey} />
 </h2>
 
