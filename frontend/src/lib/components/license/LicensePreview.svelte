@@ -12,12 +12,30 @@
 	import PageTitle from '../basics/PageTitle.svelte'
 	import LicenseLimitInfo from './LicenseLimitInfo.svelte'
 	import LicenseStatusChip from './LicenseStatusChip.svelte'
+	import QRCode from "qrcode";
 
 	export let license: ReadLicense
 
+	let qrCodeDataUrl = "";
+
 	const licenseStore = writable(license)
 
+	const generateQRCode = () => {
+		QRCode
+			.toDataURL(license.licenseKey, {
+				scale: 8,
+				errorCorrectionLevel: 'H'
+			})
+			.then(url => {
+				qrCodeDataUrl = url;
+			})
+			.catch(err => {
+				console.error("Failed to generate QR code:", err);
+			});
+	};
+
 	onMount(() => {
+		generateQRCode()
 		return syncLicense(licenseStore, ['active'], () => dispatchEvent('exit'))
 	})
 
@@ -110,6 +128,10 @@
 <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
 	<LicenseLimitInfo {license} />
 </div>
+
+{#if qrCodeDataUrl}
+	<img src={qrCodeDataUrl} alt="License QR Code" />
+{/if}
 
 <style>
 </style>
