@@ -19,6 +19,7 @@
 		"@types/node-rsa": "^1.1.4",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
+		"@types/qrcode": "^1.5.5",
 		"autoprefixer": "^10.4.14",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^8.5.0",
@@ -41,12 +42,12 @@
 	"dependencies": {
 		"@sveltejs/adapter-static": "^2.0.2",
 		"@trpc/client": "^10.18.0",
-		"@types/qrcode": "^1.5.5",
 		"d3": "^7.8.5",
 		"highlight.js": "^11.9.0",
 		"lodash": "^4.17.21",
 		"material-icons": "^1.13.4",
 		"node-rsa": "^1.1.1",
+		"qrcode": "^1.5.4",
 		"superjson": "^1.12.2",
 		"svelte-persisted-store": "^0.9.1"
 	}

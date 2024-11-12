@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { goto } from '$app/navigation'
-	import { createEventDispatcher, onMount } from 'svelte'
-	import { writable } from 'svelte/store'
-	import { notifyLicenseRemoved, syncLicense } from '../../controller/license'
-	import { logSuccess } from '../../stores/alerts'
-	import { trpc, type ReadLicense } from '../../trpcClient'
+	import {goto} from '$app/navigation'
+	import {createEventDispatcher, onMount} from 'svelte'
+	import {writable} from 'svelte/store'
+	import {notifyLicenseRemoved, syncLicense} from '../../controller/license'
+	import {logSuccess} from '../../stores/alerts'
+	import {type ReadLicense, trpc} from '../../trpcClient'
 	import Button from '../basics/Button.svelte'
 	import ConfirmationCardTrigger from '../basics/ConfirmationCardTrigger.svelte'
 	import CopyText from '../basics/CopyText.svelte'
@@ -13,16 +13,17 @@
 	import LicenseLimitInfo from './LicenseLimitInfo.svelte'
 	import LicenseStatusChip from './LicenseStatusChip.svelte'
 	import QRCode from "qrcode";
+	import {Protocol} from "../../../../../backend/src/utils/constants.js";
 
 	export let license: ReadLicense
 
 	const licenseStore = writable(license)
 
-	const licenseKeyWithUserId = license.licenseKey + '#' + license.userId
+	const enterpriseLicense = Protocol.ENTERPRISE + license.licenseKey + '#' + license.userId
 	let qrCodeDataUrl = "";
 	const generateQRCode = () => {
 		QRCode
-			.toDataURL(licenseKeyWithUserId, {
+			.toDataURL(enterpriseLicense, {
 				scale: 8,
 				errorCorrectionLevel: 'H'
 			})
@@ -82,7 +83,7 @@
 <h2
 	class="flex items-center justify-between w-full px-4 py-2 text-xl tracking-widest bg-gray-100 rounded-md"
 >
-	{licenseKeyWithUserId}
+	{enterpriseLicense}
 	<CopyText class="text-xl" text={license.licenseKey} />
 </h2>
 
