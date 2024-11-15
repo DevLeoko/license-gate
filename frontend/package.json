@@ -19,7 +19,6 @@
 		"@types/d3": "^7.4.0",
 		"@types/lodash": "^4.14.192",
 		"@types/node-rsa": "^1.1.4",
-		"@types/qrcode": "^1.5.5",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"autoprefixer": "^10.4.14",
@@ -41,6 +40,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@svelte-put/qr": "^1.2.1",
 		"@sveltejs/adapter-static": "3.0.0",
 		"@trpc/client": "^10.18.0",
 		"d3": "^7.8.5",
@@ -48,7 +48,6 @@
 		"lodash": "^4.17.21",
 		"material-icons": "^1.13.4",
 		"node-rsa": "^1.1.1",
-		"qrcode": "^1.5.4",
 		"superjson": "^1.12.2",
 		"svelte-persisted-store": "^0.9.1"
 	}

@@ -12,31 +12,21 @@
 	import PageTitle from '../basics/PageTitle.svelte'
 	import LicenseLimitInfo from './LicenseLimitInfo.svelte'
 	import LicenseStatusChip from './LicenseStatusChip.svelte'
-	import QRCode from "qrcode";
 	import {Protocol} from "../../../../../backend/src/utils/constants.js";
+
+	import { qr as imgQR } from '@svelte-put/qr/img';
+	import ImgQR from '@svelte-put/qr/img/QR.svelte';
+	import { qr as svgQR } from '@svelte-put/qr/svg';
+	import SvgQR from '@svelte-put/qr/svg/QR.svelte';
 
 	export let license: ReadLicense
 
 	const licenseStore = writable(license)
 
-	const enterpriseLicense = Protocol.ENTERPRISE + license.licenseKey + '#' + license.userId
-	let qrCodeDataUrl = "";
-	const generateQRCode = () => {
-		QRCode
-			.toDataURL(enterpriseLicense, {
-				scale: 8,
-				errorCorrectionLevel: 'H'
-			})
-			.then(url => {
-				qrCodeDataUrl = url;
-			})
-			.catch(err => {
-				console.error("Failed to generate QR code:", err);
-			});
-	};
+	const data = Protocol.ENTERPRISE + license.licenseKey + '#' + license.userId
+	const logo = 'https://pbs.twimg.com/profile_images/1629168416836706304/TPhvrSCB_400x400.jpg';
 
 	onMount(() => {
-		generateQRCode()
 		return syncLicense(licenseStore, ['active'], () => dispatchEvent('exit'))
 	})
 
@@ -83,7 +73,7 @@
 <h2
 	class="flex items-center justify-between w-full px-4 py-2 text-xl tracking-widest bg-gray-100 rounded-md"
 >
-	{enterpriseLicense}
+	{data}
 	<CopyText class="text-xl" text={license.licenseKey} />
 </h2>
 
@@ -130,8 +120,8 @@
 	<LicenseLimitInfo {license} />
 </div>
 
-{#if qrCodeDataUrl}
-	<img src={qrCodeDataUrl} alt="License QR Code" />
+{#if data}
+	<svg use:svgQR={{ data, logo }} />
 {/if}
 
 <style>
