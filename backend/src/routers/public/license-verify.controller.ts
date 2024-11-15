@@ -213,7 +213,7 @@ export class LicenseVerifyController extends Controller {
 }
 
 function getIpFromRequest(req: express.Request): string {
-  return (req.headers["cf-connecting-ip"] as string | undefined) || req.ip;
+  return (req.headers["cf-connecting-ip"] as string | undefined) || req.ip || req.socket.remoteAddress || '';
 }
 
 async function processLicenseVerification(

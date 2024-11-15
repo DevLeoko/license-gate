@@ -14,7 +14,8 @@
     "prisma-gen": "prisma generate",
     "tsoa-gen": "tsoa spec-and-routes",
     "tsoa-watch": "nodemon --exec \"npm run tsoa-gen\" --watch tsoa.json",
-    "gen-env": "gen-env-types .env -o src/types/env.d.ts -e ."
+    "gen-env": "gen-env-types .env -o src/types/env.d.ts -e .",
+    "go": "rm -r node_modules package-lock.json ; npm install && npm run start"
   },
   "keywords": [],
   "author": "",
