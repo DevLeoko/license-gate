@@ -9,7 +9,8 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"noErrorTruncation": true
+		"noErrorTruncation": true,
+		"verbatimModuleSyntax": true
 	},
 	"include": [
 		"ambient.d.ts",
