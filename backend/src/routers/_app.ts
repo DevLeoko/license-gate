@@ -4,10 +4,12 @@ import { apiKeyRouter } from "./apiKey";
 import { authRouter } from "./auth";
 import { licenseRouter } from "./license";
 import { logsRouter } from "./logs";
+import { deviceRouter } from "./device";
 
 export const appRouter = router({
   auth: authRouter,
   license: licenseRouter,
+  device: deviceRouter,
   logs: logsRouter,
   apiKey: apiKeyRouter,
 });

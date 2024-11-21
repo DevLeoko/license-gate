@@ -26,6 +26,9 @@ model User {
   logs     Log[]
 
   apiKeys ApiKey[]
+
+  maxDevices      Int       @default(0)
+  currentDevices  Device[]
 }
 
 enum ReplenishInterval {
@@ -61,6 +64,9 @@ model License {
 
   logs Log[]
 
+  maxDevices      Int       @default(0)
+  currentDevices  Device[]
+
   @@unique([userId, licenseKey])
 }
 
@@ -75,13 +81,16 @@ enum ValidationResult {
 }
 
 model Log {
-  id Int @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
 
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
 
   license   License @relation(fields: [licenseId], references: [id], onDelete: Cascade)
   licenseId Int
+
+  device      Device    @relation(fields: [deviceId], references: [deviceId], onDelete: Cascade)
+  deviceId    String
 
   ip        String
   result    ValidationResult
@@ -99,4 +108,18 @@ model ApiKey {
   name String
 
   createdAt DateTime @default(now())
+}
+
+model Device {
+  deviceId  String      @id
+  licenseId Int
+  userId    Int
+
+  logs      Log[]
+
+  createdAt DateTime    @default(now())
+  isActive  Boolean     @default(true)
+
+  license   License     @relation(fields: [licenseId], references: [id])
+  user      User        @relation(fields: [userId]   , references: [id])
 }

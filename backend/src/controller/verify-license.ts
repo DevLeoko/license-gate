@@ -1,6 +1,6 @@
-import { License, Prisma } from "@prisma/client";
+import {License, Prisma} from "@prisma/client";
 import NodeRSA from "node-rsa";
-import { prisma } from "../prisma";
+import {prisma} from "../prisma";
 
 const DEBUG_TIME = false;
 
@@ -40,7 +40,13 @@ async function getIpCount(
   // TODO: We might want to add indexes to the database to speed up this query (and some other queries)
   const result = await prisma.$queryRaw<
     [{ count: number }]
-  >`SELECT COUNT(DISTINCT \`ip\`) AS \`count\` FROM \`Log\` WHERE \`userId\` = ${userId} AND \`licenseId\` = ${licenseId} AND \`result\` = 'VALID' AND \`ip\` != ${excludeIp} AND \`timestamp\` >= ${last12Hours}`;
+  >`SELECT COUNT(DISTINCT \`ip\`) AS \`count\`
+    FROM \`Log\`
+    WHERE \`userId\` = ${userId}
+      AND \`licenseId\` = ${licenseId}
+      AND \`result\` = 'VALID'
+      AND \`ip\` != ${excludeIp}
+      AND \`timestamp\` >= ${last12Hours}`;
   return result[0].count;
 
   // return prisma.log.count({
@@ -82,9 +88,9 @@ async function fetchLicense(
   includePrivateKey: boolean
 ) {
   return prisma.license.findUnique({
-    where: { userId_licenseKey: { licenseKey, userId } },
+    where: {userId_licenseKey: {licenseKey, userId}},
     include: includePrivateKey
-      ? { user: { select: { rsaPrivateKey: true } } }
+      ? {user: {select: {rsaPrivateKey: true}}}
       : undefined,
   });
 }
@@ -155,6 +161,26 @@ export async function verifyLicense(
 
   const backgroundPromises: Promise<unknown>[] = [];
 
+  backgroundPromises.push(
+    prisma.device.upsert({
+      where: {
+        deviceId: options.metadata || "",
+      },
+      create: {
+        deviceId: options.metadata || "",
+        userId: userId,
+        licenseId: license.id,
+      },
+      update: {
+        deviceId: options.metadata || "",
+        userId: userId,
+        licenseId: license.id,
+      }
+    })
+  )
+
+  await Promise.all(backgroundPromises);
+
   // Create log entry
   backgroundPromises.push(
     prisma.log.create({
@@ -164,6 +190,7 @@ export async function verifyLicense(
         ip,
         result: status,
         metadata: options.metadata || "",
+        deviceId: options.metadata || "",
       },
     })
   );

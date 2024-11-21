@@ -21,9 +21,15 @@
 			primary: true,
 		},
 		{
-			name: 'Manage licenses',
+			name: 'Licenses',
 			icon: 'password',
 			href: '/licenses',
+			primary: true,
+		},
+		{
+			name: 'Devices',
+			icon: 'smartphone',
+			href: '/devices',
 			primary: true,
 		},
 		{
