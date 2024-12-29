@@ -44,6 +44,13 @@ You can also self-host LicenseGate. You can find the installation instructions i
   - Rate Limit
   - Expiration Date
   - Scopes
+- Discord Integration (Third Party)
+
+## Discord Integration
+
+Issue license keys to your users using a fully automated bot on your discord server.
+Users with a certain role can request their license keys. Check out this third-party integration:
+https://github.com/abhiyanpa/Discord-License-Manager-Bot
 
 ## Community
 
