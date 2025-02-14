@@ -46,11 +46,20 @@ You can also self-host LicenseGate. You can find the installation instructions i
   - Scopes
 - Discord Integration (Third Party)
 
-## Discord Integration
+## 3rd Party Extensions and Integrations
+
+### Discord Integration
 
 Issue license keys to your users using a fully automated bot on your discord server.
-Users with a certain role can request their license keys. Check out this third-party integration:
-https://github.com/abhiyanpa/Discord-License-Manager-Bot
+Users with a certain role can request their license keys.
+
+GitHub: https://github.com/abhiyanpa/Discord-License-Manager-Bot
+
+### WHMCS Modules
+
+A WHMCS module for selling software licenses on a WHMCS page integrated with LicenseGate.
+
+GitHub: https://github.com/NekoMonci12/LicenseGate-WHMCS
 
 ## Community
 
