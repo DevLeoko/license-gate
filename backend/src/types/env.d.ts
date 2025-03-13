@@ -17,6 +17,7 @@ declare global {
       CORS_ORIGIN: string;
       GOOGLE_AUTH_CLIENT_ID: string;
       PUBLIC_DISABLE_RECAPTCHA: boolean;
+      PUBLIC_DISABLE_SIGN_UP: boolean;
     }
   }
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
-	import { PUBLIC_GOOGLE_AUTH_CLIENT_ID } from '$env/static/public'
+	import { PUBLIC_DISABLE_SIGN_UP, PUBLIC_GOOGLE_AUTH_CLIENT_ID } from '$env/static/public'
 	import { onMount } from 'svelte'
 	import Button from '../../../lib/components/basics/Button.svelte'
 	import { logSuccess } from '../../../lib/stores/alerts'
@@ -138,8 +138,10 @@
 	<div class="mt-4">
 		<a href="/auth/reset-password" class="text-blue-500">Forgot your password?</a>
 	</div>
-	<div>
-		<span>Don't have an account?</span>
-		<a href="/auth/signup" class="text-blue-500">Sign up</a>
-	</div>
+	{#if !PUBLIC_DISABLE_SIGN_UP}
+		<div>
+			<span>Don't have an account?</span>
+			<a href="/auth/signup" class="text-blue-500">Sign up</a>
+		</div>
+	{/if}
 </form>

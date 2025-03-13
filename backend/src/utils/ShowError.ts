@@ -8,7 +8,8 @@ export type ShowErrorType =
   | "no-account-for-google-email"
   | "invalid-token"
   | "license-with-same-key-already-exists"
-  | "failed-captcha";
+  | "failed-captcha"
+  | "sign-up-disabled";
 
 export class ShowError extends Error {
   type: ShowErrorType;

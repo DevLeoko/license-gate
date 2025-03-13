@@ -55,6 +55,10 @@ export const authRouter = router({
       if (!process.env.PUBLIC_DISABLE_RECAPTCHA && !verifyRecaptcha(input.token))
         throw new ShowError("Failed captcha", "failed-captcha");
 
+      if (process.env.PUBLIC_DISABLE_SIGN_UP) {
+        throw new ShowError("Sign up is disabled", "sign-up-disabled");
+      }
+
       await signUpWithPassword(
         input.email,
         input.password,
