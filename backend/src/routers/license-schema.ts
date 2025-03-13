@@ -15,7 +15,7 @@ export const licenseCreateSchema = z.object({
   replenishAmount: z.number().int().nullish(),
   replenishInterval: z
     .enum(["TEN_SECONDS", "MINUTE", "HOUR", "DAY"])
-    .nullable(),
+    .nullish(),
 
   licenseKey: z.string().min(1).max(100).optional(),
 });
