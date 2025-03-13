@@ -123,17 +123,85 @@ interface License {
 /**
  * Data required to create a license.
  */
-interface LicenseCreateInput
-  extends Expand<
-    Omit<License, "id" | "createdAt" | "userId" | "licenseKey"> & {
-      /**
-       * You can specify a custom license key, or one will be generated (UUIDv4).
-       * If you specify a custom key, it must be unique.
-       */
-      licenseKey?: string;
-    }
-  > {}
+interface LicenseCreateInput {
+  // Dev note: This is a copy of the Interface License, this is done to make tsoa generate the correct schema, I'm sure there is a better way to do this.
 
+  /**
+   * Whether the license is active.
+   * When a license is disabled, it will not validate.
+   */
+  active: boolean;
+
+  /**
+   * License key.
+   */
+  licenseKey?: string;
+
+  /**
+   * Name to identify the license.
+   */
+  name: string;
+
+  /**
+   * Notes for the license.
+   */
+  notes: string;
+
+  /**
+   * Limit of IPs that can validate this license.
+   * See https://docs.licensegate.io/restriction-options/ip-limit
+   * @isInt
+   * @default null
+   */
+  ipLimit?: number | null;
+
+  /**
+   * Scope of the license.
+   * See https://docs.licensegate.io/restriction-options/scope
+   * @default null
+   */
+  licenseScope?: string | null;
+
+  /**
+   * Expiration date of the license.
+   * See https://docs.licensegate.io/restriction-options/expiration
+   * @default null
+   */
+  expirationDate?: Date | null;
+
+  /**
+   * Current amount of validation points. This is used for rate limiting.
+   * See https://docs.licensegate.io/restriction-options/rate-limit
+   * @default null
+   */
+  validationPoints?: number | null;
+
+  /**
+   * Maximum amount of validation points. This is used for rate limiting.
+   * Set to null for no rate limiting.
+   * See https://docs.licensegate.io/restriction-options/rate-limit
+   * @isInt
+   * @default null
+   */
+  validationLimit?: number | null;
+
+  /**
+   * Amount of validation points to replenish every interval.
+   * Set to null for no rate limiting.
+   * See https://docs.licensegate.io/restriction-options/rate-limit
+   * @isInt
+   * @default null
+   */
+  replenishAmount?: number | null;
+
+  /**
+   * Interval to replenish validation points.
+   * Set to null for no rate limiting.
+   * See https://docs.licensegate.io/restriction-options/rate-limit
+   * @default null
+   */
+  replenishInterval?: ReplenishInterval | null;
+}
 /**
  * Data required to update a license.
  * Updates are partial, so all fields are optional.
