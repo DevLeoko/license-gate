@@ -63,28 +63,24 @@ interface License {
    * Limit of IPs that can validate this license.
    * See https://docs.licensegate.io/restriction-options/ip-limit
    * @isInt
-   * @default null
    */
   ipLimit: number | null;
 
   /**
    * Scope of the license.
    * See https://docs.licensegate.io/restriction-options/scope
-   * @default null
    */
   licenseScope: string | null;
 
   /**
    * Expiration date of the license.
    * See https://docs.licensegate.io/restriction-options/expiration
-   * @default null
    */
   expirationDate: Date | null;
 
   /**
    * Current amount of validation points. This is used for rate limiting.
    * See https://docs.licensegate.io/restriction-options/rate-limit
-   * @default null
    */
   validationPoints: number | null;
 
@@ -93,7 +89,6 @@ interface License {
    * Set to null for no rate limiting.
    * See https://docs.licensegate.io/restriction-options/rate-limit
    * @isInt
-   * @default null
    */
   validationLimit: number | null;
 
@@ -102,7 +97,6 @@ interface License {
    * Set to null for no rate limiting.
    * See https://docs.licensegate.io/restriction-options/rate-limit
    * @isInt
-   * @default null
    */
   replenishAmount: number | null;
 
@@ -110,7 +104,6 @@ interface License {
    * Interval to replenish validation points.
    * Set to null for no rate limiting.
    * See https://docs.licensegate.io/restriction-options/rate-limit
-   * @default null
    */
   replenishInterval: ReplenishInterval | null;
 
