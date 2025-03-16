@@ -75,7 +75,7 @@
 			return
 		}
 
-		if (PUBLIC_DISABLE_RECAPTCHA) {
+		if (PUBLIC_DISABLE_RECAPTCHA === "true") {
 			register("")
 		} else {
 			// @ts-ignore
@@ -131,7 +131,7 @@
 		on:focus={() => (showIssue = true)}
 		on:keypress={(e) => e.key === 'Enter' && registerClick()}
 	/>
-	{#if !PUBLIC_DISABLE_RECAPTCHA}
+	{#if PUBLIC_DISABLE_RECAPTCHA === "false"}
 		<div
 			class="z-30 g-recaptcha"
 			data-sitekey={PUBLIC_RECAPTCHA_SITE_KEY}
