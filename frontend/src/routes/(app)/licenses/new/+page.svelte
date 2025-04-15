@@ -13,6 +13,8 @@
 		active: true,
 
 		ipLimit: null,
+		ipBoundEnabled: false,
+		ip: null,
 		licenseScope: null,
 		expirationDate: null,
 

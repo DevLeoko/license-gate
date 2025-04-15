@@ -31,6 +31,8 @@ const models: TsoaRoute.Models = {
             "name": {"dataType":"string","required":true},
             "notes": {"dataType":"string","required":true},
             "ipLimit": {"dataType":"union","subSchemas":[{"dataType":"integer"},{"dataType":"enum","enums":[null]}],"default":null,"required":true},
+            "ipBoundEnabled": {"dataType":"union","subSchemas":[{"dataType":"boolean"},{"dataType":"enum","enums":[false]}],"required":true},
+            "ip": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"default":null},
             "licenseScope": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"default":null,"required":true},
             "expirationDate": {"dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"enum","enums":[null]}],"default":null,"required":true},
             "validationPoints": {"dataType":"union","subSchemas":[{"dataType":"double"},{"dataType":"enum","enums":[null]}],"default":null,"required":true},
@@ -76,6 +78,8 @@ const models: TsoaRoute.Models = {
             "name": {"dataType":"string","required":true},
             "notes": {"dataType":"string","required":true},
             "ipLimit": {"dataType":"integer","default":null,"required":true},
+            "ipBoundEnabled": {"dataType":"boolean","required":true},
+            "ip": {"dataType":"string","default":null},
             "licenseScope": {"dataType":"string","default":null,"required":true},
             "expirationDate": {"dataType":"datetime","default":null,"required":true},
             "validationPoints": {"dataType":"double","default":null,"required":true},
@@ -104,6 +108,8 @@ const models: TsoaRoute.Models = {
             "name": {"dataType":"string"},
             "notes": {"dataType":"string"},
             "ipLimit": {"dataType":"integer","default":null},
+            "ipBoundEnabled": {"dataType":"boolean"},
+            "ip": {"dataType":"string","default":null},
             "licenseScope": {"dataType":"string","default":null},
             "expirationDate": {"dataType":"datetime","default":null},
             "validationPoints": {"dataType":"double","default":null},
@@ -116,7 +122,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ValidationResult": {
         "dataType": "refAlias",
-        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["VALID"]},{"dataType":"enum","enums":["NOT_FOUND"]},{"dataType":"enum","enums":["NOT_ACTIVE"]},{"dataType":"enum","enums":["EXPIRED"]},{"dataType":"enum","enums":["LICENSE_SCOPE_FAILED"]},{"dataType":"enum","enums":["IP_LIMIT_EXCEEDED"]},{"dataType":"enum","enums":["RATE_LIMIT_EXCEEDED"]}],"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"dataType":"enum","enums":["VALID"]},{"dataType":"enum","enums":["NOT_FOUND"]},{"dataType":"enum","enums":["NOT_ACTIVE"]},{"dataType":"enum","enums":["EXPIRED"]},{"dataType":"enum","enums":["LICENSE_SCOPE_FAILED"]},{"dataType":"enum","enums":["IP_LIMIT_EXCEEDED"]},{"dataType":"enum","enums":["RATE_LIMIT_EXCEEDED"]},{"dataType":"enum","enums":["BOUND_IP_MISMATCH"]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ValidationResponse": {

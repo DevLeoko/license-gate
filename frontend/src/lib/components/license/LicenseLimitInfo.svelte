@@ -13,6 +13,12 @@
 		},
 
 		{
+			name: 'IP Bound',
+			text: `The license is bound to the first IP address that uses it.`,
+			active: license.ipBoundEnabled !== false,
+		},
+
+		{
 			name: 'Rate Limit',
 			text: `Limited to ${license.replenishAmount} verifications every ${
 				!license.replenishInterval ? '' : replenishIntervalToString(license.replenishInterval)

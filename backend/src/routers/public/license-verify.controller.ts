@@ -42,6 +42,7 @@ const verifyLicenseSchema = z
  * - `LICENSE_SCOPE_FAILED`: The scope of the license does not match the scope in the request
  * - `IP_LIMIT_EXCEEDED`: The IP limit has been exceeded
  * - `RATE_LIMIT_EXCEEDED`: The rate limit has been exceeded
+ * - 'BOUND_IP_MISMATCH': The request was made from an IP address that does not match the one bound to the license
  * @example "VALID"
  */
 type ValidationResult =
@@ -51,7 +52,8 @@ type ValidationResult =
   | "EXPIRED"
   | "LICENSE_SCOPE_FAILED"
   | "IP_LIMIT_EXCEEDED"
-  | "RATE_LIMIT_EXCEEDED";
+  | "RATE_LIMIT_EXCEEDED"
+  | "BOUND_IP_MISMATCH";
 
 interface ValidationResponse {
   /**

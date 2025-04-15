@@ -57,6 +57,9 @@ model License {
   replenishAmount   Int?
   replenishInterval ReplenishInterval?
 
+  ip String?
+  ipBoundEnabled Boolean @default(false)
+
   createdAt DateTime @default(now())
 
   logs Log[]
@@ -72,6 +75,7 @@ enum ValidationResult {
   LICENSE_SCOPE_FAILED
   IP_LIMIT_EXCEEDED
   RATE_LIMIT_EXCEEDED
+  BOUND_IP_MISMATCH
 }
 
 model Log {

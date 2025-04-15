@@ -7,6 +7,8 @@ export const licenseCreateSchema = z.object({
   active: z.boolean(),
 
   ipLimit: z.number().int().nullable(),
+  ipBoundEnabled: z.boolean().default(false),
+  ip: z.string().nullable().optional(),
   licenseScope: z.string().nullable(),
   expirationDate: z.date().nullable(),
 

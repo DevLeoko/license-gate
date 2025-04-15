@@ -52,6 +52,26 @@
 						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
 						"default": null
 					},
+					"ipBoundEnabled": {
+						"anyOf": [
+							{
+								"type": "boolean"
+							},
+							{
+								"type": "boolean",
+								"enum": [
+									false
+								]
+							}
+						],
+						"description": "Whether to bind this license to the first IP that uses it."
+					},
+					"ip": {
+						"type": "string",
+						"nullable": true,
+						"description": "The first IP that used this license.",
+						"default": null
+					},
 					"licenseScope": {
 						"type": "string",
 						"nullable": true,
@@ -110,6 +130,7 @@
 					"name",
 					"notes",
 					"ipLimit",
+					"ipBoundEnabled",
 					"licenseScope",
 					"expirationDate",
 					"validationPoints",
@@ -202,6 +223,15 @@
 						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
 						"default": null
 					},
+					"ipBoundEnabled": {
+						"type": "boolean",
+						"description": "Whether to bind this license to the first IP that uses it."
+					},
+					"ip": {
+						"type": "string",
+						"description": "The first IP that used this license.",
+						"default": null
+					},
 					"licenseScope": {
 						"type": "string",
 						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope",
@@ -245,6 +275,7 @@
 					"name",
 					"notes",
 					"ipLimit",
+					"ipBoundEnabled",
 					"licenseScope",
 					"expirationDate",
 					"validationPoints",
@@ -300,6 +331,15 @@
 						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
 						"default": null
 					},
+					"ipBoundEnabled": {
+						"type": "boolean",
+						"description": "Whether to bind this license to the first IP that uses it."
+					},
+					"ip": {
+						"type": "string",
+						"description": "The first IP that used this license.",
+						"default": null
+					},
 					"licenseScope": {
 						"type": "string",
 						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope",
@@ -346,10 +386,11 @@
 					"EXPIRED",
 					"LICENSE_SCOPE_FAILED",
 					"IP_LIMIT_EXCEEDED",
-					"RATE_LIMIT_EXCEEDED"
+					"RATE_LIMIT_EXCEEDED",
+					"BOUND_IP_MISMATCH"
 				],
 				"example": "VALID",
-				"description": "The result of the license verification.\r\n- `VALID`: The license is valid\r\n- `NOT_FOUND`: The license was not found\r\n- `NOT_ACTIVE`: The license is not active\r\n- `EXPIRED`: The license has expired\r\n- `LICENSE_SCOPE_FAILED`: The scope of the license does not match the scope in the request\r\n- `IP_LIMIT_EXCEEDED`: The IP limit has been exceeded\r\n- `RATE_LIMIT_EXCEEDED`: The rate limit has been exceeded"
+				"description": "The result of the license verification.\r\n- `VALID`: The license is valid\r\n- `NOT_FOUND`: The license was not found\r\n- `NOT_ACTIVE`: The license is not active\r\n- `EXPIRED`: The license has expired\r\n- `LICENSE_SCOPE_FAILED`: The scope of the license does not match the scope in the request\r\n- `IP_LIMIT_EXCEEDED`: The IP limit has been exceeded\r\n- `RATE_LIMIT_EXCEEDED`: The rate limit has been exceeded\r\n- 'BOUND_IP_MISMATCH': The request was made from an IP address that does not match the one bound to the license"
 			},
 			"ValidationResponse": {
 				"properties": {

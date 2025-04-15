@@ -59,6 +59,7 @@
 		'LICENSE_SCOPE_FAILED',
 		'IP_LIMIT_EXCEEDED',
 		'RATE_LIMIT_EXCEEDED',
+		'BOUND_IP_MISMATCH'
 	] satisfies ValidationResult[]
 </script>
 
