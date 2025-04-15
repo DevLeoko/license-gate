@@ -11,6 +11,7 @@ const validationResultSchema = z.enum([
   "LICENSE_SCOPE_FAILED",
   "IP_LIMIT_EXCEEDED",
   "RATE_LIMIT_EXCEEDED",
+  "BOUND_IP_MISMATCH"
 ]);
 
 export const logsRouter = router({

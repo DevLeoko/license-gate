@@ -68,6 +68,17 @@ interface License {
   ipLimit: number | null;
 
   /**
+   * Whether to bind this license to the first IP that uses it.
+   */
+  ipBoundEnabled: boolean | false;
+
+  /**
+   * The first IP that used this license.
+   * @default null
+   */
+  ip?: string | null;
+
+  /**
    * Scope of the license.
    * See https://docs.licensegate.io/restriction-options/scope
    * @default null
@@ -143,7 +154,7 @@ interface LicenseUpdateInput
 
 @Route("admin/licenses")
 @Tags("Admin")
-export class LicenseController extends Controller {
+export class LicenseController extends Controller { 
   licenseService!: LicenseService;
 
   constructor() {

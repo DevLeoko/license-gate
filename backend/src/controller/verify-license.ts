@@ -118,6 +118,24 @@ async function checkLicense(
     }
   }
 
+  if (license.ipBoundEnabled) {
+    if (license.ip == null) {
+      license.ip = ip;
+
+      // Save the updated license to the database
+      await prisma.license.update({
+        where: { id: license.id },
+        data: { ip: license.ip },
+      });
+
+      return "VALID";
+    }
+
+    if (license.ip != ip) {
+      return "BOUND_IP_MISMATCH";
+    }
+  }
+
   return "VALID";
 }
 

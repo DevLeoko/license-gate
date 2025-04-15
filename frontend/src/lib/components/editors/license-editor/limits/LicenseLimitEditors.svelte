@@ -3,6 +3,7 @@
 	import Collapsable from '../../../basics/Collapsable.svelte'
 	import OnOffChip from '../OnOffChip.svelte'
 	import Expiration from './Expiration.svelte'
+	import IpBound from './IpBound.svelte'
 	import IpLimit from './IpLimit.svelte'
 	import RateLimit from './RateLimit.svelte'
 	import Scope from './Scope.svelte'
@@ -16,6 +17,13 @@
 				'You can limit the number of IP addresses that can be used to verify this license.',
 			component: IpLimit,
 			active: entity.ipLimit !== null,
+		},
+		{
+			name: 'IP Bound',
+			description:
+				'You can bound an IP adress to the License, IP will be automatically bound on first verify.',
+			component: IpBound,
+			active: entity.ipBoundEnabled !== false,
 		},
 
 		{
