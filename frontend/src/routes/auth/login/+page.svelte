@@ -138,7 +138,7 @@
 	<div class="mt-4">
 		<a href="/auth/reset-password" class="text-blue-500">Forgot your password?</a>
 	</div>
-	{#if PUBLIC_DISABLE_SIGN_UP === "false"}
+	{#if PUBLIC_DISABLE_SIGN_UP === 'false'}
 		<div>
 			<span>Don't have an account?</span>
 			<a href="/auth/signup" class="text-blue-500">Sign up</a>

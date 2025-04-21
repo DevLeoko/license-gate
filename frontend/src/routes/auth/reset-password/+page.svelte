@@ -42,8 +42,8 @@
 	})
 
 	function resetPasswordClick() {
-		if (PUBLIC_DISABLE_RECAPTCHA === "true") {
-			resetPassword("")
+		if (PUBLIC_DISABLE_RECAPTCHA === 'true') {
+			resetPassword('')
 		} else {
 			// @ts-ignore
 			grecaptcha.execute()
@@ -66,7 +66,7 @@
 		{inputIssue}&nbsp;
 	</span>
 	<input type="text" placeholder="Email" class="mt-2" bind:value={email} />
-	{#if PUBLIC_DISABLE_RECAPTCHA === "false"}
+	{#if PUBLIC_DISABLE_RECAPTCHA === 'false'}
 		<div
 			class="z-30 g-recaptcha"
 			data-sitekey={PUBLIC_RECAPTCHA_SITE_KEY}

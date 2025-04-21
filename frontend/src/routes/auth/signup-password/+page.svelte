@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { PUBLIC_DISABLE_RECAPTCHA, PUBLIC_GOOGLE_AUTH_CLIENT_ID, PUBLIC_RECAPTCHA_SITE_KEY } from '$env/static/public'
+	import {
+		PUBLIC_DISABLE_RECAPTCHA,
+		PUBLIC_GOOGLE_AUTH_CLIENT_ID,
+		PUBLIC_RECAPTCHA_SITE_KEY,
+	} from '$env/static/public'
 	import { onMount } from 'svelte'
 	import ConsentCheckBoxes from '../../../lib/components/auth/ConsentCheckBoxes.svelte'
 	import BasicModal from '../../../lib/components/basics/BasicModal.svelte'
@@ -75,8 +79,8 @@
 			return
 		}
 
-		if (PUBLIC_DISABLE_RECAPTCHA === "true") {
-			register("")
+		if (PUBLIC_DISABLE_RECAPTCHA === 'true') {
+			register('')
 		} else {
 			// @ts-ignore
 			grecaptcha.execute()
@@ -131,7 +135,7 @@
 		on:focus={() => (showIssue = true)}
 		on:keypress={(e) => e.key === 'Enter' && registerClick()}
 	/>
-	{#if PUBLIC_DISABLE_RECAPTCHA === "false"}
+	{#if PUBLIC_DISABLE_RECAPTCHA === 'false'}
 		<div
 			class="z-30 g-recaptcha"
 			data-sitekey={PUBLIC_RECAPTCHA_SITE_KEY}
