@@ -52,7 +52,10 @@ export const authRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (process.env.DISABLE_RECAPTCHA === "false" && !(await verifyRecaptcha(input.token)))
+      if (
+        process.env.DISABLE_RECAPTCHA !== "true" &&
+        !(await verifyRecaptcha(input.token))
+      )
         throw new ShowError("Failed captcha", "failed-captcha");
 
       if (process.env.DISABLE_SIGN_UP === "true") {
@@ -117,7 +120,10 @@ export const authRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      if (process.env.DISABLE_RECAPTCHA === "false" && !(await verifyRecaptcha(input.token)))
+      if (
+        process.env.DISABLE_RECAPTCHA !== "true" &&
+        !(await verifyRecaptcha(input.token))
+      )
         throw new ShowError("Failed captcha", "failed-captcha");
 
       const user = await prisma.user.findUnique({

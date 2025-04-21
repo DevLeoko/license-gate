@@ -66,7 +66,7 @@
 		{inputIssue}&nbsp;
 	</span>
 	<input type="text" placeholder="Email" class="mt-2" bind:value={email} />
-	{#if PUBLIC_DISABLE_RECAPTCHA === 'false'}
+	{#if PUBLIC_DISABLE_RECAPTCHA !== 'true'}
 		<div
 			class="z-30 g-recaptcha"
 			data-sitekey={PUBLIC_RECAPTCHA_SITE_KEY}

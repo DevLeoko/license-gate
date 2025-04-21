@@ -135,7 +135,7 @@
 		on:focus={() => (showIssue = true)}
 		on:keypress={(e) => e.key === 'Enter' && registerClick()}
 	/>
-	{#if PUBLIC_DISABLE_RECAPTCHA === 'false'}
+	{#if PUBLIC_DISABLE_RECAPTCHA !== 'true'}
 		<div
 			class="z-30 g-recaptcha"
 			data-sitekey={PUBLIC_RECAPTCHA_SITE_KEY}
