@@ -49,42 +49,36 @@
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
-						"default": null
+						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit"
 					},
 					"licenseScope": {
 						"type": "string",
 						"nullable": true,
-						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope",
-						"default": null
+						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope"
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
 						"nullable": true,
-						"description": "Expiration date of the license.\r\nSee https://docs.licensegate.io/restriction-options/expiration",
-						"default": null
+						"description": "Expiration date of the license.\r\nSee https://docs.licensegate.io/restriction-options/expiration"
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
 						"nullable": true,
-						"description": "Current amount of validation points. This is used for rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
-						"default": null
+						"description": "Current amount of validation points. This is used for rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Maximum amount of validation points. This is used for rate limiting.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
-						"default": null
+						"description": "Maximum amount of validation points. This is used for rate limiting.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
 						"nullable": true,
-						"description": "Amount of validation points to replenish every interval.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
-						"default": null
+						"description": "Amount of validation points to replenish every interval.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					},
 					"replenishInterval": {
 						"allOf": [
@@ -93,8 +87,7 @@
 							}
 						],
 						"nullable": true,
-						"description": "Interval to replenish validation points.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
-						"default": null
+						"description": "Interval to replenish validation points.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					},
 					"createdAt": {
 						"type": "string",
@@ -188,6 +181,10 @@
 						"type": "boolean",
 						"description": "Whether the license is active.\r\nWhen a license is disabled, it will not validate."
 					},
+					"licenseKey": {
+						"type": "string",
+						"description": "License key."
+					},
 					"name": {
 						"type": "string",
 						"description": "Name to identify the license."
@@ -199,58 +196,59 @@
 					"ipLimit": {
 						"type": "integer",
 						"format": "int32",
+						"nullable": true,
 						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
 						"default": null
 					},
 					"licenseScope": {
 						"type": "string",
+						"nullable": true,
 						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope",
 						"default": null
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
+						"nullable": true,
 						"description": "Expiration date of the license.\r\nSee https://docs.licensegate.io/restriction-options/expiration",
 						"default": null
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
+						"nullable": true,
 						"description": "Current amount of validation points. This is used for rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
+						"nullable": true,
 						"description": "Maximum amount of validation points. This is used for rate limiting.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
+						"nullable": true,
 						"description": "Amount of validation points to replenish every interval.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
 						"default": null
 					},
 					"replenishInterval": {
-						"$ref": "#/components/schemas/ReplenishInterval",
-						"description": "Interval to replenish validation points.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
-					},
-					"licenseKey": {
-						"type": "string",
-						"description": "You can specify a custom license key, or one will be generated (UUIDv4).\r\nIf you specify a custom key, it must be unique."
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/ReplenishInterval"
+							}
+						],
+						"nullable": true,
+						"description": "Interval to replenish validation points.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
+						"default": null
 					}
 				},
 				"required": [
 					"active",
 					"name",
-					"notes",
-					"ipLimit",
-					"licenseScope",
-					"expirationDate",
-					"validationPoints",
-					"validationLimit",
-					"replenishAmount",
-					"replenishInterval"
+					"notes"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -278,13 +276,13 @@
 			"LicenseUpdateInput": {
 				"description": "Data required to update a license.\r\nUpdates are partial, so all fields are optional.",
 				"properties": {
-					"licenseKey": {
-						"type": "string",
-						"description": "License key."
-					},
 					"active": {
 						"type": "boolean",
 						"description": "Whether the license is active.\r\nWhen a license is disabled, it will not validate."
+					},
+					"licenseKey": {
+						"type": "string",
+						"description": "License key."
 					},
 					"name": {
 						"type": "string",
@@ -297,37 +295,31 @@
 					"ipLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit",
-						"default": null
+						"description": "Limit of IPs that can validate this license.\r\nSee https://docs.licensegate.io/restriction-options/ip-limit"
 					},
 					"licenseScope": {
 						"type": "string",
-						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope",
-						"default": null
+						"description": "Scope of the license.\r\nSee https://docs.licensegate.io/restriction-options/scope"
 					},
 					"expirationDate": {
 						"type": "string",
 						"format": "date-time",
-						"description": "Expiration date of the license.\r\nSee https://docs.licensegate.io/restriction-options/expiration",
-						"default": null
+						"description": "Expiration date of the license.\r\nSee https://docs.licensegate.io/restriction-options/expiration"
 					},
 					"validationPoints": {
 						"type": "number",
 						"format": "double",
-						"description": "Current amount of validation points. This is used for rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
-						"default": null
+						"description": "Current amount of validation points. This is used for rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					},
 					"validationLimit": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Maximum amount of validation points. This is used for rate limiting.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
-						"default": null
+						"description": "Maximum amount of validation points. This is used for rate limiting.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					},
 					"replenishAmount": {
 						"type": "integer",
 						"format": "int32",
-						"description": "Amount of validation points to replenish every interval.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit",
-						"default": null
+						"description": "Amount of validation points to replenish every interval.\r\nSet to null for no rate limiting.\r\nSee https://docs.licensegate.io/restriction-options/rate-limit"
 					},
 					"replenishInterval": {
 						"$ref": "#/components/schemas/ReplenishInterval",
@@ -434,9 +426,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_license-with-same-key-already-exists_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -447,9 +436,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_unauthorized_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -460,9 +446,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -525,9 +508,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_unauthorized_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -538,9 +518,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -625,9 +602,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_unauthorized_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -638,9 +612,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_not-found_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -651,9 +622,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -710,9 +678,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_unauthorized_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -723,9 +688,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_not-found_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -736,9 +698,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -796,9 +755,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_unauthorized_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -809,9 +765,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_not-found_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -822,9 +775,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -874,9 +824,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_unauthorized_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -887,9 +834,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_not-found_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -900,9 +844,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -993,9 +934,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}
@@ -1107,9 +1045,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/ResponseError_invalid-schema_"
-								},
-								"examples": {
-									"Example 1": {}
 								}
 							}
 						}

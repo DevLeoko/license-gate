@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation'
-	import { PUBLIC_RECAPTCHA_SITE_KEY } from '$env/static/public'
+	import { PUBLIC_DISABLE_RECAPTCHA, PUBLIC_RECAPTCHA_SITE_KEY } from '$env/static/public'
 	import { onMount } from 'svelte'
 	import Button from '../../../lib/components/basics/Button.svelte'
 	import { logSuccess } from '../../../lib/stores/alerts'
@@ -42,8 +42,12 @@
 	})
 
 	function resetPasswordClick() {
-		// @ts-ignore
-		grecaptcha.execute()
+		if (PUBLIC_DISABLE_RECAPTCHA === 'true') {
+			resetPassword('')
+		} else {
+			// @ts-ignore
+			grecaptcha.execute()
+		}
 	}
 </script>
 
@@ -62,12 +66,14 @@
 		{inputIssue}&nbsp;
 	</span>
 	<input type="text" placeholder="Email" class="mt-2" bind:value={email} />
-	<div
-		class="z-30 g-recaptcha"
-		data-sitekey={PUBLIC_RECAPTCHA_SITE_KEY}
-		data-callback="resetPasswordCallback"
-		data-size="invisible"
-	/>
+	{#if PUBLIC_DISABLE_RECAPTCHA !== 'true'}
+		<div
+			class="z-30 g-recaptcha"
+			data-sitekey={PUBLIC_RECAPTCHA_SITE_KEY}
+			data-callback="resetPasswordCallback"
+			data-size="invisible"
+		/>
+	{/if}
 	<Button {loading} disabled={!!inputIssue} on:click={resetPasswordClick} class="mt-4"
 		>Send reset link</Button
 	>

@@ -6,16 +6,16 @@ export const licenseCreateSchema = z.object({
 
   active: z.boolean(),
 
-  ipLimit: z.number().int().nullable(),
-  licenseScope: z.string().nullable(),
-  expirationDate: z.date().nullable(),
+  ipLimit: z.number().int().nullish(),
+  licenseScope: z.string().nullish(),
+  expirationDate: z.date().nullish(),
 
-  validationPoints: z.number().int().nullable(),
-  validationLimit: z.number().int().nullable(),
-  replenishAmount: z.number().int().nullable(),
+  validationPoints: z.number().int().nullish(),
+  validationLimit: z.number().int().nullish(),
+  replenishAmount: z.number().int().nullish(),
   replenishInterval: z
     .enum(["TEN_SECONDS", "MINUTE", "HOUR", "DAY"])
-    .nullable(),
+    .nullish(),
 
   licenseKey: z.string().min(1).max(100).optional(),
 });

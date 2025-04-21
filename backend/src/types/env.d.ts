@@ -16,8 +16,11 @@ declare global {
       RESET_PASSWORD_URL: string;
       CORS_ORIGIN: string;
       GOOGLE_AUTH_CLIENT_ID: string;
+      DISABLE_RECAPTCHA: string;
+      DISABLE_SIGN_UP: string;
     }
   }
 }
 
-export {}
+export { };
+

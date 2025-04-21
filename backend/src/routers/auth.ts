@@ -52,8 +52,15 @@ export const authRouter = router({
       })
     )
     .mutation(async ({ input, ctx }) => {
-      if (!verifyRecaptcha(input.token))
+      if (
+        process.env.DISABLE_RECAPTCHA !== "true" &&
+        !(await verifyRecaptcha(input.token))
+      )
         throw new ShowError("Failed captcha", "failed-captcha");
+
+      if (process.env.DISABLE_SIGN_UP === "true") {
+        throw new ShowError("Sign up is disabled", "sign-up-disabled");
+      }
 
       await signUpWithPassword(
         input.email,
@@ -113,7 +120,10 @@ export const authRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      if (!verifyRecaptcha(input.token))
+      if (
+        process.env.DISABLE_RECAPTCHA !== "true" &&
+        !(await verifyRecaptcha(input.token))
+      )
         throw new ShowError("Failed captcha", "failed-captcha");
 
       const user = await prisma.user.findUnique({

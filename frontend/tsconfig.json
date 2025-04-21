@@ -25,7 +25,7 @@
 		"./.svelte-kit/[!ambient.d.ts]**",
 		"src/service-worker.js",
 		"src/service-worker.ts",
-		"src/service-worker.d.ts",
+		"src/service-worker.d.ts"
 	]
 	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
 	//
