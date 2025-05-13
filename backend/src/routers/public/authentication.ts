@@ -13,25 +13,28 @@ export async function expressAuthentication(
     // Get API key from request
     const apiKeyStr = request.headers.authorization || request.query["api_key"];
 
-    const apiKeyParsed = z.string().parse(apiKeyStr);
-    const apiKey = await prisma.apiKey.findUnique({
-      where: { key: apiKeyParsed },
-      select: { userId: true },
-    });
-
-    // Check if the API key is valid
-    if (apiKey) {
-      return Promise.resolve({
-        id: apiKey.userId,
+    //Check if api key is present, otherwise return 401
+    if(apiKeyStr != undefined) {
+      const apiKeyParsed = z.string().parse(apiKeyStr);
+      const apiKey = await prisma.apiKey.findUnique({
+        where: { key: apiKeyParsed },
+        select: { userId: true },
       });
-    } else {
-      response
+
+      // Check if the API key is valid
+      if (apiKey) {
+        return Promise.resolve({
+          id: apiKey.userId,
+        });
+      }
+    }
+
+    response
         .status(401)
         .send({
           error: "unauthorized",
           details: "Invalid API key",
         } satisfies ResponseError<"unauthorized">);
-      return Promise.reject({});
-    }
+    return Promise.reject({});
   }
 }
